@@ -9,7 +9,6 @@ export function processSalesData(data) {
     return salesByState;
 }
 
-// Fonction pour charger les fichiers CSV et organiser les données
 export function loadSalesData() {
     return Promise.all([
         d3.csv('/data/EV_sales.csv', d3.autoType),
@@ -22,5 +21,15 @@ export function loadSalesData() {
             PHEV: processSalesData(phevData)
         };
     });
+}
+
+export async function loadSalesDataForLineGraph() {
+    const data = await d3.csv('/data/sales_data.csv');
+    return data.map(d => ({
+        year: new Date(+d.Year, 0, 1),
+        state: d.State,
+        type: d.Type,
+        value: +d.Sales
+    }));
 }
 

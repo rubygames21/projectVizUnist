@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import { loadSalesData } from '../utils/dataLoaders/salesDataLoader';
 import { loadChargingStations } from '../utils/dataLoaders/chargingStationsLoader';
+import { updateLineChartData } from './LineGraph';
 
 const stateNameMap = {
     "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California",
@@ -16,6 +17,38 @@ const stateNameMap = {
     "DC": "District of Columbia"
 };
 
+let selectedStartDate = new Date(2016, 0, 1);
+let selectedEndDate = new Date(2023, 0, 1);
+let activeState = null;
+
+// Fonction pour mettre à jour les dates de la timeline et filtrer les données pour le graphique de ligne
+export function updateTimelineDates(startDate, endDate) {
+    selectedStartDate = startDate;
+    selectedEndDate = endDate;
+    updateFilteredData();
+}
+
+// Fonction pour mettre à jour l'état actif et filtrer les données pour le graphique de ligne
+function updateSelectedState(state) {
+    activeState = (activeState === state) ? null : state;
+    updateFilteredData();
+}
+
+// Filtre les données des stations par état et par date pour le graphique de ligne
+function updateFilteredData() {
+    loadChargingStations().then(stations => {
+        const filteredStations = stations.filter(station => {
+            const isInState = activeState ? station.properties.state === activeState : true;
+            const isInDateRange = station.properties.openDate >= selectedStartDate && station.properties.openDate <= selectedEndDate;
+            return isInState && isInDateRange;
+        });
+
+        // Transmettre les données filtrées au graphique de ligne
+        updateLineChartData(filteredStations);
+    });
+}
+
+// Fonction principale pour le rendu de la carte
 export function renderMap() {
     const container = d3.select('.map');
     const width = container.node().getBoundingClientRect().width;
@@ -23,7 +56,7 @@ export function renderMap() {
 
     const projection = d3.geoAlbersUsa()
         .translate([width / 2, height / 2])
-        .scale(Math.min(width, height) * 2);
+        .scale(Math.min(width, height) * 2.2);
 
     const path = d3.geoPath().projection(projection);
 
@@ -60,8 +93,6 @@ function countStationsByState(stations) {
 
 // Fonction pour dessiner la carte et gérer le clic sur les états
 function drawMap(svg, data, path, tooltip, salesData, stationCountsByState, stations, projection) {
-    let activeState = null;
-
     svg.selectAll('path')
         .data(data.features)
         .enter()
@@ -74,17 +105,11 @@ function drawMap(svg, data, path, tooltip, salesData, stationCountsByState, stat
             d3.select(this).attr('fill', '#ffcc00');
             const state = d.properties.NAME;
             const evSales = salesData.EV[state] ? salesData.EV[state]['2023'] : 'N/A';
-            const hevSales = salesData.HEV[state] ? salesData.HEV[state]['2023'] : 'N/A';
-            const phevSales = salesData.PHEV[state] ? salesData.PHEV[state]['2023'] : 'N/A';
             const stationCount = stationCountsByState[state] || 0;
 
             tooltip
                 .style('opacity', 1)
-                .html(`<strong>${state}</strong><br>
-                    EV Sales: ${evSales}<br>
-                    HEV Sales: ${hevSales}<br>
-                    PHEV Sales: ${phevSales}<br>
-                    Charging Stations: ${stationCount}`);
+                .html(`<strong>${state}</strong><br> EV Sales: ${evSales}<br> Charging Stations: ${stationCount}`);
         })
         .on('mousemove', function(event) {
             const [x, y] = d3.pointer(event);
@@ -99,30 +124,27 @@ function drawMap(svg, data, path, tooltip, salesData, stationCountsByState, stat
         .on('click', function(event, d) {
             event.stopPropagation();
             const state = d.properties.NAME;
-            if (activeState === state) {
-                hideStations(svg.select('.station-layer'));
-                activeState = null;
-            } else {
-                displayStationsForState(svg.select('.station-layer'), stations, state, projection);
-                activeState = state;
-            }
+            updateSelectedState(state);
+            displayStationsForState(svg.select('.station-layer'), stations, state, projection);
         });
 
     svg.on('click', () => {
         if (activeState) {
+            updateSelectedState(null);
             hideStations(svg.select('.station-layer'));
-            activeState = null;
         }
     });
 }
 
-// Fonction pour afficher les stations d'un état spécifique
+// Fonction pour afficher les stations d'un état spécifique en fonction des dates sélectionnées
 function displayStationsForState(layer, stations, state, projection, scale = 1) {
     hideStations(layer);
 
     const filteredStations = stations.filter(station => {
-        const stationState = stateNameMap[station.properties.state] || station.properties.state;
-        return stationState === state;
+        const isInState = station.properties.state === state;
+        const isInDateRange = station.properties.openDate >= selectedStartDate && station.properties.openDate <= selectedEndDate;
+        const hasValidCoordinates = station.geometry.coordinates[0] && station.geometry.coordinates[1];
+        return isInState && isInDateRange && hasValidCoordinates;
     });
 
     layer.selectAll('circle')
@@ -131,10 +153,12 @@ function displayStationsForState(layer, stations, state, projection, scale = 1) 
         .append('circle')
         .attr('cx', d => projection(d.geometry.coordinates)[0])
         .attr('cy', d => projection(d.geometry.coordinates)[1])
-        .attr('r', 4 / scale) // Ajuster le rayon en fonction du zoom
+        .attr('r', 4 / scale)
         .attr('fill', 'red')
         .attr('stroke', '#000')
         .attr('stroke-width', 1);
+
+    console.log("Stations affichées pour l'état et la période sélectionnés :", filteredStations);
 }
 
 // Fonction pour masquer toutes les stations
@@ -160,14 +184,12 @@ function setupZoom(svg, path, projection, geoData, tooltip, salesData, stations,
     const zoom = d3.zoom()
         .scaleExtent([1, 8])
         .on('zoom', (event) => {
-            // Appliquer la limitation de translation
             const transform = limitTranslate(event.transform, width, height);
 
             svg.selectAll('path').attr('transform', transform);
-            stationLayer.attr('transform', transform); // Appliquer la transformation à la couche de stations
+            stationLayer.attr('transform', transform);
 
-            // Ajuster la taille des cercles en fonction du zoom
-            stationLayer.selectAll('circle').attr('r', 4 / transform.k).attr('stroke-width',1/transform.k);
+            stationLayer.selectAll('circle').attr('r', 4 / transform.k).attr('stroke-width', 1 / transform.k);
         });
 
     svg.call(zoom);

@@ -1,6 +1,6 @@
-import { renderMap, updateTimelineDates } from './components/Map';
+import { renderMap } from './components/Map';
 import { renderTimeline } from './components/Timeline';
-import renderLineChart from './components/LineGraph';
+import { renderLineGraph } from './components/LineGraph';
 
 export function initApp() {
     const container = document.createElement('div');
@@ -17,7 +17,6 @@ export function initApp() {
 
     const filters = document.createElement('div');
     filters.classList.add('filters');
-    filters.innerText = 'Selections/Filter Checklists';
 
     mapContainer.appendChild(map);
     mapContainer.appendChild(filters);
@@ -28,11 +27,9 @@ export function initApp() {
 
     const lineGraph = document.createElement('div');
     lineGraph.classList.add('linegraph');
-    lineGraph.innerText = 'Linegraph sales and number of stations';
 
     const incentives = document.createElement('div');
     incentives.classList.add('incentives');
-    incentives.innerText = 'Incentives List';
 
     sideSection.appendChild(lineGraph);
     sideSection.appendChild(incentives);
@@ -46,9 +43,14 @@ export function initApp() {
 
     document.body.appendChild(container);
 
-    renderMap();
+    const defaultStartDate = new Date(2016, 0, 1); // Date par défaut (janvier 2016)
+    const defaultEndDate = new Date(2023, 11, 31); // Date par défaut (décembre 2023)
 
-    renderTimeline(updateTimelineDates);
+    const onSelectionChange = (startDate, endDate) => {
+        renderMap(startDate, endDate);
+        renderLineGraph(startDate, endDate);
+    };
 
-    renderLineChart();
+    // Lier la carte au graphique
+    renderTimeline(onSelectionChange);
 }

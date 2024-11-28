@@ -1,0 +1,80 @@
+chargingstation : 
+export function loadChargingStations() {
+    return fetch('/data/stations_par_etat.json')
+        .then(response => response.json())
+        .then(data => {
+            const stations = Object.entries(data).flatMap(([state, stations]) =>
+                stations.map(station => ({
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [station.Longitude, station.Latitude]
+                    },
+                    properties: {
+                        address: station['Street Address'],
+                        city: station.City,
+                        state: state,
+                        network: station['EV Network'],
+                        access: station['Access Days Time'],
+                        openDate: new Date(station['Open Date'])
+                    }
+                }))
+            );
+            stations.forEach(station => {
+                if (!station.geometry.coordinates[0] || !station.geometry.coordinates[1]) {
+                    console.warn("Station sans coordonnées géographiques :", station);
+                }
+            });
+            return stations;
+        })
+        .catch(error => {
+            console.error("Error loading charging stations JSON:", error);
+        });
+}
+
+
+date processor
+
+import stationsData from '../../../public/data/stations_par_etat.json';
+
+export function filterStationsByDateAndState(startDate, endDate, state = null) {
+    return Object.entries(stationsData).flatMap(([stateName, stations]) => {
+        // Filtrer par état si `state` est défini, sinon traiter tous les états
+        if (state && stateName !== state) return [];
+        
+        // Filtrer les stations par date de création
+        return stations.filter(station => {
+            const openDate = new Date(station["Open Date"]);
+            return openDate >= startDate && openDate <= endDate;
+        });
+    });
+}
+
+salesDataLoaders : import * as d3 from 'd3';
+
+export function processSalesData(data) {
+    const salesByState = {};
+    data.forEach(row => {
+        const state = row['stateName'];  
+        salesByState[state] = row;
+    });
+    return salesByState;
+}
+
+export function loadSalesData() {
+    return Promise.all([
+        d3.csv('/data/EV_sales.csv', d3.autoType),
+        d3.csv('/data/HEV_sales.csv', d3.autoType),
+        d3.csv('/data/PHEV_sales.csv', d3.autoType)
+    ]).then(([evData, hevData, phevData]) => {
+        return {
+            EV: processSalesData(evData),
+            HEV: processSalesData(hevData),
+            PHEV: processSalesData(phevData)
+        };
+    });
+}
+
+
+
+

@@ -28,7 +28,7 @@ body, html {
 }
 
 .map-container {
-  flex: 2.3;
+  flex: 3;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -58,7 +58,21 @@ body, html {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Ombre pour plus de visibilité */
 }
 
+/* Dans votre fichier CSS */
+.selected-state {
+  fill: purple; /* Changez cette couleur pour celle de votre choix */
+  stroke: #333333;
+  stroke-width: 2px;
+}
 
+
+.timeline {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .filters {
   flex: 0.3;
@@ -73,7 +87,7 @@ body, html {
 }
 
 .side-section {
-  flex: 0.7;
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -82,32 +96,20 @@ body, html {
 .linegraph {
   flex: 1;
   color: black;
-  background-color: green;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
   font-size: 18px;
-  margin-left: 0px;
-  padding: 0px;
+  padding-left: 0px;
 }
+
 
 .incentives {
   flex: 1;
   background-color: #7e57c2;
   padding: 15px;
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  font-size: 18px;
-}
-
-.timeline {
-  flex: 0.05;
-  padding: 10px;
-  color: black;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,0 +1,892 @@
+{
+    "Alaska": [
+        {
+            "Project Name": "Energy and Resilience Project Support",
+            "Date": "2022-07-02",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Arizona": [
+        {
+            "Project Name": "School Transportation Advisory Council",
+            "Date": "2022-06-13",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric School Bus Purchase Authorization",
+            "Date": "2022-07-13",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "California": [
+        {
+            "Project Name": "Zero-Emission and Autonomous Vehicle Infrastructure Support",
+            "Date": "2017-04-28",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Location Assessment",
+            "Date": "2018-09-13",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Support",
+            "Date": "2018-09-13",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Assessment",
+            "Date": "2018-09-13",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Volkswagen (VW) Zero Emission Vehicle (ZEV) Investment Plan",
+            "Date": "2017-03-13",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Grid Integration Requirements",
+            "Date": "2019-10-02",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Certification and Training Requirements",
+            "Date": "2020-09-30",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Utility Transportation Electrification Cost Recovery Regulations",
+            "Date": "2021-09-30",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Alternative Fuel and Infrastructure Assessment",
+            "Date": "2023-10-07",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Public Utility Zero Emission Vehicle (ZEV) Acquisition Requirement",
+            "Date": "2023-10-08",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) and Fueling Station Financing Program",
+            "Date": "2023-10-07",
+            "Category": "State Incentives",
+            "Types Supported": "ELECLOANS"
+        }
+    ],
+    "Colorado": [
+        {
+            "Project Name": "Colorado Electric Vehicle (EV) Plan",
+            "Date": "2018-01-02",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Transportation Electrification Workgroup",
+            "Date": "2019-01-17",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Transportation Impacts Stakeholder Group",
+            "Date": "2019-05-31",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Permitting Policy Development",
+            "Date": "2023-05-23",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Parking Space Designation Requirement",
+            "Date": "2023-05-23",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Development Authorization",
+            "Date": "2023-05-23",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Government Electric Vehicle (EV) Charger Fee",
+            "Date": "2023-05-23",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Residential Electric Vehicle (EV) Charger Standard",
+            "Date": "2023-06-02",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Regional Electric Vehicle (REV) West Plan",
+            "Date": "2017-10-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Connecticut": [
+        {
+            "Project Name": "Electric Vehicle (EV) Registration Data",
+            "Date": "2016-06-07",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Utility Company Electric Vehicle (EV) Charging Load Projection Requirement",
+            "Date": "2016-06-07",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Integrated Resources Plan Report",
+            "Date": "2016-06-07",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Accessibility Requirements",
+            "Date": "2023-10-02",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "District of Columbia": [
+        {
+            "Project Name": "Alternative Fuel Vehicle and Infrastructure Support",
+            "Date": "2018-07-02",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Utility Electric Vehicle (EV) Charging Station Program Authorization",
+            "Date": "2019-01-18",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2019-01-18",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        }
+    ],
+    "Delaware": [
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Building Standards for Residential Developments",
+            "Date": "2023-08-03",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) and Plug-In Hybrid Electric Vehicle (PHEV) Rebates",
+            "Date": "2023-08-03",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVRBATE"
+        }
+    ],
+    "Hawaii": [
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        }
+    ],
+    "Illinois": [
+        {
+            "Project Name": "Regional Electric Vehicle (REV) Midwest Plan",
+            "Date": "2021-09-30",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Permitting Support",
+            "Date": "2022-05-27",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Building Standards for Residential Developments",
+            "Date": "2023-06-09",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Policies for Condominiums",
+            "Date": "2023-06-09",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Grants",
+            "Date": "2021-09-15",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVRBATE"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) and EV Charging Station Manufacturing Tax Credits",
+            "Date": "2021-11-16",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVTAX"
+        }
+    ],
+    "Indiana": [
+        {
+            "Project Name": "Regional Electric Vehicle (REV) Midwest Plan",
+            "Date": "2021-09-30",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Public Utility Definition",
+            "Date": "2022-03-11",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Utility Electric Vehicle (EV) Planning",
+            "Date": "2023-12-27",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Kansas": [
+        {
+            "Project Name": "Study of Electric Vehicle (EV) Charger Rates",
+            "Date": "2019-04-18",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Massachusetts": [
+        {
+            "Project Name": "Zero Emission Vehicle (ZEV) and Infrastructure Support",
+            "Date": "2017-01-03",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Building Standards",
+            "Date": "2017-01-03",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Direct Current Fast Charging (DCFC) Station Alternative Rate Structure Requirement",
+            "Date": "2021-01-15",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "State Zero Emission Vehicle (ZEV) and Infrastructure Deployment Requirements",
+            "Date": "2021-04-21",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Transportation Network Company (TNC) Emission Reduction Requirements",
+            "Date": "2022-08-11",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Grid Modernization Plan",
+            "Date": "2022-08-11",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Maryland": [
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station New Construction Requirement",
+            "Date": "2021-05-31",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Maine": [
+        {
+            "Project Name": "Electric Vehicle (EV) Deployment and Emissions Reduction Roadmap",
+            "Date": "2019-06-26",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Recognition Program for Electric Vehicles (EVs)",
+            "Date": "2021-03-30",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Accessible Electric Vehicle (EV) Charger Working Group",
+            "Date": "2023-06-16",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Beneficial Electrification Policy Support and Planning",
+            "Date": "2023-06-23",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Rebates",
+            "Date": "2019-06-10",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVRBATE"
+        }
+    ],
+    "Michigan": [
+        {
+            "Project Name": "Regional Electric Vehicle (REV) Midwest Plan",
+            "Date": "2021-09-30",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Minnesota": [
+        {
+            "Project Name": "Regional Electric Vehicle (REV) Midwest Plan",
+            "Date": "2021-09-30",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Mississippi": [
+        {
+            "Project Name": "School Electric Vehicle (EV) Purchase Authorization",
+            "Date": "2022-04-22",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        }
+    ],
+    "Montana": [
+        {
+            "Project Name": "Regional Electric Vehicle (REV) West Plan",
+            "Date": "2017-10-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "North Carolina": [
+        {
+            "Project Name": "Zero Emission Vehicle (ZEV) Support",
+            "Date": "2018-10-29",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Purchase Policy for Dealerships",
+            "Date": "2021-09-10",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Clean Transportation Plan",
+            "Date": "2022-01-07",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Zero Emission Vehicle (ZEV) Infrastructure Study",
+            "Date": "2022-10-25",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Advanced Technology Vehicle Purchase Policy for Dealerships",
+            "Date": "2023-08-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "North Dakota": [
+        {
+            "Project Name": "Public Utility Definition",
+            "Date": "2021-03-31",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Nebraska": [
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Certification",
+            "Date": "2024-04-25",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "New Hampshire": [
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station and Hydrogen Fueling Station Signage",
+            "Date": "2018-08-11",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "New Jersey": [
+        {
+            "Project Name": "Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2018-05-03",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Zero Emission Vehicle (ZEV) Initiative",
+            "Date": "2019-06-03",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Residential Electric Vehicle (EV) Charging Station Installation Policies",
+            "Date": "2020-09-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Make-Ready Requirements for New Developments",
+            "Date": "2021-07-09",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric School Bus Program",
+            "Date": "2022-08-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Rebates - Atlantic City Electric (ACE)",
+            "Date": "2021-02-17",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "New Mexico": [
+        {
+            "Project Name": "State Emissions Reduction Strategy",
+            "Date": "2019-01-29",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Utility Electric Vehicle (EV) Support",
+            "Date": "2019-04-03",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Regional Electric Vehicle (REV) West Plan",
+            "Date": "2017-10-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Make-Ready Building Renovation Tax Credit",
+            "Date": "2021-06-18",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVTAX"
+        }
+    ],
+    "Nevada": [
+        {
+            "Project Name": "Transportation Electrification Investment Authorization",
+            "Date": "2021-06-10",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "New York": [
+        {
+            "Project Name": "Electric Vehicle (EV) and Charging Infrastructure Support",
+            "Date": "2019-04-12",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Utility Electric Vehicle (EV) Charging Station Programs Authorization",
+            "Date": "2020-07-16",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Policies for Homeowners' Associations",
+            "Date": "2022-11-22",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Make-Ready Requirements",
+            "Date": "2023-03-03",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Utility Commercial Electric Vehicle (EV) Charging Station Program Requirements",
+            "Date": "2023-11-20",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Zero Emission School Bus and Infrastructure Funding",
+            "Date": "2022-11-08",
+            "Category": "State Incentives",
+            "Types Supported": "ELECRBATE"
+        }
+    ],
+    "Oklahoma": [
+        {
+            "Project Name": "Committee of Alternative Fuels Technician Examiners",
+            "Date": "2016-04-21",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HEV|PHEV"
+        },
+        {
+            "Project Name": "Alternative Fuels Technician Certificates",
+            "Date": "2016-04-21",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Oregon": [
+        {
+            "Project Name": "Volkswagen (VW) Settlement Allocation",
+            "Date": "2017-11-06",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Establishment of Recognition Programs for Electric Vehicle (EV) Adoption",
+            "Date": "2017-11-06",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Zero-Emission Buses Support",
+            "Date": "2017-11-06",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "State Emissions Reductions and Reporting Requirements",
+            "Date": "2020-03-10",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Building Standards for New Construction",
+            "Date": "2017-11-06",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Certification",
+            "Date": "2023-07-31",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Adoption Support",
+            "Date": "2017-11-06",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Pennsylvania": [
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        }
+    ],
+    "Rhode Island": [
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Clean Diesel Grant",
+            "Date": "2016-06-24",
+            "Category": "State Incentives",
+            "Types Supported": "ELECGNT"
+        }
+    ],
+    "South Carolina": [
+        {
+            "Project Name": "Transportation Electrification Utility Impact Study",
+            "Date": "2021-05-17",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "South Dakota": [
+        {
+            "Project Name": "Volkswagen (VW) Settlement Allocation",
+            "Date": "2019-03-05",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HEV|PHEV"
+        },
+        {
+            "Project Name": "Public Utility Definition",
+            "Date": "2022-02-10",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Texas": [
+        {
+            "Project Name": "Public Utility Electric Vehicle (EV) Charger Policy Design Requirements",
+            "Date": "2023-09-02",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle Emissions Inspection Exemption",
+            "Date": "2023-09-02",
+            "Category": "State Incentives",
+            "Types Supported": "ELECEXEM"
+        }
+    ],
+    "United States of America": [
+        {
+            "Project Name": "Charging and Fueling Infrastructure Grants",
+            "Date": "2021-11-15",
+            "Category": "Incentives",
+            "Types Supported": "ELEC|PHEVGNT"
+        },
+        {
+            "Project Name": "National Multimodal Cooperative Freight Research Program",
+            "Date": "2021-11-15",
+            "Category": "Incentives",
+            "Types Supported": "ELECGNT"
+        },
+        {
+            "Project Name": "Community Electric Vehicle Charging Grants",
+            "Date": "2021-11-15",
+            "Category": "Incentives",
+            "Types Supported": "ELEC|PHEVGNT"
+        },
+        {
+            "Project Name": "Commercial Electric Vehicle (EV) and Fuel Cell Electric Vehicle (FCEV) Tax Credit",
+            "Date": "2022-08-16",
+            "Category": "Incentives",
+            "Types Supported": "ELEC|PHEVTAX"
+        },
+        {
+            "Project Name": "Port Electrification Grants",
+            "Date": "2022-08-16",
+            "Category": "Incentives",
+            "Types Supported": "ELECGNT"
+        },
+        {
+            "Project Name": "Utility Electric Vehicle (EV) Promotion Measures",
+            "Date": "2021-11-15",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Utah": [
+        {
+            "Project Name": "Electric Vehicle (EV) Infrastructure Bond Authorization",
+            "Date": "2016-03-29",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Rebate Program Authorization",
+            "Date": "2020-03-28",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Fee and Tax",
+            "Date": "2023-03-02",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Regional Electric Vehicle (REV) West Plan",
+            "Date": "2017-10-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Virginia": [
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Residential Electric Vehicle (EV) Charging Program – Dominion Energy",
+            "Date": "2023-10-02",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVRBATE"
+        }
+    ],
+    "Vermont": [
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Deployment Goal",
+            "Date": "2021-06-03",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Utility Company Electric Vehicle (EV) Rates",
+            "Date": "2021-06-03",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Washington": [
+        {
+            "Project Name": "Volkswagen (VW) Settlement Allocation",
+            "Date": "2018-03-27",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Utility Electric Transportation Plan Authorization",
+            "Date": "2019-04-23",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Mandatory Electric Vehicle (EV) Charger Building Standards",
+            "Date": "2019-05-07",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) Deployment Support",
+            "Date": "2020-07-14",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Green Transportation Grant Program",
+            "Date": "2019-05-07",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVGNT"
+        },
+        {
+            "Project Name": "Alternative Fuel Vehicle (AFV) Retail Sales and Use Tax Exemption",
+            "Date": "2019-05-07",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVEXEM"
+        }
+    ],
+    "Wisconsin": [
+        {
+            "Project Name": "Regional Electric Vehicle (REV) Midwest Plan",
+            "Date": "2021-09-30",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],
+    "Wyoming": [
+        {
+            "Project Name": "Regional Electric Vehicle (REV) West Plan",
+            "Date": "2017-10-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ]
+}

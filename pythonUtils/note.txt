@@ -1,0 +1,47 @@
+map : 
+	- nombre d'incentives (global ou par state ?)
+	- taille station eu debut puis se fix quand on zoom
+
+filter : 
+	- packer les sales (EV;HEV;PHEV) ou non 
+	- choisir les quelles on veut 
+	- afficher ou non les stations de recharge
+	- afficher les incentives ou non
+		== faire le tout et on cachera celle qu'on veut pas 
+
+linechart : 
+	- traitmeent données sales OK
+	- traitement données stations TODO
+	- traitement données incentives TODO
+	- au max 5 courbes (incentives, les 3 ventes et les stations recharge) TODO
+	- incentives et president ligne verticale TODO
+	- prendre en compte les filtres TODO
+
+incentives : 
+	- logo : state incentives/ incentives/ laws and regulation 
+	- date
+	- title
+
+timeline:
+date actuellement selectionné
+
+IMPORTANT : tooltip le nombre créer pendant la periode ou on compte aussi celle d'avant ?
+				- Juste celle de la periode mais je crois que c'est bon
+			veut on pouvoir cliquer sur une stations et afficher des infos ?
+				- pas mtn
+
+
+
+
+			sales : 
+				- Tennessee,48400,53400,59200,64300,68700,79800,79800,113300
+				c'est les ventes par années ou le nombre qu'il y en a dans l'état par année.
+				si c'est les ventes est ce que on cumule pour chaque année.
+			
+			pb incentives :
+			{
+            "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) and Fueling Station Financing Program",
+            "Date": "2023-10-07",
+            "Category": "State Incentives",
+            "Types Supported": "ELECLOANS"
+        	}

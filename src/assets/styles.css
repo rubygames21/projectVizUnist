@@ -65,6 +65,9 @@ body, html {
   stroke-width: 2px;
 }
 
+.stations-layer {
+  pointer-events: none; /* Désactive les interactions de la souris */
+}
 
 .timeline {
   width: 100%;
@@ -73,6 +76,7 @@ body, html {
   justify-content: center;
   align-items: center;
 }
+
 
 .filters {
   flex: 0.3;

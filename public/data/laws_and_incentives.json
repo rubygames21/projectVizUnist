@@ -92,7 +92,7 @@
             "Project Name": "Medium- and Heavy-Duty (MHD) Zero Emission Vehicle (ZEV) and Fueling Station Financing Program",
             "Date": "2023-10-07",
             "Category": "State Incentives",
-            "Types Supported": "ELECLOANS"
+            "Types Supported": "ELEC|HY"
         }
     ],
     "Colorado": [

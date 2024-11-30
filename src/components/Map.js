@@ -2,8 +2,9 @@ import * as d3 from 'd3';
 import { calculateSalesByState, loadSalesData } from '../utils/dataLoaders/salesDataLoader';
 import { getStationsCountByState, getStationsByState } from '../utils/dataLoaders/chargingStationsLoader';
 import { getIncentivesCountByState } from '../utils/dataLoaders/incentivesLoader';
-import { updateSelectedState } from './LineGraph';
-import { getStartDate, getEndDate } from './stateManager'; // Import des dates dynamiques
+import { renderLineGraph } from './LineGraph';
+import { getStartDate, getEndDate, setSelectedState, getSelectedState } from './stateManager'; // Import des dates dynamiques
+import { renderIncentivesList } from './IncentivesList';
 
 let salesData = null;
 let chargingData = null;
@@ -90,7 +91,7 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
 
     projection = d3.geoAlbersUsa()
         .translate([width / 2, height / 2])
-        .scale(Math.min(width, height) * 2.1);
+        .scale(Math.min(width, height) * 1.9);
 
     const path = d3.geoPath().projection(projection);
 
@@ -152,22 +153,28 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
                 event.stopPropagation();
                 const state = d.properties.NAME;
 
-                // Récupérer les dates actuelles
-                const currentStartDate = getStartDate();
-                const currentEndDate = getEndDate();
+                // Vérifier si l'état est déjà sélectionné
+                if (activeState === state) {
+                    deselectState(svg, stationLayer); // Désélectionner l'état
+                } else {
+                    // Récupérer les dates actuelles
+                    const currentStartDate = getStartDate();
+                    const currentEndDate = getEndDate();
 
-                // Filtrer les stations par les dates actuelles
-                const filteredStations = stationsByState[state]?.filter(station => {
-                    const stationDate = new Date(station["Open Date"]);
-                    return stationDate >= currentStartDate && stationDate <= currentEndDate;
-                }) || [];
+                    // Filtrer les stations par les dates actuelles
+                    const filteredStations = stationsByState[state]?.filter(station => {
+                        const stationDate = new Date(station["Open Date"]);
+                        return stationDate >= currentStartDate && stationDate <= currentEndDate;
+                    }) || [];
 
-                toggleStateSelection(svg, state, filteredStations, projection);
+                    toggleStateSelection(svg, state, filteredStations, projection);
+                }
             });
 
         setupZoom(svg, mapLayer, stationLayer, width, height);
     });
 }
+
 function updateMap(svg, salesResults, stationsCount, incentivesCount, stationsByState) {
     const currentStartDate = getStartDate();
     const currentEndDate = getEndDate();
@@ -235,24 +242,37 @@ function updateMap(svg, salesResults, stationsCount, incentivesCount, stationsBy
         });
 }
 
+function deselectState(svg, stationLayer) {
+    activeState = null;
 
+    setSelectedState(null)
+    svg.selectAll('.state').attr('fill', '#4a90e2');
+    stationLayer.selectAll('circle').remove();
+
+    renderLineGraph(getStartDate(), getEndDate());
+    renderIncentivesList(getStartDate(),getEndDate()) // Réinitialiser le graphique
+}
 
 function toggleStateSelection(svg, state, stations, projection) {
     const stationLayer = svg.select('.stations-layer');
     const currentTransform = d3.zoomTransform(svg.node());
 
     if (activeState === state) {
+        // L'état est déjà sélectionné, donc on le désélectionne
         activeState = null;
-        updateSelectedState(null);
+        setSelectedState(null); // Désélectionner l'état
         stationLayer.selectAll('circle').remove();
         svg.selectAll('path').attr('fill', '#4a90e2');
+        // Mettre à jour le graphique avec les données globales
+        renderLineGraph(getStartDate(), getEndDate());
+        renderIncentivesList(getStartDate(),getEndDate())
     } else {
+        // Un nouvel état est sélectionné
         activeState = state;
-        updateSelectedState(activeState);
+        setSelectedState(state); // Mettre à jour l'état sélectionné
         svg.selectAll('path').attr('fill', d =>
             d.properties.NAME === state ? '#ffcc00' : '#4a90e2'
         );
-
         stationLayer.selectAll('circle').remove();
 
         stationLayer.selectAll('circle')
@@ -273,6 +293,9 @@ function toggleStateSelection(svg, state, stations, projection) {
             .attr('fill', 'red')
             .attr('stroke', 'black')
             .attr('stroke-width', 1 / currentTransform.k);
+
+        renderLineGraph(getStartDate(), getEndDate());
+        renderIncentivesList(getStartDate(),getEndDate());
     }
 
     if (onStateSelectionChange) {
@@ -280,12 +303,7 @@ function toggleStateSelection(svg, state, stations, projection) {
     }
 }
 
-function deselectState(svg, stationLayer) {
-    activeState = null;
 
-    svg.selectAll('.state').attr('fill', '#4a90e2');
-    stationLayer.selectAll('circle').remove();
-}
 
 function setupZoom(svg, mapLayer, stationLayer, width, height) {
     const zoom = d3.zoom()

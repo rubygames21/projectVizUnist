@@ -1,6 +1,7 @@
 import { renderMap } from './components/Map';
 import { renderTimeline } from './components/Timeline';
 import { renderLineGraph } from './components/LineGraph';
+import { renderIncentivesList } from './components/IncentivesList';
 
 export function initApp() {
     const container = document.createElement('div');
@@ -43,12 +44,10 @@ export function initApp() {
 
     document.body.appendChild(container);
 
-    const defaultStartDate = new Date(2016, 0, 1); // Date par défaut (janvier 2016)
-    const defaultEndDate = new Date(2023, 11, 31); // Date par défaut (décembre 2023)
-
     const onSelectionChange = (startDate, endDate) => {
         renderMap(startDate, endDate);
         renderLineGraph(startDate, endDate);
+        renderIncentivesList(startDate, endDate)
     };
 
     // Lier la carte au graphique

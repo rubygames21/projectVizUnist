@@ -1,7 +1,7 @@
 import { renderMap } from './components/Map';
 import { renderTimeline } from './components/Timeline';
 import { renderLineGraph } from './components/LineGraph';
-import { renderIncentivesList } from './components/IncentivesList';
+import { renderIncentivesList  } from './components/IncentivesList';
 
 export function initApp() {
     const container = document.createElement('div');
@@ -31,7 +31,6 @@ export function initApp() {
 
     const incentives = document.createElement('div');
     incentives.classList.add('incentives');
-
     sideSection.appendChild(lineGraph);
     sideSection.appendChild(incentives);
     topSection.appendChild(sideSection);
@@ -49,7 +48,5 @@ export function initApp() {
         renderLineGraph(startDate, endDate);
         renderIncentivesList(startDate, endDate)
     };
-
-    // Lier la carte au graphique
     renderTimeline(onSelectionChange);
 }

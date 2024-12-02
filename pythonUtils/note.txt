@@ -2,6 +2,8 @@ map :
 	- infos global des US 
 	- stations missouri dans un autre état 
 
+
+
 filter : 
 	- packer les sales (EV;HEV;PHEV) ou non 
 	- choisir les quelles on veut 
@@ -9,25 +11,30 @@ filter :
 	- afficher les incentives ou non
 		== faire le tout et on cachera celle qu'on veut pas 
 
+
+
 linechart : 
 	- au max 5 courbes (incentives, les 3 ventes et les stations recharge) TODO
 	- incentives et president ligne verticale TODO
 	- prendre en compte les filtres TODO
 
+
+
 incentives : 
-	- logo : state incentives/ incentives/ laws and regulation 
-	- date
-	- title
+	- logo : state incentives/ incentives/ laws and regulation / EV /HEV / PHEV
+
+
 
 timeline:
 	- afficher date actuellement selectionné
+
+
+
 
 IMPORTANT : tooltip le nombre créer pendant la periode ou on compte aussi celle d'avant ?
 				- Juste celle de la periode mais je crois que c'est bon
 			veut on pouvoir cliquer sur une stations et afficher des infos ?
 				- pas mtn
-
-
 
 
 			sales : 

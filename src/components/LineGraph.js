@@ -23,7 +23,6 @@ const defaultEndDate = new Date(2024, 0, 1);
         if (!incentivesResponse.ok) throw new Error(`Erreur HTTP Incentives: ${incentivesResponse.status}`);
         incentivesData = await incentivesResponse.json();
 
-        // console.log('Linergraph, Données chargées:', { salesData, chargingData, incentivesData });
         renderLineGraph(defaultStartDate, defaultEndDate);
     } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
@@ -37,8 +36,8 @@ export function renderLineGraph(startDate = getStartDate(), endDate = getEndDate
     }
 
     const container = d3.select('.linegraph');
-    const width = container.node().getBoundingClientRect().width || 800;
-    const height = container.node().getBoundingClientRect().height || 400;
+    const width = container.node().getBoundingClientRect().width;
+    const height = container.node().getBoundingClientRect().height;
 
     const svg = container.select('svg');
     if (svg.empty()) {
@@ -73,22 +72,22 @@ function initializeLineGraph(svg, startDate, endDate, width, height) {
         .attr('transform', 'translate(50, 0)')
         .call(d3.axisLeft(yScale));
 
-        const selectedState = getSelectedState(); // Récupérer l'état sélectionné globalement
+        const selectedState = getSelectedState(); 
 
     if (selectedState) {
         const stationsCount = getStationsCountForStateInRange(chargingData, startDate, endDate, getSelectedState());
         const salesCountForState = calculateSalesByYearForState(startDate, endDate, getSelectedState(), salesData);
         const incentivesDetailsForState = getIncentivesDetailsForState(incentivesData, getSelectedState(), startDate, endDate);
-        // console.log('LGS : getIncentivesDetailsForState : ', incentivesDetailsForState);
-        // console.log('LGS : salesCountForState : ', salesCountForState)
-        // console.log('LGS : stationsCount : ', stationsCount)
+         console.log('LGS : getIncentivesDetailsForState : ', incentivesDetailsForState);
+         console.log('LGS : salesCountForState : ', salesCountForState)
+         console.log('LGS : stationsCount : ', stationsCount)
     } else {
         const stationsCountByState = getStationsCountByStateInRange(chargingData, startDate, endDate);
         const totalSalesByYear = calculateTotalSalesByYear(startDate, endDate, salesData);
         const IncentivesCountByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
-        // console.log('LG : IncentivesCountByState : ', IncentivesCountByState);
-        // console.log('LG : totalSalesByYear : ', totalSalesByYear);
-        // console.log('LG : stationsCountByState : ', stationsCountByState);
+         console.log('LG : IncentivesCountByState : ', IncentivesCountByState);
+         console.log('LG : totalSalesByYear : ', totalSalesByYear);
+         console.log('LG : stationsCountByState : ', stationsCountByState);
     }
 }
 
@@ -98,7 +97,7 @@ function updateLineGraph(svg, startDate, endDate, width, height) {
         .range([50, width - 50])
 
     const yScale = d3.scaleLinear()
-        .domain([0, 800000]) // Ajuster selon les besoins
+        .domain([0, 800000])
         .range([height - 50, 50]);
 
     svg.select('.x-axis')
@@ -111,15 +110,15 @@ function updateLineGraph(svg, startDate, endDate, width, height) {
         const stationsCount = getStationsCountForStateInRange(chargingData, startDate, endDate, getSelectedState());
         const salesCountForState = calculateSalesByYearForState(startDate, endDate, getSelectedState(), salesData);
         const incentivesDetailsForState = getIncentivesDetailsForState(incentivesData, getSelectedState(), startDate, endDate);
-        // console.log('LGS : getIncentivesDetailsForState : ', incentivesDetailsForState);
-        // console.log('LGS : salesCountForState : ', salesCountForState)
-        // console.log('LGS : stationsCount : ', stationsCount)
+         console.log('LGS : getIncentivesDetailsForState : ', incentivesDetailsForState);
+         console.log('LGS : salesCountForState : ', salesCountForState)
+         console.log('LGS : stationsCount : ', stationsCount)
     } else {
         const stationsCountByState = getStationsCountByStateInRange(chargingData, startDate, endDate);
         const totalSalesByYear = calculateTotalSalesByYear(startDate, endDate, salesData);
         const IncentivesCountByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
-        // console.log('LG : IncentivesCountByState : ', IncentivesCountByState);
-        // console.log('LG : totalSalesByYear : ', totalSalesByYear);
-        // console.log('LG : stationsCountByState : ', stationsCountByState);
+         console.log('LG : IncentivesCountByState : ', IncentivesCountByState);
+         console.log('LG : totalSalesByYear : ', totalSalesByYear);
+         console.log('LG : stationsCountByState : ', stationsCountByState);
     }
 }

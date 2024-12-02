@@ -10,8 +10,10 @@ let incentivesData = null;
         if (!incentivesResponse.ok) throw new Error(`Erreur HTTP Incentives: ${incentivesResponse.status}`);
         incentivesData = await incentivesResponse.json();
 
-        console.log('IncentivesList, données chargées:', incentivesData);
+        //console.log('IncentivesList, données chargées:', incentivesData);
 
+        const incentivesElement = document.querySelector('.incentives');
+    
         // Appeler la fonction globale de rendu
         renderIncentivesList(getStartDate(), getEndDate());
     } catch (error) {
@@ -23,7 +25,7 @@ let incentivesData = null;
 export function renderIncentivesList(startDate = getStartDate(), endDate = getEndDate()) {
     const container = d3.select('.incentives');
     const svg = container.select('svg');
-
+    
     if (svg.empty()) {
         initializeIncentivesList(container, startDate, endDate);
     } else {
@@ -35,18 +37,27 @@ export function renderIncentivesList(startDate = getStartDate(), endDate = getEn
 function initializeIncentivesList(container, startDate, endDate) {
     container.selectAll('*').remove(); // Supprimer tout contenu existant
 
-    const selectedState = getSelectedState(); // Récupérer l'état sélectionné globalement
+    const selectedState = getSelectedState(); 
 
     if (selectedState) {
         const incentivesForState = getIncentivesDetailsForState(incentivesData, selectedState, startDate, endDate);
-        console.log(`Incentives pour ${selectedState} entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesForState);
+        //console.log(`Incentives pour ${selectedState} entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesForState);
 
-       
+        // Afficher les incentives pour un état spécifique
+        renderIncentives(container, incentivesForState);
     } else {
         const incentivesByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
-        console.log(`Incentives pour tous les états entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesByState);
+        //console.log(`Incentives pour tous les états entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesByState);
 
-      
+        // Afficher les incentives groupés par état
+        Object.entries(incentivesByState).forEach(([state, incentives]) => {
+            container.append('h3')
+                .text(state)
+                .style('margin-bottom', '10px')
+                .style('margin-top', '10px');
+
+            renderIncentives(container, incentives);
+        });
     }
 }
 
@@ -54,17 +65,109 @@ function initializeIncentivesList(container, startDate, endDate) {
 function updateIncentivesList(container, startDate, endDate) {
     container.selectAll('*').remove(); // Supprimer le contenu existant
 
-    const selectedState = getSelectedState(); // Récupérer l'état sélectionné globalement
+    const selectedState = getSelectedState(); 
 
     if (selectedState) {
         const incentivesForState = getIncentivesDetailsForState(incentivesData, selectedState, startDate, endDate);
-        console.log(`Incentives pour ${selectedState} entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesForState);
-
-       
+        //console.log(`Incentives pour ${selectedState} entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesForState);
+        
+        renderIncentives(container, incentivesForState);
     } else {
         const incentivesByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
-        console.log(`Incentives pour tous les états entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesByState);
+        //console.log(`Incentives pour tous les états entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesByState);
 
-    
+        // Afficher les incentives groupés par état
+        Object.entries(incentivesByState).forEach(([state, incentives]) => {
+            container.append('h3')
+                .text(state)
+                .style('margin-bottom', '10px')
+                .style('margin-top', '10px');
+
+            renderIncentives(container, incentives);
+        });
     }
+}
+
+// Fonction pour afficher les incentives
+function renderIncentives(container, incentives) {
+    incentives.forEach(incentive => {
+        const row = container.append('div')
+            .attr('class', 'incentive-row')
+            .style('display', 'flex')
+            .style('align-items', 'center')
+            .style('margin-bottom', '10px')
+            .style('padding', '10px')
+            .style('background-color', '#f5f5f5')
+            .style('border-radius', '5px')
+            .style('border', '1px solid #ccc')
+            .style('width','97%')
+
+        // Ajouter le logo rouge
+        row.append('img')
+            .attr('src', '/public/data/img_incentives_red.png')
+            .attr('alt', 'Logo')
+            .style('width', '30px')
+            .style('height', '30px')
+            .style('margin-right', '10px');
+
+        // Ajouter la date
+        row.append('span')
+            .text(formatDate(incentive.Date))
+            .style('margin-right', '10px')
+            .style('color','black');
+
+
+        // Ajouter le titre tronqué
+        row.append('span')
+            .text(incentive["Project Name"]) // Tronque le texte si nécessaire
+            .style('flex', '1')
+            .style('margin-right', '10px')
+            .style('color','black');
+
+        // Ajouter les types supportés (logos)
+        const typesContainer = row.append('div')
+            .style('display', 'flex')
+            .style('gap', '5px');
+
+        const supportedTypes = incentive["Types Supported"]?.split('|') || [];
+        supportedTypes.forEach(type => {
+            let imgSrc;
+            switch (type) {
+                case 'ELEC':
+                    imgSrc = 'data/img_incentives_brown.png';
+                    break;
+                case 'HEV':
+                    imgSrc = 'data/img_incentives_brown.png';
+                    break;
+                case 'PHEV':
+                    imgSrc = 'data/img_incentives_brown.png';
+                    break;
+                default:
+                    imgSrc = null;
+            }
+
+            if (imgSrc) {
+                typesContainer.append('img')
+                    .attr('src', imgSrc)
+                    .attr('alt', type)
+                    .style('width', '30px')
+                    .style('height', '30px');
+            }
+        });
+    });
+}
+
+// Fonction pour formater la date
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+// Fonction pour tronquer le texte
+function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+    }
+    return text;
 }

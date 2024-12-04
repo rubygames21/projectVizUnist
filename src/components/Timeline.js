@@ -1,10 +1,12 @@
 import * as d3 from 'd3';
 import { setStartDate, setEndDate } from './stateManager';
+
+
 export function renderTimeline(onSelectionChange) {
     const timelineContainer = document.querySelector('.timeline');
     const containerWidth = timelineContainer.offsetWidth;
     const height = 80;
-    const margin = { left: 20, right: 20, top: 0, bottom: 20 };
+    const margin = { left: 40, right: 40, top: 0, bottom: 20 };
 
     const svg = d3
         .select(timelineContainer)
@@ -115,17 +117,44 @@ export function renderTimeline(onSelectionChange) {
         return new Date(year, month, 1); // Début du mois
     }
 
+    const startDateText = svg.append('text')
+    .attr('class', 'start-date-text')
+    .attr('x', xScale(selectedStartDate))
+    .attr('y', height / 4 - 10) // Position au-dessus du curseur
+    .attr('text-anchor', 'middle')
+    .style('fill', '#333')
+    .style('font-size', '12px')
+    .text(formatDate(selectedStartDate));
+
+    const endDateText = svg.append('text')
+    .attr('class', 'end-date-text')
+    .attr('x', xScale(selectedEndDate))
+    .attr('y', height / 4 - 10) // Position au-dessus du curseur
+    .attr('text-anchor', 'middle')
+    .style('fill', '#333')
+    .style('font-size', '12px')
+    .text(formatDate(selectedEndDate));
+
     function updateRange() {
         rangeLine
             .attr('x1', xScale(selectedStartDate))
             .attr('x2', xScale(selectedEndDate));
-
+    
+        startDateText
+            .attr('x', xScale(selectedStartDate))
+            .text(formatDate(selectedStartDate));
+    
+        endDateText
+            .attr('x', xScale(selectedEndDate))
+            .text(formatDate(selectedEndDate));
+    
         setStartDate(selectedStartDate);
         setEndDate(selectedEndDate);
         if (onSelectionChange) {
             onSelectionChange(selectedStartDate, selectedEndDate);
         }
     }
+
 
     window.addEventListener('resize', () => {
         const newWidth = timelineContainer.offsetWidth;
@@ -159,4 +188,10 @@ export function renderTimeline(onSelectionChange) {
                 )
         );
     });
+}
+
+
+// Fonction pour formater les dates en mois et année
+function formatDate(date) {
+    return d3.timeFormat('%B %Y')(date); // Ex : "January 2016"
 }

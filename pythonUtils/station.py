@@ -9,30 +9,30 @@ output_file = '../public/data/stations_by_month_cumulative.json'
 with open(input_file, 'r') as f:
     stations_data = json.load(f)
 
+# Ordre des mois pour garantir un cumul correct
+month_order = [
+    "january", "february", "march", "april", "may", "june",
+    "july", "august", "september", "october", "november", "december"
+]
+
 # Transformer les données
 result = {}
 
-for state, stations in stations_data.items():
-    state_data = defaultdict(lambda: defaultdict(int))
-    for station in stations:
-        open_date_str = station.get("Open Date")
-        if open_date_str:
-            try:
-                open_date = datetime.strptime(open_date_str, "%m/%d/%y")
-                year = open_date.year
-                month = open_date.strftime("%B").lower()
-                state_data[year][month] += 1
-            except ValueError:
-                print(f"Date invalide trouvée : {open_date_str}")
-    
-    # Transformer les données en cumulatif
-    cumulative_data = defaultdict(lambda: defaultdict(int))
-    cumulative_totals = defaultdict(int)
-    for year in sorted(state_data.keys()):  # Trier par année
-        for month in state_data[year]:
-            cumulative_totals[month] += state_data[year][month]
-            cumulative_data[year][month] = cumulative_totals[month]
-    
+for state, yearly_data in stations_data.items():
+    cumulative_data = defaultdict(lambda: defaultdict(int))  # Données cumulées
+
+    # Trier les années
+    for year in sorted(yearly_data.keys()):
+        year_data = yearly_data[year]
+
+        # Initialiser le cumul de l'année en cours
+        running_total = 0
+
+        # Cumuler les mois dans l'ordre défini
+        for month in month_order:
+            running_total += year_data.get(month, 0)
+            cumulative_data[year][month] = running_total
+
     # Convertir defaultdict en dict pour la sérialisation JSON
     result[state] = {year: dict(months) for year, months in cumulative_data.items()}
 

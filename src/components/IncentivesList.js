@@ -11,8 +11,6 @@ let incentivesData = null;
         incentivesData = await incentivesResponse.json();
 
         //console.log('IncentivesList, données chargées:', incentivesData);
-
-        const incentivesElement = document.querySelector('.incentives');
     
         // Appeler la fonction globale de rendu
         renderIncentivesList(getStartDate(), getEndDate());
@@ -106,35 +104,35 @@ function renderIncentives(container, incentives) {
                     case 'Laws and Regulations':
                         return 'data/l&r.png'; // Chemin pour Laws and Regulations
                     case 'State Incentives':
-                        return 'data/st.png'; // Chemin pour State Incentive
+                        return 'data/si.png'; // Chemin pour State Incentive
                     case 'Incentives':
-                        return '/data/usi.png'; // Chemin pour Incentive
+                        return '/data/usi.png';
                 }
             })())
             .attr('alt', incentive.Category || 'Default')
-            .style('width', '30px') // Taille de l'image
+            .style('width', '30px') 
             .style('height', '30px')
-            .style('margin-right', '10px');
+            .style('margin-right', '13px')
+            .style('transform', 'scale(1.5)'); 
 
 
         row.append('span')
             .text(formatDate(incentive.Date))
             .style('margin-right', '10px')
-            .style('color', '#333') // Texte légèrement plus sombre pour le contraste
-            .style('font-weight', 'bold'); // Texte en gras
+            .style('color', '#333') 
 
         row.append('span')
             .text(incentive["Project Name"])
             .style('flex', '1')
-            .style('margin-right', '10px')
+            .style('margin-right', '15px')
+            .style('margin-left', '4px')
             .style('color', '#333')
-            .style('font-size', '14px'); // Taille de texte ajustée
+            .style('font-size', '16px'); // Taille de texte ajustée
 
             const typesContainer = row.append('div')
             .style('display', 'flex')
             .style('gap', '25px') // Espacement entre les icônes
             .style('margin-left', 'auto') // Aligne les icônes à droite
-        
         const supportedTypes = incentive["Types Supported"]?.split('|') || [];
         supportedTypes.forEach(type => {
             let imgSrc;

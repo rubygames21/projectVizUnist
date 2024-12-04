@@ -2,14 +2,28 @@ import * as d3 from 'd3';
 import { calculateSalesByMonthForState, calculateTotalSalesByMonth, loadSalesData } from '../utils/dataLoaders/salesDataLoader';
 import { getStartDate, getEndDate, getSelectedState } from './stateManager';
 import {filterStationsForState,filterStationsByState}from '../utils/dataLoaders/chargingStationsLoader';
+import {getIncentivesDetailsForState, getIncentivesDetailsByState} from '../utils/dataLoaders/incentivesLoader';
+
 let salesData = null;
 let stationsData = null;
-
+let incentivesData = null;
 
 (async () => {
     try {
         salesData = await loadSalesData();
+
+
+        const incentivesResponse = await fetch('/data/laws_and_incentives.json');
+        if (!incentivesResponse.ok) throw new Error(`Erreur HTTP Incentives: ${incentivesResponse.status}`);
+        incentivesData= await incentivesResponse.json();
+
+        const stationsResponse = await fetch('/data/stations_par_etat.json');
+        if (!stationsResponse.ok) throw new Error(`Erreur HTTP Stations: ${stationsResponse.status}`);
+        stationsData = await stationsResponse.json();
+
         renderLineGraph(getStartDate(),getEndDate());
+
+        
     } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
     }
@@ -44,6 +58,12 @@ function initializeLineGraph(svg, startDate, endDate, width, height) {
         ? calculateSalesByMonthForState(startDate, endDate, selectedState, salesData)
         : calculateTotalSalesByMonth(startDate, endDate, salesData);
 
+    let incentivesToPlot = selectedState
+        ? getIncentivesDetailsForState(incentivesData,selectedState,startDate,endDate)
+        : getIncentivesDetailsByState(incentivesData,startDate,endDate);
+    
+    console.log(incentivesToPlot)    
+
     const formattedData = formatAllDataForLine(salesDataToPlot);
 
     const xScale = d3.scaleTime()
@@ -64,7 +84,8 @@ function initializeLineGraph(svg, startDate, endDate, width, height) {
         .attr('transform', 'translate(50, 0)')
         .call(d3.axisLeft(yScale));
 
-    plotLines(svg, salesDataToPlot, xScale, yScale);
+    plotSalesLines(svg, salesDataToPlot, xScale, yScale);
+    plotIncentives(svg, incentivesToPlot, xScale, height);
 }
 
 
@@ -75,6 +96,11 @@ function updateLineGraph(svg, startDate, endDate, width, height) {
         ? calculateSalesByMonthForState(startDate, endDate, selectedState, salesData)
         : calculateTotalSalesByMonth(startDate, endDate, salesData);
 
+    let incentivesToPlot = selectedState
+        ? getIncentivesDetailsForState(incentivesData,selectedState,startDate,endDate)
+        : getIncentivesDetailsByState(incentivesData,startDate,endDate);
+
+    console.log(incentivesToPlot)        
     const formattedData = formatAllDataForLine(salesDataToPlot);
 
     const xScale = d3.scaleTime()
@@ -92,20 +118,20 @@ function updateLineGraph(svg, startDate, endDate, width, height) {
     svg.select('.y-axis')
         .call(d3.axisLeft(yScale));
 
-    plotLines(svg, salesDataToPlot, xScale, yScale);
+    plotSalesLines(svg, salesDataToPlot, xScale, yScale);
+    plotIncentives(svg, incentivesToPlot, xScale, height);
 }
 
 
-function plotLines(svg, salesDataToPlot, xScale, yScale) {
+function plotSalesLines(svg, salesDataToPlot, xScale, yScale) {
     svg.selectAll('.line-path').remove();
     const colors = {
         evData: 'red',
         hevData: 'green',
         phevData: 'blue',
     };
-
     for (const type in salesDataToPlot) {
-        const lineData = formatDataForLine(salesDataToPlot[type]);
+        const lineData = formatDataForSalesLine(salesDataToPlot[type]);
 
         if (lineData.length === 0) {
             console.warn(`No data for line type: ${type}`);
@@ -127,8 +153,30 @@ function plotLines(svg, salesDataToPlot, xScale, yScale) {
     }
 }
 
+function plotIncentives(svg, incentivesToPlot, xScale, height) {
+    // Supprimer les lignes existantes pour éviter les doublons
+    svg.selectAll('.incentive-line').remove();
 
-function formatDataForLine(data) {
+    
+
+    // Si incentivesToPlot est un objet (aucun état sélectionné)
+    if (typeof incentivesToPlot === 'object') {
+        Object.values(incentivesToPlot).flat().forEach((incentive) => {
+            const incentiveDate = new Date(incentive.Date);
+            svg.append('line')
+                .attr('class', 'incentive-line')
+                .attr('x1', xScale(incentiveDate))
+                .attr('y1', 50) // Position de départ de la ligne
+                .attr('x2', xScale(incentiveDate))
+                .attr('y2', height - 50) // Position de fin de la ligne
+                .style('stroke', 'purple')
+                .style('stroke-width', 1)
+                .style('stroke-dasharray', '4 2'); // Ligne pointillée
+        });
+    }
+}
+
+function formatDataForSalesLine(data) {
     const formattedData = [];
     for (const year in data) {
         for (const month in data[year]) {
@@ -145,7 +193,7 @@ function formatDataForLine(data) {
 function formatAllDataForLine(salesData) {
     const formattedData = [];
     for (const type in salesData) {
-        formattedData.push(...formatDataForLine(salesData[type]));
+        formattedData.push(...formatDataForSalesLine(salesData[type]));
     }
     return formattedData;
 }

@@ -5,13 +5,15 @@ filter :
 	- checkbox influe sur les autre components
 
 linechart : 
-	- au max 4 courbes(les 3 ventes et les stations recharge) TODO
-	- incentives et president ligne verticale TODO
+	- les stations recharge) TODO pb dans la fonction/fichier cumuler 
+	- echelle stations
 	- prendre en compte les filtres TODO
+	- incentives plusieurs sur la meme date comment faire ?
+		- LR = violet (logo dans incentivesList + ligne verticale dans linegraph) / SI = orange / I = black
 
+		
 incentives : 
-	- logo : SI = State incentives, USI= US incentives LR =  laws and regulation,EV /HEV / PHEV
+	- logo HEV
 	- united states incentives for all the state les mettre à la toute fin
+	- margin entre logo EV... depend du type de logo (pas d'espace à doirte d'un logo EV)
 
-timeline:
-	- afficher date actuellement selectionné

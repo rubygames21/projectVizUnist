@@ -1,60 +1,47 @@
-let filters = {
-    EV_sales : true,
-    HEV_sales : true,
-    PHEV_sales : true,
-    sales_aggregate : false,
-    stations : true,
-    incentives : true
-};
+import * as d3 from 'd3';
+import { setFilter, getFilters, initializeFilters } from './FilterManager';
 
-export function setDisplayEVSales(bool_from_checkbox) {
-    filters.EV_sales = bool_from_checkbox;
-}
+export function renderFilterChecklist() {
+    // Initialisez les filtres
+    initializeFilters();
 
-export function setDisplayHEVSales(bool_from_checkbox) {
-    filters.HEV_sales = bool_from_checkbox;
-}
+    // Sélectionnez le conteneur
+    const container = d3.select('.filters');
+    container.selectAll('*').remove(); // Nettoyez les anciens éléments
 
-export function setDisplayPHEVSales(bool_from_checkbox) {
-    filters.PHEV_sales = bool_from_checkbox;
-}
+    const filterState = getFilters();
 
-export function setDisplaySalesAggregate(bool_from_checkbox) {
-    filters.EVsales_aggregate_sales = bool_from_checkbox;
-    filters.EV_sales = !bool_from_checkbox;
-    filters.EV_sales = !bool_from_checkbox;
-    filters.EV_sales = !bool_from_checkbox;
-}
+    const filters = [
+        { id: 'EV_sales', label: 'EV Sales' },
+        { id: 'HEV_sales', label: 'HEV Sales' },
+        { id: 'PHEV_sales', label: 'PHEV Sales' },
+        { id: 'sales_aggregate', label: 'Aggregate Sales' },
+        { id: 'stations', label: 'Stations' },
+        { id: 'incentives', label: 'Incentives' },
+    ];
 
-export function setDisplayStations(bool_from_checkbox) {
-    filters.stations = bool_from_checkbox;
-}
+    filters.forEach(filter => {
+        const checkboxContainer = container.append('div').attr('class', 'checkbox-container');
 
-export function setDisplayIncentives(bool_from_checkbox) {
-    filters.incentives = bool_from_checkbox;
-}
+        checkboxContainer
+            .append('input')
+            .attr('type', 'checkbox')
+            .attr('id', filter.id)
+            .property('checked', filterState[filter.id])
+            .on('change', function () {
+                const isChecked = d3.select(this).property('checked');
+                setFilter(filter.id, isChecked);
 
+                // Gestion conditionnelle
+                if (filter.id === 'sales_aggregate' && isChecked) {
+                    d3.select('#EV_sales').property('checked', false);
+                    d3.select('#HEV_sales').property('checked', false);
+                    d3.select('#PHEV_sales').property('checked', false);
+                } else if (['EV_sales', 'HEV_sales', 'PHEV_sales'].includes(filter.id) && isChecked) {
+                    d3.select('#sales_aggregate').property('checked', false);
+                }
+            });
 
-export function getDisplayEVSales() {
-    return filters.EV_sales;
-}
-
-export function getDisplayHEVSales() {
-    return filters.HEV_sales;
-}
-
-export function getDisplayPHEVSales() {
-    return filters.PHEV_sales;
-}
-
-export function getDisplaySalesAggregate() {
-    return filters.sales_aggregate;
-}
-
-export function getDisplayStations() {
-    return filters.stations;
-}
-
-export function getDisplayIncentives() {
-    return filters.incentives;
+        checkboxContainer.append('label').attr('for', filter.id).text(filter.label);
+    });
 }

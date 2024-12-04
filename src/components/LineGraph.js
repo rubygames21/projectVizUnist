@@ -1,36 +1,22 @@
 import * as d3 from 'd3';
-import { calculateSalesByYearForState, calculateTotalSalesByYear, loadSalesData } from '../utils/dataLoaders/salesDataLoader';
-import { getStationsCountByStateInRange, getStationsCountForStateInRange } from '../utils/dataLoaders/chargingStationsLoader';
-import { getIncentivesDetailsByState, getIncentivesDetailsForState } from '../utils/dataLoaders/incentivesLoader';
-import { getStartDate, getEndDate, getSelectedState  } from './stateManager';
-
+import { calculateSalesByMonthForState, calculateTotalSalesByMonth, loadSalesData } from '../utils/dataLoaders/salesDataLoader';
+import { getStartDate, getEndDate, getSelectedState } from './stateManager';
+import {filterStationsForState,filterStationsByState}from '../utils/dataLoaders/chargingStationsLoader';
 let salesData = null;
-let chargingData = null;
-let incentivesData = null;
+let stationsData = null;
 
-const defaultStartDate = new Date(2016, 0, 1);
-const defaultEndDate = new Date(2024, 0, 1);
 
 (async () => {
     try {
         salesData = await loadSalesData();
-
-        const stationsResponse = await fetch('/data/stations_par_etat.json');
-        if (!stationsResponse.ok) throw new Error(`Erreur HTTP Stations: ${stationsResponse.status}`);
-        chargingData = await stationsResponse.json();
-
-        const incentivesResponse = await fetch('/data/laws_and_incentives.json');
-        if (!incentivesResponse.ok) throw new Error(`Erreur HTTP Incentives: ${incentivesResponse.status}`);
-        incentivesData = await incentivesResponse.json();
-
-        renderLineGraph(defaultStartDate, defaultEndDate);
+        renderLineGraph(getStartDate(),getEndDate());
     } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
     }
 })();
 
 export function renderLineGraph(startDate = getStartDate(), endDate = getEndDate()) {
-    if (!salesData || !chargingData || !incentivesData) {
+    if (!salesData) {
         console.error('Les données ne sont pas encore chargées.');
         return;
     }
@@ -47,19 +33,25 @@ export function renderLineGraph(startDate = getStartDate(), endDate = getEndDate
     }
 }
 
-
 function initializeLineGraph(svg, startDate, endDate, width, height) {
     const container = d3.select('.linegraph');
     svg = container.append('svg')
         .attr('width', width)
         .attr('height', height);
 
-    const xScale = d3.scaleBand()
-        .domain(d3.range(startDate.getFullYear(), endDate.getFullYear() + 1))
-        .range([50, width - 50])
+    const selectedState = getSelectedState();
+    let salesDataToPlot = selectedState
+        ? calculateSalesByMonthForState(startDate, endDate, selectedState, salesData)
+        : calculateTotalSalesByMonth(startDate, endDate, salesData);
+
+    const formattedData = formatAllDataForLine(salesDataToPlot);
+
+    const xScale = d3.scaleTime()
+        .domain(d3.extent(formattedData, (d) => d.date))
+        .range([50, width - 50]);
 
     const yScale = d3.scaleLinear()
-        .domain([0, 800000])
+        .domain([0, d3.max(formattedData, (d) => d.value)])
         .range([height - 50, 50]);
 
     svg.append('g')
@@ -72,53 +64,106 @@ function initializeLineGraph(svg, startDate, endDate, width, height) {
         .attr('transform', 'translate(50, 0)')
         .call(d3.axisLeft(yScale));
 
-        const selectedState = getSelectedState(); 
-
-    if (selectedState) {
-        const stationsCount = getStationsCountForStateInRange(chargingData, startDate, endDate, getSelectedState());
-        const salesCountForState = calculateSalesByYearForState(startDate, endDate, getSelectedState(), salesData);
-        const incentivesDetailsForState = getIncentivesDetailsForState(incentivesData, getSelectedState(), startDate, endDate);
-         console.log('LGS : getIncentivesDetailsForState : ', incentivesDetailsForState);
-         console.log('LGS : salesCountForState : ', salesCountForState)
-         console.log('LGS : stationsCount : ', stationsCount)
-    } else {
-        const stationsCountByState = getStationsCountByStateInRange(chargingData, startDate, endDate);
-        const totalSalesByYear = calculateTotalSalesByYear(startDate, endDate, salesData);
-        const IncentivesCountByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
-         console.log('LG : IncentivesCountByState : ', IncentivesCountByState);
-         console.log('LG : totalSalesByYear : ', totalSalesByYear);
-         console.log('LG : stationsCountByState : ', stationsCountByState);
-    }
+    plotLines(svg, salesDataToPlot, xScale, yScale);
 }
 
+
+
 function updateLineGraph(svg, startDate, endDate, width, height) {
-    const xScale = d3.scaleBand()
-        .domain(d3.range(startDate.getFullYear(), endDate.getFullYear() + 1))
-        .range([50, width - 50])
+    const selectedState = getSelectedState();
+    let salesDataToPlot = selectedState
+        ? calculateSalesByMonthForState(startDate, endDate, selectedState, salesData)
+        : calculateTotalSalesByMonth(startDate, endDate, salesData);
+
+    const formattedData = formatAllDataForLine(salesDataToPlot);
+
+    const xScale = d3.scaleTime()
+        .domain(d3.extent(formattedData, (d) => d.date))
+        .range([50, width - 50]);
 
     const yScale = d3.scaleLinear()
-        .domain([0, 800000])
+        .domain([0, d3.max(formattedData, (d) => d.value)])
         .range([height - 50, 50]);
 
     svg.select('.x-axis')
+        .attr('transform', `translate(0, ${height - 50})`)
         .call(d3.axisBottom(xScale).ticks(d3.timeYear.every(1)));
 
     svg.select('.y-axis')
         .call(d3.axisLeft(yScale));
-    const selectedState = getSelectedState(); 
-    if (selectedState) {
-        const stationsCount = getStationsCountForStateInRange(chargingData, startDate, endDate, getSelectedState());
-        const salesCountForState = calculateSalesByYearForState(startDate, endDate, getSelectedState(), salesData);
-        const incentivesDetailsForState = getIncentivesDetailsForState(incentivesData, getSelectedState(), startDate, endDate);
-         console.log('LGS : getIncentivesDetailsForState : ', incentivesDetailsForState);
-         console.log('LGS : salesCountForState : ', salesCountForState)
-         console.log('LGS : stationsCount : ', stationsCount)
-    } else {
-        const stationsCountByState = getStationsCountByStateInRange(chargingData, startDate, endDate);
-        const totalSalesByYear = calculateTotalSalesByYear(startDate, endDate, salesData);
-        const IncentivesCountByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
-         console.log('LG : IncentivesCountByState : ', IncentivesCountByState);
-         console.log('LG : totalSalesByYear : ', totalSalesByYear);
-         console.log('LG : stationsCountByState : ', stationsCountByState);
+
+    plotLines(svg, salesDataToPlot, xScale, yScale);
+}
+
+
+function plotLines(svg, salesDataToPlot, xScale, yScale) {
+    svg.selectAll('.line-path').remove();
+    const colors = {
+        evData: 'red',
+        hevData: 'green',
+        phevData: 'blue',
+    };
+
+    for (const type in salesDataToPlot) {
+        const lineData = formatDataForLine(salesDataToPlot[type]);
+
+        if (lineData.length === 0) {
+            console.warn(`No data for line type: ${type}`);
+            continue;
+        }
+
+
+        const lineGenerator = d3.line()
+            .x((d) => xScale(d.date))
+            .y((d) => yScale(d.value));
+
+        svg.append('path')
+            .datum(lineData)
+            .attr('class', 'line-path') 
+            .attr('fill', 'none')
+            .attr('stroke', colors[type])
+            .attr('stroke-width', 2)
+            .attr('d', lineGenerator);
     }
+}
+
+
+function formatDataForLine(data) {
+    const formattedData = [];
+    for (const year in data) {
+        for (const month in data[year]) {
+            const monthIndex = getMonthNumber(month); // Récupérer l'index du mois (0-based)
+            formattedData.push({
+                date: new Date(year, monthIndex, 1),
+                value: data[year][month],
+            });
+        }
+    }
+    return formattedData.sort((a, b) => a.date - b.date);
+}
+
+function formatAllDataForLine(salesData) {
+    const formattedData = [];
+    for (const type in salesData) {
+        formattedData.push(...formatDataForLine(salesData[type]));
+    }
+    return formattedData;
+}
+
+function getMonthNumber(monthName) {
+    const months = {
+        janvier: 0,
+        février: 1,
+        mars: 2,
+        avril: 3,
+        mai: 4,
+        juin: 5,
+        juillet: 6,
+        août: 7,
+        septembre: 8,
+        octobre: 9,
+        novembre: 10,
+        décembre: 11,
+    };
+    return months[monthName];
 }

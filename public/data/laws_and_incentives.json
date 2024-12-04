@@ -607,12 +607,6 @@
             "Date": "2023-11-20",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
-        },
-        {
-            "Project Name": "Zero Emission School Bus and Infrastructure Funding",
-            "Date": "2022-11-08",
-            "Category": "State Incentives",
-            "Types Supported": "ELECRBATE"
         }
     ],
     "Oklahoma": [
@@ -734,7 +728,7 @@
             "Project Name": "Electric Vehicle Emissions Inspection Exemption",
             "Date": "2023-09-02",
             "Category": "State Incentives",
-            "Types Supported": "ELECEXEM"
+            "Types Supported": "ELEC"
         }
     ],
     "United States of America": [
@@ -742,31 +736,31 @@
             "Project Name": "Charging and Fueling Infrastructure Grants",
             "Date": "2021-11-15",
             "Category": "Incentives",
-            "Types Supported": "ELEC|PHEVGNT"
+            "Types Supported": "ELEC|PHEV"
         },
         {
             "Project Name": "National Multimodal Cooperative Freight Research Program",
             "Date": "2021-11-15",
             "Category": "Incentives",
-            "Types Supported": "ELECGNT"
+            "Types Supported": "ELEC"
         },
         {
             "Project Name": "Community Electric Vehicle Charging Grants",
             "Date": "2021-11-15",
             "Category": "Incentives",
-            "Types Supported": "ELEC|PHEVGNT"
+            "Types Supported": "ELEC|PHEV"
         },
         {
             "Project Name": "Commercial Electric Vehicle (EV) and Fuel Cell Electric Vehicle (FCEV) Tax Credit",
             "Date": "2022-08-16",
             "Category": "Incentives",
-            "Types Supported": "ELEC|PHEVTAX"
+            "Types Supported": "ELEC|HY|PHEV"
         },
         {
             "Project Name": "Port Electrification Grants",
             "Date": "2022-08-16",
             "Category": "Incentives",
-            "Types Supported": "ELECGNT"
+            "Types Supported": "ELEC|HY"
         },
         {
             "Project Name": "Utility Electric Vehicle (EV) Promotion Measures",

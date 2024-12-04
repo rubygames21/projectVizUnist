@@ -91,7 +91,7 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
 
     projection = d3.geoAlbersUsa()
         .translate([width / 2, height / 2])
-        .scale(Math.min(width, height) * 1.9);
+        .scale(Math.min(width, height) * 1.7);
 
     const path = d3.geoPath().projection(projection);
 

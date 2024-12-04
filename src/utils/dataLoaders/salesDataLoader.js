@@ -53,7 +53,7 @@ export function calculateSalesByState(startDate, endDate, salesData) {
     return results; 
 }
 
-export function calculateSalesByYearForState(startDate, endDate, stateName, salesData) {
+export function calculateSalesByMonthForState(startDate, endDate, stateName, salesData) {
     const startYear = startDate.getFullYear();
     const endYear = endDate.getFullYear();
     const startMonth = startDate.getMonth(); // Mois (0 = janvier)
@@ -64,41 +64,57 @@ export function calculateSalesByYearForState(startDate, endDate, stateName, sale
     for (const [type, data] of Object.entries(salesData)) {
         results[type] = {}; // Initialiser les résultats pour ce type
 
+        // Trouver les données pour l'état sélectionné
         const stateData = data.find((row) => row.stateName === stateName);
         if (!stateData) continue;
+
+        let cumulativeSum = 0; // Réinitialiser le cumul pour chaque type
 
         for (let year = startYear; year <= endYear; year++) {
             const annualSales = parseFloat(stateData[year]);
 
-            if (isNaN(annualSales)) {
-                results[type][year] = 0;
-                continue;
+            if (isNaN(annualSales)) continue;
+
+            const monthlySales = Math.round(annualSales / 12);
+
+            // Initialiser les mois pour cette année
+            if (!results[type][year]) {
+                results[type][year] = {};
             }
 
-            let adjustedSales = annualSales;
+            for (let month = 0; month < 12; month++) {
+                const isInRange =
+                    (year > startYear || month >= startMonth) &&
+                    (year < endYear || month <= endMonth);
 
-            if (year === startYear && year === endYear) {
-                const monthsIncluded = endMonth - startMonth; // Exclure endMonth
-                adjustedSales = Math.round((annualSales / 12) * monthsIncluded);
-            } else if (year === startYear) {
-                const monthsIncluded = 12 - startMonth;
-                adjustedSales = Math.round((annualSales / 12) * monthsIncluded);
-            } else if (year === endYear) {
-                const monthsIncluded = endMonth; // Exclure endMonth
-                adjustedSales = Math.round((annualSales / 12) * monthsIncluded);
+                if (isInRange) {
+                    const monthName = new Date(year, month)
+                        .toLocaleString('default', { month: 'long' })
+                        .toLowerCase();
+
+                    cumulativeSum += monthlySales; // Ajouter les ventes mensuelles au cumul
+                    results[type][year][monthName] = cumulativeSum;
+                }
             }
-
-            results[type][year] = adjustedSales;
         }
     }
 
     return results;
 }
 
-export function calculateTotalSalesByYear(startDate, endDate, salesData) {
+
+
+export function calculateTotalSalesByMonth(startDate, endDate, salesData) {
     const startYear = startDate.getFullYear();
     const endYear = endDate.getFullYear();
-    const allYears = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i);
+    const startMonth = startDate.getMonth(); // 0 = janvier
+    const endMonth = endDate.getMonth(); // 0 = janvier
+
+    // Tableau des noms des mois
+    const monthNames = [
+        "janvier", "février", "mars", "avril", "mai", "juin",
+        "juillet", "août", "septembre", "octobre", "novembre", "décembre"
+    ];
 
     // Initialiser les résultats
     const results = {
@@ -107,31 +123,38 @@ export function calculateTotalSalesByYear(startDate, endDate, salesData) {
         phevData: {},
     };
 
-    // Initialiser les résultats pour chaque année
-    for (const year of allYears) {
-        results.evData[year] = 0;
-        results.hevData[year] = 0;
-        results.phevData[year] = 0;
-    }
-
-    // Calculer les ventes pour chaque état
-    salesData.evData.forEach((row) => {
-        const stateName = row.stateName;
-
-        const stateResults = calculateSalesByYearForState(startDate, endDate, stateName, salesData);
-
-        // Cumuler les résultats par année
-        for (const year of allYears) {
-            results.evData[year] += stateResults.evData[year] || 0;
-            results.hevData[year] += stateResults.hevData[year] || 0;
-            results.phevData[year] += stateResults.phevData[year] || 0;
-        }
-    });
     for (const type in results) {
-        results[type] = Object.fromEntries(
-            Object.entries(results[type]).filter(([_, value]) => value > 0)
-        );
+        let cumulativeSum = 0; // Cumul global pour ce type de ventes
+
+        for (let year = startYear; year <= endYear; year++) {
+            results[type][year] = {};
+
+            for (let month = 0; month < 12; month++) {
+                const isInRange =
+                    (year > startYear || month >= startMonth) &&
+                    (year < endYear || month <= endMonth);
+
+                if (!isInRange) continue; // Ignorer les mois hors plage
+
+                const monthName = monthNames[month];
+
+                // Somme des ventes mensuelles pour tous les états
+                let monthlySales = 0;
+                salesData[type].forEach((row) => {
+                    const annualSales = parseFloat(row[year]) || 0;
+                    monthlySales += Math.round(annualSales / 12);
+                });
+
+                // Ajouter les ventes mensuelles au cumul global
+                cumulativeSum += monthlySales;
+
+                // Assigner le cumul au mois en question
+                results[type][year][monthName] = cumulativeSum;
+            }
+        }
     }
 
     return results;
 }
+
+

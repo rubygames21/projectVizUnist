@@ -76,7 +76,6 @@ function updateIncentivesList(container, startDate, endDate) {
         const incentivesByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
         //console.log(`Incentives pour tous les états entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesByState);
 
-        // Afficher les incentives groupés par état
         Object.entries(incentivesByState).forEach(([state, incentives]) => {
             container.append('h3')
                 .text(state)
@@ -87,8 +86,6 @@ function updateIncentivesList(container, startDate, endDate) {
         });
     }
 }
-
-// Fonction pour afficher les incentives
 function renderIncentives(container, incentives) {
     incentives.forEach(incentive => {
         const row = container.append('div')
@@ -100,62 +97,74 @@ function renderIncentives(container, incentives) {
             .style('background-color', '#f5f5f5')
             .style('border-radius', '5px')
             .style('border', '1px solid #ccc')
-            .style('width','97%')
+            .style('width', '97%')
+            .style('box-shadow', '0 2px 4px rgba(0, 0, 0, 0.1)'); // Ajout d'une ombre légère
 
-        // Ajouter le logo rouge
-        row.append('img')
-            .attr('src', '/public/data/img_incentives_red.png')
-            .attr('alt', 'Logo')
-            .style('width', '30px')
+            row.append('img')
+            .attr('src', (() => {
+                switch (incentive.Category) {
+                    case 'Laws and Regulations':
+                        return 'data/l&r.png'; // Chemin pour Laws and Regulations
+                    case 'State Incentives':
+                        return 'data/st.png'; // Chemin pour State Incentive
+                    case 'Incentives':
+                        return '/data/usi.png'; // Chemin pour Incentive
+                }
+            })())
+            .attr('alt', incentive.Category || 'Default')
+            .style('width', '30px') // Taille de l'image
             .style('height', '30px')
             .style('margin-right', '10px');
 
-        // Ajouter la date
+
         row.append('span')
             .text(formatDate(incentive.Date))
             .style('margin-right', '10px')
-            .style('color','black');
+            .style('color', '#333') // Texte légèrement plus sombre pour le contraste
+            .style('font-weight', 'bold'); // Texte en gras
 
-
-        // Ajouter le titre tronqué
         row.append('span')
-            .text(incentive["Project Name"]) // Tronque le texte si nécessaire
+            .text(incentive["Project Name"])
             .style('flex', '1')
             .style('margin-right', '10px')
-            .style('color','black');
+            .style('color', '#333')
+            .style('font-size', '14px'); // Taille de texte ajustée
 
-        // Ajouter les types supportés (logos)
-        const typesContainer = row.append('div')
+            const typesContainer = row.append('div')
             .style('display', 'flex')
-            .style('gap', '5px');
-
+            .style('gap', '25px') // Espacement entre les icônes
+            .style('margin-left', 'auto') // Aligne les icônes à droite
+        
         const supportedTypes = incentive["Types Supported"]?.split('|') || [];
         supportedTypes.forEach(type => {
             let imgSrc;
             switch (type) {
                 case 'ELEC':
-                    imgSrc = 'data/img_incentives_brown.png';
+                    imgSrc = 'data/ev.png';
                     break;
                 case 'HEV':
-                    imgSrc = 'data/img_incentives_brown.png';
+                    imgSrc = 'data/hev.png';
                     break;
                 case 'PHEV':
-                    imgSrc = 'data/img_incentives_brown.png';
+                    imgSrc = 'data/phev.png';
                     break;
-                default:
-                    imgSrc = null;
             }
-
+        
             if (imgSrc) {
                 typesContainer.append('img')
                     .attr('src', imgSrc)
                     .attr('alt', type)
-                    .style('width', '30px')
-                    .style('height', '30px');
+                    .style('width', '30px') // Ajustez la taille si nécessaire
+                    .style('height', '30px')
+                    .style('transform', 'scale(2.5)') // Zoom des logos
+                    .style('transform-origin', 'center') // Centre le zoom
+                    .style('margin-right','20px') 
+
             }
         });
     });
 }
+
 
 // Fonction pour formater la date
 function formatDate(dateString) {

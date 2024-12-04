@@ -2,6 +2,7 @@ import { renderMap } from './components/Map';
 import { renderTimeline } from './components/Timeline';
 import { renderLineGraph } from './components/LineGraph';
 import { renderIncentivesList  } from './components/IncentivesList';
+import { renderFilterChecklist } from './components/FilterChecklist';
 
 export function initApp() {
     const container = document.createElement('div');
@@ -49,4 +50,5 @@ export function initApp() {
         renderIncentivesList(startDate, endDate)
     };
     renderTimeline(onSelectionChange);
+    renderFilterChecklist();
 }

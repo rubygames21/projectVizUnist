@@ -75,3 +75,89 @@ export function getStationsCountForStateInRange(chargingData, startDate, endDate
         return openDate >= startDate && openDate <= endDate;
     }).length;
 }
+
+
+/**
+ * Filtre les données des stations par mois et années dans la plage de dates spécifiée.
+ * @param {Object} data - Données des stations organisées par état, année et mois.
+ * @param {Date} startDate - Date de début de la plage.
+ * @param {Date} endDate - Date de fin de la plage.
+ * @returns {Object} - Données filtrées par état, année et mois.
+ */
+export function filterStationsByState(data, startDate, endDate) {
+    const result = {};
+
+    for (const [state, years] of Object.entries(data)) {
+        const filteredYears = {};
+
+        for (const [year, months] of Object.entries(years)) {
+            const yearInt = parseInt(year, 10);
+
+            // Vérifier si l'année est dans la plage
+            if (yearInt >= startDate.getFullYear() && yearInt <= endDate.getFullYear()) {
+                const filteredMonths = {};
+
+                for (const [month, count] of Object.entries(months)) {
+                    // Convertir le mois en Date pour comparer
+                    const monthDate = new Date(`${month} 1, ${year}`);
+
+                    if (monthDate >= startDate && monthDate <= endDate) {
+                        filteredMonths[month] = count;
+                    }
+                }
+
+                if (Object.keys(filteredMonths).length > 0) {
+                    filteredYears[year] = filteredMonths;
+                }
+            }
+        }
+
+        if (Object.keys(filteredYears).length > 0) {
+            result[state] = filteredYears;
+        }
+    }
+
+    return result;
+}
+
+
+/**
+ * Filtre les données des stations pour un état donné par mois et années dans la plage de dates spécifiée.
+ * @param {Object} data - Données des stations organisées par état, année et mois.
+ * @param {string} state - Nom de l'état pour lequel on veut filtrer les données.
+ * @param {Date} startDate - Date de début de la plage.
+ * @param {Date} endDate - Date de fin de la plage.
+ * @returns {Object} - Données filtrées pour l'état spécifié, triées par année et mois.
+ */
+export function filterStationsForState(data, state, startDate, endDate) {
+    if (!data[state]) {
+        console.warn(`Aucune donnée trouvée pour l'état : ${state}`);
+        return {};
+    }
+
+    const filteredYears = {};
+
+    for (const [year, months] of Object.entries(data[state])) {
+        const yearInt = parseInt(year, 10);
+
+        // Vérifier si l'année est dans la plage
+        if (yearInt >= startDate.getFullYear() && yearInt <= endDate.getFullYear()) {
+            const filteredMonths = {};
+
+            for (const [month, count] of Object.entries(months)) {
+                // Convertir le mois en Date pour comparer
+                const monthDate = new Date(`${month} 1, ${year}`);
+
+                if (monthDate >= startDate && monthDate <= endDate) {
+                    filteredMonths[month] = count;
+                }
+            }
+
+            if (Object.keys(filteredMonths).length > 0) {
+                filteredYears[year] = filteredMonths;
+            }
+        }
+    }
+
+    return filteredYears;
+}

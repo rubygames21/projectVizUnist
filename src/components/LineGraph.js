@@ -3,10 +3,12 @@ import { calculateSalesByMonthForState, calculateTotalSalesByMonth, loadSalesDat
 import { getStartDate, getEndDate, getSelectedState } from './stateManager';
 import { filterDataByDateRange, filterDataByDateRangeForState } from '../utils/dataLoaders/chargingStationsLoader';
 import { getIncentivesDetailsForState, getIncentivesDetailsByState } from '../utils/dataLoaders/incentivesLoader';
+import { setFilter, getFilters } from './FilterManager';
 
 let salesData = null;
 let stationsData = null;
 let incentivesData = null;
+let filters = null;
 
 (async () => {
     try {
@@ -31,20 +33,20 @@ export function renderLineGraph(startDate = getStartDate(), endDate = getEndDate
         console.error('Les données ne sont pas encore chargées.');
         return;
     }
-
+    filters = getFilters(); // Récupérer les filtres
     const container = d3.select('.linegraph');
     const width = container.node().getBoundingClientRect().width;
     const height = container.node().getBoundingClientRect().height;
 
     const svg = container.select('svg');
     if (svg.empty()) {
-        initializeLineGraph(svg, startDate, endDate, width, height);
+        initializeLineGraph(svg, startDate, endDate, width, height,filters);
     } else {
-        updateLineGraph(svg, startDate, endDate, width, height);
+        updateLineGraph(svg, startDate, endDate, width, height,filters);
     }
 }
 
-function initializeLineGraph(svg, startDate, endDate, width, height) {
+function initializeLineGraph(svg, startDate, endDate, width, height,filters) {
     const container = d3.select('.linegraph');
     svg = container.append('svg')
         .attr('width', width)
@@ -58,7 +60,8 @@ function initializeLineGraph(svg, startDate, endDate, width, height) {
     let chargingStationsToPlot = selectedState
         ? filterDataByDateRangeForState(stationsData, selectedState, startDate, endDate)
         : filterDataByDateRange(stationsData, startDate, endDate);
-    console.log(chargingStationsToPlot);
+    //console.log(chargingStationsToPlot);
+
     let incentivesToPlot = selectedState
         ? getIncentivesDetailsForState(incentivesData, selectedState, startDate, endDate)
         : getIncentivesDetailsByState(incentivesData, startDate, endDate);
@@ -88,17 +91,31 @@ function initializeLineGraph(svg, startDate, endDate, width, height) {
         .attr('transform', 'translate(50, 0)')
         .call(d3.axisLeft(yScaleSales));
 
-    svg.append('g')
+    if (filters.stations) {
+        svg.append('g')
         .attr('class', 'y-axis-stations')
         .attr('transform', `translate(${width - 50}, 0)`)
+        .style('color','orange')
         .call(d3.axisRight(yScaleStations));
+        plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleStations);
+    }
+    else{
+        svg.selectAll('.station-line-path').remove();
+        svg.selectAll('.y-axis-stations').remove();
 
-    plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales);
-    plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleStations);
+    }
+    if (filters.EV_sales || filters.HEV_sales || filters.PHEV_sales) {
+        plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales, filters);
+    }
+    else{
+        svg.selectAll('.line-path').remove();
+    }
+
+       
     plotIncentives(svg, incentivesToPlot, xScale, height);
 }
 
-function updateLineGraph(svg, startDate, endDate, width, height) {
+function updateLineGraph(svg, startDate, endDate, width, height,filters) {
     const selectedState = getSelectedState();
     let salesDataToPlot = selectedState
         ? calculateSalesByMonthForState(startDate, endDate, selectedState, salesData)
@@ -133,20 +150,47 @@ function updateLineGraph(svg, startDate, endDate, width, height) {
     svg.select('.y-axis-sales')
         .call(d3.axisLeft(yScaleSales));
 
-    svg.select('.y-axis-stations')
-        .call(d3.axisRight(yScaleStations))
-        .style('color','orange');
+    if (filters.stations) {
+        svg.selectAll('.y-axis-stations').remove();
 
-    plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales);
-    plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleStations);
+        svg.append('g')
+        .attr('class', 'y-axis-stations')
+        .attr('transform', `translate(${width - 50}, 0)`)
+        .style('color','orange')
+        .call(d3.axisRight(yScaleStations));
+        plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleStations);
+    }
+    else{
+        svg.selectAll('.station-line-path').remove();
+        svg.selectAll('.y-axis-stations').remove();
+
+    }
+   
+
+    if (filters.EV_sales || filters.HEV_sales || filters.PHEV_sales) {
+        plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales, filters);
+    }
+    else{
+        svg.selectAll('.line-path').remove();
+    }
+
+    
     plotIncentives(svg, incentivesToPlot, xScale, height);
 }
 
-function plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales) {
+function plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales, filters) {
     svg.selectAll('.line-path').remove();
     const colors = { evData: 'red', hevData: 'green', phevData: 'blue' };
 
     for (const type in salesDataToPlot) {
+        if (
+            (type === 'evData' && !filters.EV_sales) ||
+            (type === 'hevData' && !filters.HEV_sales) ||
+            (type === 'phevData' && !filters.PHEV_sales)
+        ) {
+            continue; // Sauter les types de ventes décochés
+        }
+
         const lineData = formatDataForSalesLine(salesDataToPlot[type]);
 
         if (lineData.length === 0) continue;
@@ -164,6 +208,7 @@ function plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales) {
             .attr('d', lineGenerator);
     }
 }
+
 
 function plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleStations) {
     svg.selectAll('.station-line-path').remove();

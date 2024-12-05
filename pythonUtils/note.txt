@@ -5,18 +5,13 @@ filter :
 	- checkbox influe sur les autre components
 
 linechart : 
-	- echelle stations
-	- prendre en compte les filtres TODO
 	- incentives plusieurs sur la meme date comment faire ?
 		- LR = violet (logo dans incentivesList + ligne verticale dans linegraph) / SI = orange / I = black
 
-
 incentives : 
-	- logo HEV
 	- united states incentives for all the state les mettre à la toute fin
 	- margin entre logo EV... depend du type de logo (pas d'espace à doirte d'un logo EV)
-
-
+	
 
 si le temps :
 	- zoom sur le graph

@@ -3,7 +3,7 @@ import { renderTimeline } from './components/Timeline';
 import { renderLineGraph } from './components/LineGraph';
 import { renderIncentivesList  } from './components/IncentivesList';
 import { renderFilterChecklist } from './components/FilterChecklist';
-
+import { getStartDate, getEndDate } from './components/stateManager';
 export function initApp() {
     const container = document.createElement('div');
     container.classList.add('container');
@@ -43,6 +43,7 @@ export function initApp() {
     container.appendChild(timeline);
 
     document.body.appendChild(container);
+    renderFilterChecklist();
 
     const onSelectionChange = (startDate, endDate) => {
         renderMap(startDate, endDate);
@@ -50,5 +51,13 @@ export function initApp() {
         renderIncentivesList(startDate, endDate)
     };
     renderTimeline(onSelectionChange);
-    renderFilterChecklist();
+
+    // Écoute les modifications des filtres
+    document.addEventListener('filtersUpdated', () => {
+        const startDate = getStartDate();
+        const endDate = getEndDate();
+        renderLineGraph(startDate, endDate); // Mets à jour les graphes
+        renderMap(startDate, endDate);       // Mets à jour la carte
+        renderIncentivesList(startDate, endDate); // Mets à jour la liste des incitations
+    });
 }

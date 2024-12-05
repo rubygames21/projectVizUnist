@@ -28,8 +28,12 @@ export function renderFilterChecklist() {
             .on('change', function () {
                 const isChecked = d3.select(this).property('checked');
                 setFilter(filter.id, isChecked);
+                const event = new CustomEvent('filtersUpdated', { detail: getFilters() });
+                document.dispatchEvent(event);
             });
-
+        
         checkboxContainer.append('label').attr('for', filter.id).text(filter.label);
     });
 }
+
+

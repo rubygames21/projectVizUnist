@@ -5,6 +5,7 @@ import { getIncentivesCountByState } from '../utils/dataLoaders/incentivesLoader
 import { renderLineGraph } from './LineGraph';
 import { getStartDate, getEndDate, setSelectedState, getSelectedState } from './stateManager'; // Import des dates dynamiques
 import { renderIncentivesList } from './IncentivesList';
+import { getFilters } from './FilterManager';
 
 let salesData = null;
 let chargingData = null;
@@ -107,7 +108,6 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
     const mapLayer = svg.append('g').attr('class', 'map-layer');
     const stationLayer = svg.append('g').attr('class', 'stations-layer');
 
-    // Ajout d'un gestionnaire de clic pour désélectionner l'état
     svg.on('click', function (event) {
         const target = d3.select(event.target);
         if (!target.classed('state')) {
@@ -126,22 +126,17 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
             .attr('stroke-width', 1)
             .attr('class', 'state')
             .on('mouseover', function (event, d) {
+                const filters = getFilters(); // Récupérer les filtres
                 const state = d.properties.NAME;
 
-                const evSales = salesResults.evData[state] || 0;
-                const hevSales = salesResults.hevData[state] || 0;
-                const phevSales = salesResults.phevData[state] || 0;
-                const stations = stationsCount[state] || 0;
+                const evSales = filters.EV_sales ? (salesResults.evData[state] || 0) : null;
+                const hevSales = filters.HEV_sales ? (salesResults.hevData[state] || 0) : null;
+                const phevSales = filters.PHEV_sales ? (salesResults.phevData[state] || 0) : null;
+                const stations = filters.stations ? (stationsCount[state] || 0) : null;
                 const incentives = incentivesCount[state] || 0;
 
-                tooltip.style('opacity', 1).html(`
-                    <strong>${state}</strong><br>
-                    EV: ${evSales}<br>
-                    HEV: ${hevSales}<br>
-                    PHEV: ${phevSales}<br>
-                    Charging stations: ${stations}<br>
-                    Incentives: ${incentives}
-                `);
+                const tooltipContent = buildTooltipContent(state, evSales, hevSales, phevSales, stations, incentives);
+                tooltip.style('opacity', 1).html(tooltipContent);
             })
             .on('mousemove', function (event) {
                 tooltip.style('left', `${event.pageX + 15}px`).style('top', `${event.pageY + 15}px`);
@@ -152,20 +147,20 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
             .on('click', function (event, d) {
                 event.stopPropagation();
                 const state = d.properties.NAME;
+                const filters = getFilters();
 
-                // Vérifier si l'état est déjà sélectionné
                 if (activeState === state) {
-                    deselectState(svg, stationLayer); // Désélectionner l'état
+                    deselectState(svg, stationLayer);
                 } else {
-                    // Récupérer les dates actuelles
                     const currentStartDate = getStartDate();
                     const currentEndDate = getEndDate();
 
-                    // Filtrer les stations par les dates actuelles
-                    const filteredStations = stationsByState[state]?.filter(station => {
-                        const stationDate = new Date(station["Open Date"]);
-                        return stationDate >= currentStartDate && stationDate <= currentEndDate;
-                    }) || [];
+                    const filteredStations = filters.stations
+                        ? stationsByState[state]?.filter(station => {
+                              const stationDate = new Date(station["Open Date"]);
+                              return stationDate >= currentStartDate && stationDate <= currentEndDate;
+                          }) || []
+                        : []; // Pas de stations si le filtre est décoché
 
                     toggleStateSelection(svg, state, filteredStations, projection);
                 }
@@ -176,61 +171,44 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
 }
 
 function updateMap(svg, salesResults, stationsCount, incentivesCount, stationsByState) {
+    const filters = getFilters(); // Récupérer les filtres
     const currentStartDate = getStartDate();
     const currentEndDate = getEndDate();
 
     svg.selectAll('path.state').each(function (d) {
         const state = d.properties.NAME;
 
-        const evSales = (salesResults.evData && salesResults.evData[state]) || 0;
-        const hevSales = (salesResults.hevData && salesResults.hevData[state]) || 0;
-        const phevSales = (salesResults.phevData && salesResults.phevData[state]) || 0;
-        const stations = stationsByState[state]?.filter(station => {
-            const stationDate = new Date(station["Open Date"]);
-            return stationDate >= currentStartDate && stationDate <= currentEndDate;
-        }).length || 0;
+        const evSales = filters.EV_sales ? (salesResults.evData[state] || 0) : null;
+        const hevSales = filters.HEV_sales ? (salesResults.hevData[state] || 0) : null;
+        const phevSales = filters.PHEV_sales ? (salesResults.phevData[state] || 0) : null;
+        const stations = filters.stations
+            ? stationsByState[state]?.filter(station => {
+                  const stationDate = new Date(station["Open Date"]);
+                  return stationDate >= currentStartDate && stationDate <= currentEndDate;
+              }).length || 0
+            : null;
+        const incentives = incentivesCount[state] || 0;
 
-        // Mettre à jour les attributs des états avec les nouvelles données
         d3.select(this)
             .attr('data-ev-sales', evSales)
             .attr('data-hev-sales', hevSales)
             .attr('data-phev-sales', phevSales)
             .attr('data-stations', stations)
-            .attr('data-incentives', incentivesCount[state] || 0);
+            .attr('data-incentives', incentives);
     });
 
-    // Si un état est actif, mettre à jour ses stations
-    if (activeState) {
-        const stationLayer = svg.select('.stations-layer');
-        const filteredStations = stationsByState[activeState]?.filter(station => {
-            const stationDate = new Date(station["Open Date"]);
-            return stationDate >= currentStartDate && stationDate <= currentEndDate;
-        }) || [];
-
-        updateStationsForState(activeState, filteredStations);
-    }
-
-    // Ajouter ou mettre à jour le gestionnaire de tooltip
     svg.selectAll('path.state')
         .on('mouseover', function (event, d) {
             const state = d.properties.NAME;
 
-            const evSales = d3.select(this).attr('data-ev-sales') || 0;
-            const hevSales = d3.select(this).attr('data-hev-sales') || 0;
-            const phevSales = d3.select(this).attr('data-phev-sales') || 0;
-            const stations = d3.select(this).attr('data-stations') || 0;
-            const incentives = d3.select(this).attr('data-incentives') || 0;
+            const evSales = d3.select(this).attr('data-ev-sales') !== "null" ? d3.select(this).attr('data-ev-sales') : null;
+            const hevSales = d3.select(this).attr('data-hev-sales') !== "null" ? d3.select(this).attr('data-hev-sales') : null;
+            const phevSales = d3.select(this).attr('data-phev-sales') !== "null" ? d3.select(this).attr('data-phev-sales') : null;
+            const stations = d3.select(this).attr('data-stations') !== "null" ? d3.select(this).attr('data-stations') : null;
+            const incentives = d3.select(this).attr('data-incentives');
 
-            d3.select('.tooltip')
-                .style('opacity', 1)
-                .html(`
-                    <strong>${state}</strong><br>
-                    EV: ${evSales}<br>
-                    HEV: ${hevSales}<br>
-                    PHEV: ${phevSales}<br>
-                    Charging stations: ${stations}<br>
-                    Incentives: ${incentives}
-                `);
+            const tooltipContent = buildTooltipContent(state, evSales, hevSales, phevSales, stations, incentives);
+            d3.select('.tooltip').style('opacity', 1).html(tooltipContent);
         })
         .on('mousemove', function (event) {
             d3.select('.tooltip')
@@ -240,7 +218,34 @@ function updateMap(svg, salesResults, stationsCount, incentivesCount, stationsBy
         .on('mouseout', function () {
             d3.select('.tooltip').style('opacity', 0);
         });
+
+    if (activeState) {
+        const stationLayer = svg.select('.stations-layer');
+        const filteredStations = filters.stations
+            ? stationsByState[activeState]?.filter(station => {
+                  const stationDate = new Date(station["Open Date"]);
+                  return stationDate >= currentStartDate && stationDate <= currentEndDate;
+              }) || []
+            : []; // Pas de stations si le filtre est décoché
+
+        updateStationsForState(activeState, filteredStations);
+    }
 }
+
+
+
+
+function buildTooltipContent(state, evSales, hevSales, phevSales, stations, incentives) {
+    let tooltipContent = `<strong>${state}</strong><br>`;
+    if (evSales !== null && evSales !== undefined) tooltipContent += `EV: ${evSales}<br>`;
+    if (hevSales !== null && hevSales !== undefined) tooltipContent += `HEV: ${hevSales}<br>`;
+    if (phevSales !== null && phevSales !== undefined) tooltipContent += `PHEV: ${phevSales}<br>`;
+    if (stations !== null && stations !== undefined) tooltipContent += `Charging stations: ${stations}<br>`;
+    tooltipContent += `Incentives: ${incentives}`;
+    return tooltipContent;
+}
+
+
 
 function deselectState(svg, stationLayer) {
     activeState = null;
@@ -252,50 +257,49 @@ function deselectState(svg, stationLayer) {
     renderLineGraph(getStartDate(), getEndDate());
     renderIncentivesList(getStartDate(),getEndDate()) // Réinitialiser le graphique
 }
-
 function toggleStateSelection(svg, state, stations, projection) {
+    const filters = getFilters(); // Récupérer les filtres
     const stationLayer = svg.select('.stations-layer');
     const currentTransform = d3.zoomTransform(svg.node());
 
     if (activeState === state) {
-        // L'état est déjà sélectionné, donc on le désélectionne
         activeState = null;
-        setSelectedState(null); // Désélectionner l'état
+        setSelectedState(null);
         stationLayer.selectAll('circle').remove();
         svg.selectAll('path').attr('fill', '#4a90e2');
-        // Mettre à jour le graphique avec les données globales
         renderLineGraph(getStartDate(), getEndDate());
-        renderIncentivesList(getStartDate(),getEndDate())
+        renderIncentivesList(getStartDate(), getEndDate());
     } else {
-        // Un nouvel état est sélectionné
         activeState = state;
-        setSelectedState(state); // Mettre à jour l'état sélectionné
+        setSelectedState(state);
         svg.selectAll('path').attr('fill', d =>
             d.properties.NAME === state ? '#ffcc00' : '#4a90e2'
         );
         stationLayer.selectAll('circle').remove();
 
-        stationLayer.selectAll('circle')
-            .data(stations)
-            .enter()
-            .append('circle')
-            .attr('cx', d => {
-                if (!d.Longitude || !d.Latitude) return null;
-                const projected = projection([d.Longitude, d.Latitude]);
-                return projected ? projected[0] : null;
-            })
-            .attr('cy', d => {
-                if (!d.Longitude || !d.Latitude) return null;
-                const projected = projection([d.Longitude, d.Latitude]);
-                return projected ? projected[1] : null;
-            })
-            .attr('r', 3.5 / currentTransform.k)
-            .attr('fill', 'red')
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1 / currentTransform.k);
+        if (filters.stations) {
+            stationLayer.selectAll('circle')
+                .data(stations)
+                .enter()
+                .append('circle')
+                .attr('cx', d => {
+                    if (!d.Longitude || !d.Latitude) return null;
+                    const projected = projection([d.Longitude, d.Latitude]);
+                    return projected ? projected[0] : null;
+                })
+                .attr('cy', d => {
+                    if (!d.Longitude || !d.Latitude) return null;
+                    const projected = projection([d.Longitude, d.Latitude]);
+                    return projected ? projected[1] : null;
+                })
+                .attr('r', 3.5 / currentTransform.k)
+                .attr('fill', 'red')
+                .attr('stroke', 'black')
+                .attr('stroke-width', 1 / currentTransform.k);
+        }
 
         renderLineGraph(getStartDate(), getEndDate());
-        renderIncentivesList(getStartDate(),getEndDate());
+        renderIncentivesList(getStartDate(), getEndDate());
     }
 
     if (onStateSelectionChange) {

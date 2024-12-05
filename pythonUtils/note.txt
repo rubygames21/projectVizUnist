@@ -1,17 +1,17 @@
-map : 
-	- infos global des US 
-
-filter :
-	- checkbox influe sur les autre components
-
 linechart : 
-	- incentives plusieurs sur la meme date comment faire ?
-		- LR = violet (logo dans incentivesList + ligne verticale dans linegraph) / SI = orange / I = black
+	-  incentives plusieurs sur la meme date comment faire ?
 
 incentives : 
 	- united states incentives for all the state les mettre à la toute fin
-	- margin entre logo EV... depend du type de logo (pas d'espace à doirte d'un logo EV)
 	
+visuel : 
+	- color
+	- filter
+	- margin entre logo EV... depend du type de logo (pas d'espace à doirte d'un logo EV)
+	- LR = violet (logo dans incentivesList + ligne verticale dans linegraph) / SI = orange / I = black
+	- legend incentives
+	- legende/titre linegraph
 
 si le temps :
 	- zoom sur le graph
+	- bouton help ?

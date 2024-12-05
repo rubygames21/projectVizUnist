@@ -70,6 +70,7 @@ export function renderMap(startDate, endDate) {
         hevData: salesData.hevData,
         phevData: salesData.phevData,
     });
+    const filters = getFilters(); // Récupérer les filtres actifs
 
     // Mettre à jour les données des stations filtrées
     filteredStationsByState = getStationsByState(chargingData, startDate, endDate);
@@ -83,6 +84,8 @@ export function renderMap(startDate, endDate) {
     } else {
         updateMap(svg, salesResults, stationsCount, incentivesCount, filteredStationsByState);
     }
+    updateGlobalTooltip(salesResults, stationsCount, incentivesCount, filters);
+
 }
 
 function initializeMap(salesResults, stationsCount, incentivesCount, stationsByState) {
@@ -167,7 +170,25 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
             });
 
         setupZoom(svg, mapLayer, stationLayer, width, height);
+
     });
+
+    // Ajouter le tooltip global
+    d3.select('body')
+        .append('div')
+        .attr('class', 'global-tooltip')
+        .style('position', 'absolute')
+        .style('top', '22px')
+        .style('right', '81vh')
+        .style('padding', '10px')
+        .style('background', '#fff')
+        .style('border', '1px solid #ccc')
+        .style('border-radius', '5px')
+        .style('box-shadow', '0 4px 8px rgba(0,0,0,0.1)')
+        .style('font-size', '14px')
+        .style('pointer-events', 'none')
+        .style('opacity', 1)
+        .html(`<strong>Total USA Data</strong><br>Calculating...`);
 }
 
 function updateMap(svg, salesResults, stationsCount, incentivesCount, stationsByState) {
@@ -230,20 +251,9 @@ function updateMap(svg, salesResults, stationsCount, incentivesCount, stationsBy
 
         updateStationsForState(activeState, filteredStations);
     }
+    updateGlobalTooltip(salesResults, stationsCount, incentivesCount, filters);
 }
 
-
-
-
-function buildTooltipContent(state, evSales, hevSales, phevSales, stations, incentives) {
-    let tooltipContent = `<strong>${state}</strong><br>`;
-    if (evSales !== null && evSales !== undefined) tooltipContent += `EV: ${evSales}<br>`;
-    if (hevSales !== null && hevSales !== undefined) tooltipContent += `HEV: ${hevSales}<br>`;
-    if (phevSales !== null && phevSales !== undefined) tooltipContent += `PHEV: ${phevSales}<br>`;
-    if (stations !== null && stations !== undefined) tooltipContent += `Charging stations: ${stations}<br>`;
-    tooltipContent += `Incentives: ${incentives}`;
-    return tooltipContent;
-}
 
 
 
@@ -254,9 +264,13 @@ function deselectState(svg, stationLayer) {
     svg.selectAll('.state').attr('fill', '#4a90e2');
     stationLayer.selectAll('circle').remove();
 
+    d3.select('.global-tooltip').style('opacity', 1);
+
     renderLineGraph(getStartDate(), getEndDate());
     renderIncentivesList(getStartDate(),getEndDate()) // Réinitialiser le graphique
 }
+
+
 function toggleStateSelection(svg, state, stations, projection) {
     const filters = getFilters(); // Récupérer les filtres
     const stationLayer = svg.select('.stations-layer');
@@ -267,6 +281,8 @@ function toggleStateSelection(svg, state, stations, projection) {
         setSelectedState(null);
         stationLayer.selectAll('circle').remove();
         svg.selectAll('path').attr('fill', '#4a90e2');
+
+        d3.select('.global-tooltip').style('opacity',1);
         renderLineGraph(getStartDate(), getEndDate());
         renderIncentivesList(getStartDate(), getEndDate());
     } else {
@@ -297,6 +313,7 @@ function toggleStateSelection(svg, state, stations, projection) {
                 .attr('stroke', 'black')
                 .attr('stroke-width', 1 / currentTransform.k);
         }
+        d3.select('.global-tooltip').style('opacity', 0);
 
         renderLineGraph(getStartDate(), getEndDate());
         renderIncentivesList(getStartDate(), getEndDate());
@@ -352,4 +369,50 @@ function updateStationsForState(state, filteredStations) {
         .attr('fill', 'red')
         .attr('stroke', 'black')
         .attr('stroke-width', 1 / currentTransform.k);
+}
+
+// Construction du contenu du tooltip pour un état
+function buildTooltipContent(state, evSales, hevSales, phevSales, stations, incentives) {
+    let tooltipContent = `<strong>${state}</strong><br>`;
+    if (evSales !== null) tooltipContent += `EV: ${evSales}<br>`;
+    if (hevSales !== null) tooltipContent += `HEV: ${hevSales}<br>`;
+    if (phevSales !== null) tooltipContent += `PHEV: ${phevSales}<br>`;
+    if (stations !== null) tooltipContent += `Charging stations: ${stations}<br>`;
+    tooltipContent += `Incentives: ${incentives}`;
+    return tooltipContent;
+}
+
+// Mise à jour du tooltip global
+function updateGlobalTooltip(salesResults, stationsCount, incentivesCount, filters) {
+    const { totalEVSales, totalHEVSales, totalPHEVSales, totalStations, totalIncentives } =
+        calculateGlobalTotals(salesResults, stationsCount, incentivesCount, filters);
+
+    d3.select('.global-tooltip')
+        .html(`
+            <strong>Total USA Data</strong><br>
+            ${filters.EV_sales ? `EV Sales: ${totalEVSales}<br>` : ''}
+            ${filters.HEV_sales ? `HEV Sales: ${totalHEVSales}<br>` : ''}
+            ${filters.PHEV_sales ? `PHEV Sales: ${totalPHEVSales}<br>` : ''}
+            ${filters.stations ? `Charging Stations: ${totalStations}<br>` : ''}
+            Incentives: ${totalIncentives}
+        `);
+}
+
+// Calcul des totaux globaux
+function calculateGlobalTotals(salesResults, stationsCount, incentivesCount, filters) {
+    let totalEVSales = 0, totalHEVSales = 0, totalPHEVSales = 0, totalStations = 0, totalIncentives = 0;
+
+    Object.keys(salesResults.evData).forEach(state => {
+        if (filters.EV_sales) totalEVSales += salesResults.evData[state] || 0;
+        if (filters.HEV_sales) totalHEVSales += salesResults.hevData[state] || 0;
+        if (filters.PHEV_sales) totalPHEVSales += salesResults.phevData[state] || 0;
+    });
+
+    if (filters.stations) {
+        Object.values(stationsCount).forEach(count => totalStations += count || 0);
+    }
+
+    Object.values(incentivesCount).forEach(count => totalIncentives += count || 0);
+
+    return { totalEVSales, totalHEVSales, totalPHEVSales, totalStations, totalIncentives };
 }

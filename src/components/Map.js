@@ -136,7 +136,7 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
                 const hevSales = filters.HEV_sales ? (salesResults.hevData[state] || 0) : null;
                 const phevSales = filters.PHEV_sales ? (salesResults.phevData[state] || 0) : null;
                 const stations = filters.stations ? (stationsCount[state] || 0) : null;
-                const incentives = incentivesCount[state] || 0;
+                const incentives = filters.incentives ? (incentivesCount[state] || 0): null;
 
                 const tooltipContent = buildTooltipContent(state, evSales, hevSales, phevSales, stations, incentives);
                 tooltip.style('opacity', 1).html(tooltipContent);
@@ -208,7 +208,7 @@ function updateMap(svg, salesResults, stationsCount, incentivesCount, stationsBy
                   return stationDate >= currentStartDate && stationDate <= currentEndDate;
               }).length || 0
             : null;
-        const incentives = incentivesCount[state] || 0;
+        const incentives = filters.incentives ? (incentivesCount[state] || 0) : null;
 
         d3.select(this)
             .attr('data-ev-sales', evSales)
@@ -226,7 +226,7 @@ function updateMap(svg, salesResults, stationsCount, incentivesCount, stationsBy
             const hevSales = d3.select(this).attr('data-hev-sales') !== "null" ? d3.select(this).attr('data-hev-sales') : null;
             const phevSales = d3.select(this).attr('data-phev-sales') !== "null" ? d3.select(this).attr('data-phev-sales') : null;
             const stations = d3.select(this).attr('data-stations') !== "null" ? d3.select(this).attr('data-stations') : null;
-            const incentives = d3.select(this).attr('data-incentives');
+            const incentives = d3.select(this).attr('data-incentives')  !== "null" ? d3.select(this).attr('data-incentives') : null;;
 
             const tooltipContent = buildTooltipContent(state, evSales, hevSales, phevSales, stations, incentives);
             d3.select('.tooltip').style('opacity', 1).html(tooltipContent);
@@ -378,7 +378,7 @@ function buildTooltipContent(state, evSales, hevSales, phevSales, stations, ince
     if (hevSales !== null) tooltipContent += `HEV: ${hevSales}<br>`;
     if (phevSales !== null) tooltipContent += `PHEV: ${phevSales}<br>`;
     if (stations !== null) tooltipContent += `Charging stations: ${stations}<br>`;
-    tooltipContent += `Incentives: ${incentives}`;
+    if (incentives !== null) tooltipContent += `Incentives: ${incentives}<br>`;
     return tooltipContent;
 }
 
@@ -394,7 +394,7 @@ function updateGlobalTooltip(salesResults, stationsCount, incentivesCount, filte
             ${filters.HEV_sales ? `HEV Sales: ${totalHEVSales}<br>` : ''}
             ${filters.PHEV_sales ? `PHEV Sales: ${totalPHEVSales}<br>` : ''}
             ${filters.stations ? `Charging Stations: ${totalStations}<br>` : ''}
-            Incentives: ${totalIncentives}
+            ${filters.incentives ? `Incentives: ${totalIncentives}<br>` : ''}
         `);
 }
 
@@ -411,8 +411,9 @@ function calculateGlobalTotals(salesResults, stationsCount, incentivesCount, fil
     if (filters.stations) {
         Object.values(stationsCount).forEach(count => totalStations += count || 0);
     }
-
-    Object.values(incentivesCount).forEach(count => totalIncentives += count || 0);
+    if (filters.incentives){
+        Object.values(incentivesCount).forEach(count => totalIncentives += count || 0);
+    }
 
     return { totalEVSales, totalHEVSales, totalPHEVSales, totalStations, totalIncentives };
 }

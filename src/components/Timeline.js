@@ -139,14 +139,30 @@ export function renderTimeline(onSelectionChange) {
         rangeLine
             .attr('x1', xScale(selectedStartDate))
             .attr('x2', xScale(selectedEndDate));
-    
-        startDateText
-            .attr('x', xScale(selectedStartDate))
-            .text(formatDate(selectedStartDate));
-    
-        endDateText
-            .attr('x', xScale(selectedEndDate))
-            .text(formatDate(selectedEndDate));
+        
+        const startX = xScale(selectedStartDate);
+        const endX = xScale(selectedEndDate);
+        const textSpacing = 20; // Espace minimum entre les textes
+        
+        if (Math.abs(endX - startX) < textSpacing) {
+            // Si les textes sont trop proches, décaler horizontalement
+            startDateText
+                .attr('x', startX - textSpacing / 2) // Décale légèrement à gauche
+                .text(formatDate(selectedStartDate));
+            
+            endDateText
+                .attr('x', endX + textSpacing / 2) // Décale légèrement à droite
+                .text(formatDate(selectedEndDate));
+        } else {
+            // Sinon, garder les positions normales
+            startDateText
+                .attr('x', startX)
+                .text(formatDate(selectedStartDate));
+            
+            endDateText
+                .attr('x', endX)
+                .text(formatDate(selectedEndDate));
+        }
     
         setStartDate(selectedStartDate);
         setEndDate(selectedEndDate);
@@ -154,6 +170,7 @@ export function renderTimeline(onSelectionChange) {
             onSelectionChange(selectedStartDate, selectedEndDate);
         }
     }
+    
 
 
     window.addEventListener('resize', () => {
@@ -190,8 +207,6 @@ export function renderTimeline(onSelectionChange) {
     });
 }
 
-
-// Fonction pour formater les dates en mois et année
 function formatDate(date) {
     return d3.timeFormat('%B %Y')(date); // Ex : "January 2016"
 }

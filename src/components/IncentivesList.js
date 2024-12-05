@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import { getIncentivesDetailsByState, getIncentivesDetailsForState } from '../utils/dataLoaders/incentivesLoader';
 import { getStartDate, getEndDate, getSelectedState } from './stateManager';
-
+import { getFilters } from './FilterManager';
 let incentivesData = null;
 
 (async () => {
@@ -23,7 +23,6 @@ let incentivesData = null;
 export function renderIncentivesList(startDate = getStartDate(), endDate = getEndDate()) {
     const container = d3.select('.incentives');
     const svg = container.select('svg');
-    
     if (svg.empty()) {
         initializeIncentivesList(container, startDate, endDate);
     } else {
@@ -34,54 +33,56 @@ export function renderIncentivesList(startDate = getStartDate(), endDate = getEn
 // Initialisation de la liste des incentives
 function initializeIncentivesList(container, startDate, endDate) {
     container.selectAll('*').remove(); // Supprimer tout contenu existant
+    if (getFilters().incentives){
+        const selectedState = getSelectedState(); 
 
-    const selectedState = getSelectedState(); 
-
-    if (selectedState) {
-        const incentivesForState = getIncentivesDetailsForState(incentivesData, selectedState, startDate, endDate);
-        //console.log(`Incentives pour ${selectedState} entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesForState);
-
-        // Afficher les incentives pour un état spécifique
-        renderIncentives(container, incentivesForState);
-    } else {
-        const incentivesByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
-        //console.log(`Incentives pour tous les états entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesByState);
-
-        // Afficher les incentives groupés par état
-        Object.entries(incentivesByState).forEach(([state, incentives]) => {
-            container.append('h3')
-                .text(state)
-                .style('margin-bottom', '10px')
-                .style('margin-top', '10px');
-
-            renderIncentives(container, incentives);
-        });
-    }
+        if (selectedState) {
+            const incentivesForState = getIncentivesDetailsForState(incentivesData, selectedState, startDate, endDate);
+            //console.log(`Incentives pour ${selectedState} entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesForState);
+    
+            // Afficher les incentives pour un état spécifique
+            renderIncentives(container, incentivesForState);
+        } else {
+            const incentivesByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
+            //console.log(`Incentives pour tous les états entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesByState);
+    
+            // Afficher les incentives groupés par état
+            Object.entries(incentivesByState).forEach(([state, incentives]) => {
+                container.append('h3')
+                    .text(state)
+                    .style('margin-bottom', '10px')
+                    .style('margin-top', '10px');
+    
+                renderIncentives(container, incentives);
+            });
+        }
+    }    
 }
 
 // Mise à jour de la liste des incentives
 function updateIncentivesList(container, startDate, endDate) {
     container.selectAll('*').remove(); // Supprimer le contenu existant
+    if (getFilters().incentives){
+        const selectedState = getSelectedState(); 
 
-    const selectedState = getSelectedState(); 
+        if (selectedState) {
+            const incentivesForState = getIncentivesDetailsForState(incentivesData, selectedState, startDate, endDate);
+            //console.log(`Incentives pour ${selectedState} entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesForState);
+            
+            renderIncentives(container, incentivesForState);
+        } else {
+            const incentivesByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
+            //console.log(`Incentives pour tous les états entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesByState);
 
-    if (selectedState) {
-        const incentivesForState = getIncentivesDetailsForState(incentivesData, selectedState, startDate, endDate);
-        //console.log(`Incentives pour ${selectedState} entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesForState);
-        
-        renderIncentives(container, incentivesForState);
-    } else {
-        const incentivesByState = getIncentivesDetailsByState(incentivesData, startDate, endDate);
-        //console.log(`Incentives pour tous les états entre ${startDate.toDateString()} et ${endDate.toDateString()} :`, incentivesByState);
+            Object.entries(incentivesByState).forEach(([state, incentives]) => {
+                container.append('h3')
+                    .text(state)
+                    .style('margin-bottom', '10px')
+                    .style('margin-top', '10px');
 
-        Object.entries(incentivesByState).forEach(([state, incentives]) => {
-            container.append('h3')
-                .text(state)
-                .style('margin-bottom', '10px')
-                .style('margin-top', '10px');
-
-            renderIncentives(container, incentives);
-        });
+                renderIncentives(container, incentives);
+            });
+        } 
     }
 }
 function renderIncentives(container, incentives) {

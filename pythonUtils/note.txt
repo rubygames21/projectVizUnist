@@ -1,9 +1,6 @@
 linechart : 
 	-  incentives plusieurs sur la meme date comment faire ?
 
-incentives : 
-	- united states incentives for all the state les mettre à la toute fin
-	
 visuel : 
 	- color
 	- filter
@@ -11,6 +8,10 @@ visuel :
 	- LR = violet (logo dans incentivesList + ligne verticale dans linegraph) / SI = orange / I = black
 	- legend incentives
 	- legende/titre linegraph
+	- time line deux dates trop proche se chevauche
+	- linegraph axe x et y sans valeur à la fin
+	- linegraph dernier mois de 2023 bug ligne droite
+
 
 si le temps :
 	- zoom sur le graph

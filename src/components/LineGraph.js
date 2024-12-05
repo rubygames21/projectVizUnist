@@ -108,11 +108,13 @@ function initializeLineGraph(svg, startDate, endDate, width, height,filters) {
         plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales, filters);
     }
     else{
-        svg.selectAll('.line-path').remove();
+        svg.selectAll('.incentive-line').remove();
     }
 
        
-    plotIncentives(svg, incentivesToPlot, xScale, height);
+    if(filters.incentives){
+        plotIncentives(svg, incentivesToPlot, xScale, height);
+    }
 }
 
 function updateLineGraph(svg, startDate, endDate, width, height,filters) {
@@ -163,7 +165,6 @@ function updateLineGraph(svg, startDate, endDate, width, height,filters) {
     else{
         svg.selectAll('.station-line-path').remove();
         svg.selectAll('.y-axis-stations').remove();
-
     }
    
 
@@ -174,8 +175,12 @@ function updateLineGraph(svg, startDate, endDate, width, height,filters) {
         svg.selectAll('.line-path').remove();
     }
 
-    
-    plotIncentives(svg, incentivesToPlot, xScale, height);
+    if(filters.incentives){
+        plotIncentives(svg, incentivesToPlot, xScale, height);
+    }
+    else{
+        svg.selectAll('.incentive-line').remove();
+    }
 }
 
 function plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales, filters) {
@@ -236,8 +241,6 @@ function plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleSta
 
 function plotIncentives(svg, incentivesToPlot, xScale, height) {
     svg.selectAll('.incentive-line').remove();
-
-    if (typeof incentivesToPlot === 'object') {
         Object.values(incentivesToPlot).flat().forEach((incentive) => {
             const incentiveDate = new Date(incentive.Date);
             svg.append('line')
@@ -250,7 +253,6 @@ function plotIncentives(svg, incentivesToPlot, xScale, height) {
                 .style('stroke-width', 1)
                 .style('stroke-dasharray', '4 2');
         });
-    }
 }
 
 function formatDataForStationLine(data) {

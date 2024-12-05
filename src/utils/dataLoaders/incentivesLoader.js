@@ -7,14 +7,12 @@
  */
 export function getIncentivesCountByState(incentivesData, startDate, endDate) {
     const results = {};
-
     for (const [state, incentives] of Object.entries(incentivesData)) {
         results[state] = incentives.filter(incentive => {
             const incentiveDate = new Date(incentive.Date);
             return incentiveDate >= startDate && incentiveDate < endDate;
         }).length;
     }
-
     return results;
 }
 
@@ -27,14 +25,12 @@ export function getIncentivesCountByState(incentivesData, startDate, endDate) {
  */
 export function getIncentivesDetailsByState(incentivesData, startDate, endDate) {
     const results = {};
-
     for (const [state, incentives] of Object.entries(incentivesData)) {
         results[state] = incentives.filter(incentive => {
             const incentiveDate = new Date(incentive.Date);
             return incentiveDate >= startDate && incentiveDate < endDate;
         });
     }
-
     return results;
 }
 
@@ -51,7 +47,6 @@ export function getIncentivesDetailsForState(incentivesData, state, startDate, e
         console.error(`L'état ${state} n'a pas d'incentives enregistrées.`);
         return [];
     }
-
     return incentivesData[state].filter(incentive => {
         const incentiveDate = new Date(incentive.Date);
         return incentiveDate >= startDate && incentiveDate < endDate;

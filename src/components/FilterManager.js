@@ -3,6 +3,7 @@ let filters = {
     HEV_sales: true,
     PHEV_sales: true,
     stations: true,
+    incentives: true,
 };
 
 function setFilter(filterName, value) {

@@ -15,11 +15,11 @@ export function renderFilterChecklist() {
         { id: 'HEV_sales', label: 'HEV Sales' },
         { id: 'PHEV_sales', label: 'PHEV Sales' },
         { id: 'stations', label: 'Stations' },
+        { id: 'incentives', label: 'Incentives' },
     ];
 
     filters.forEach(filter => {
         const checkboxContainer = container.append('div').attr('class', 'checkbox-container');
-
         checkboxContainer
             .append('input')
             .attr('type', 'checkbox')

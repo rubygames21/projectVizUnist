@@ -731,44 +731,6 @@
             "Types Supported": "ELEC"
         }
     ],
-    "United States of America": [
-        {
-            "Project Name": "Charging and Fueling Infrastructure Grants",
-            "Date": "2021-11-15",
-            "Category": "Incentives",
-            "Types Supported": "ELEC|PHEV"
-        },
-        {
-            "Project Name": "National Multimodal Cooperative Freight Research Program",
-            "Date": "2021-11-15",
-            "Category": "Incentives",
-            "Types Supported": "ELEC"
-        },
-        {
-            "Project Name": "Community Electric Vehicle Charging Grants",
-            "Date": "2021-11-15",
-            "Category": "Incentives",
-            "Types Supported": "ELEC|PHEV"
-        },
-        {
-            "Project Name": "Commercial Electric Vehicle (EV) and Fuel Cell Electric Vehicle (FCEV) Tax Credit",
-            "Date": "2022-08-16",
-            "Category": "Incentives",
-            "Types Supported": "ELEC|HY|PHEV"
-        },
-        {
-            "Project Name": "Port Electrification Grants",
-            "Date": "2022-08-16",
-            "Category": "Incentives",
-            "Types Supported": "ELEC|HY"
-        },
-        {
-            "Project Name": "Utility Electric Vehicle (EV) Promotion Measures",
-            "Date": "2021-11-15",
-            "Category": "Laws and Regulations",
-            "Types Supported": "ELEC|PHEV"
-        }
-    ],
     "Utah": [
         {
             "Project Name": "Electric Vehicle (EV) Infrastructure Bond Authorization",
@@ -879,6 +841,43 @@
         {
             "Project Name": "Regional Electric Vehicle (REV) West Plan",
             "Date": "2017-10-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        }
+    ],"United States of America": [
+        {
+            "Project Name": "Charging and Fueling Infrastructure Grants",
+            "Date": "2021-11-15",
+            "Category": "Incentives",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "National Multimodal Cooperative Freight Research Program",
+            "Date": "2021-11-15",
+            "Category": "Incentives",
+            "Types Supported": "ELEC"
+        },
+        {
+            "Project Name": "Community Electric Vehicle Charging Grants",
+            "Date": "2021-11-15",
+            "Category": "Incentives",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Commercial Electric Vehicle (EV) and Fuel Cell Electric Vehicle (FCEV) Tax Credit",
+            "Date": "2022-08-16",
+            "Category": "Incentives",
+            "Types Supported": "ELEC|HY|PHEV"
+        },
+        {
+            "Project Name": "Port Electrification Grants",
+            "Date": "2022-08-16",
+            "Category": "Incentives",
+            "Types Supported": "ELEC|HY"
+        },
+        {
+            "Project Name": "Utility Electric Vehicle (EV) Promotion Measures",
+            "Date": "2021-11-15",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
         }

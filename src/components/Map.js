@@ -136,7 +136,7 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
                 const hevSales = filters.HEV_sales ? (salesResults.hevData[state] || 0) : null;
                 const phevSales = filters.PHEV_sales ? (salesResults.phevData[state] || 0) : null;
                 const stations = filters.stations ? (stationsCount[state] || 0) : null;
-                const incentives = filters.incentives ? (incentivesCount[state] || 0): null;
+                const incentives = filters.incentives ? (incentivesCount[state] || 0) : null;
 
                 const tooltipContent = buildTooltipContent(state, evSales, hevSales, phevSales, stations, incentives);
                 tooltip.style('opacity', 1).html(tooltipContent);
@@ -170,26 +170,74 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
             });
 
         setupZoom(svg, mapLayer, stationLayer, width, height);
-
     });
 
     // Ajouter le tooltip global
-    d3.select('body')
+    const globalTooltip = d3.select('.map')
         .append('div')
         .attr('class', 'global-tooltip')
         .style('position', 'absolute')
-        .style('top', '22px')
-        .style('right', '81vh')
+        .style('top', '3vh') // Position initiale
+        .style('right', '82vh') // Position initiale
+        .style('width', '158px') // Taille fixe
+        .style('height', '95px') // Hauteur fixe
         .style('padding', '10px')
         .style('background', '#fff')
         .style('border', '1px solid #ccc')
         .style('border-radius', '5px')
         .style('box-shadow', '0 4px 8px rgba(0,0,0,0.1)')
         .style('font-size', '14px')
-        .style('pointer-events', 'none')
+        .style('pointer-events', 'auto') // Permet les interactions
         .style('opacity', 1)
         .html(`<strong>Total USA Data</strong><br>Calculating...`);
+
+    
+    let startX, startY, offsetX, offsetY;
+
+    globalTooltip
+        .on('mousedown', function (event) {
+            event.preventDefault();
+            const rect = this.getBoundingClientRect();
+            startX = event.clientX;
+            startY = event.clientY;
+            offsetX = rect.left;
+            offsetY = rect.top;
+
+            d3.select(window)
+                .on('mousemove', onDrag)
+                .on('mouseup', onStop);
+        });
+
+    function onDrag(event) {
+        event.preventDefault();
+        const newLeft = offsetX + (event.clientX - startX);
+        const newTop = offsetY + (event.clientY - startY);
+
+        const containerRect = container.node().getBoundingClientRect();
+        const tooltipRect = globalTooltip.node().getBoundingClientRect();
+
+        // Contraindre le tooltip à rester dans les limites de la carte
+        const constrainedLeft = Math.max(
+            containerRect.left+10,
+            Math.min(containerRect.right - tooltipRect.width +10, newLeft+10)
+        );
+        const constrainedTop = Math.max(
+            containerRect.top+10,
+            Math.min(containerRect.bottom - tooltipRect.height +10, newTop+10)
+        );
+
+        globalTooltip.style('left', `${constrainedLeft - containerRect.left}px`);
+        globalTooltip.style('top', `${constrainedTop - containerRect.top}px`);
+    }
+
+    function onStop() {
+        d3.select(window)
+            .on('mousemove', null)
+            .on('mouseup', null);
+    }
 }
+
+
 
 function updateMap(svg, salesResults, stationsCount, incentivesCount, stationsByState) {
     const filters = getFilters(); // Récupérer les filtres

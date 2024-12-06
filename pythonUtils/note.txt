@@ -1,17 +1,18 @@
-linechart : 
-	-  incentives plusieurs sur la meme date comment faire ?
-
 visuel : 
-	- color
-	- filter
-	- margin entre logo EV... depend du type de logo (pas d'espace à doirte d'un logo EV)
-	- LR = violet (logo dans incentivesList + ligne verticale dans linegraph) / SI = orange / I = black
-	- legend incentives
-	- legende/titre linegraph
-	- time line deux dates trop proche se chevauche
 	- linegraph axe x et y sans valeur à la fin
 	- linegraph dernier mois de 2023 bug ligne droite
+	- legende/titre linegraph
+	- lingegraph incentives plusieurs sur la meme date comment faire ?
+	- LR = violet (logo dans incentivesList + ligne verticale dans linegraph) / SI = orange / I = black
 
+	- timeline collision à droite
+
+	- filter
+
+	- map legend/titre
+
+	- margin entre logo EV... depend du type de logo (pas d'espace à doirte d'un logo EV)
+	- legend incentives
 
 si le temps :
 	- zoom sur le graph

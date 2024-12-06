@@ -139,31 +139,54 @@ export function renderTimeline(onSelectionChange) {
         rangeLine
             .attr('x1', xScale(selectedStartDate))
             .attr('x2', xScale(selectedEndDate));
-        
-        const startX = xScale(selectedStartDate);
-        const endX = xScale(selectedEndDate);
-        const textSpacing = 20; // Espace minimum entre les textes
-        
-        if (Math.abs(endX - startX) < textSpacing) {
-            // Si les textes sont trop proches, décaler horizontalement
+    
+        // Calcule la distance entre les curseurs
+        const distance = Math.abs(xScale(selectedEndDate) - xScale(selectedStartDate) - 40);
+    
+        const containerWidth = timelineContainer.offsetWidth;
+    
+        if (distance < 50) {
+            // Collision : Texte fusionné au milieu
+            const midPoint = (xScale(selectedStartDate) + xScale(selectedEndDate)) / 2;
             startDateText
-                .attr('x', startX - textSpacing / 2) // Décale légèrement à gauche
-                .text(formatDate(selectedStartDate));
-            
-            endDateText
-                .attr('x', endX + textSpacing / 2) // Décale légèrement à droite
-                .text(formatDate(selectedEndDate));
+                .attr('x', midPoint)
+                .attr('text-anchor', 'middle')
+                .text(`${formatDate(selectedStartDate)} - ${formatDate(selectedEndDate)}`);
+            endDateText.text(''); // Vider, mais ne pas utiliser pour les collisions
         } else {
-            // Sinon, garder les positions normales
+            // Pas de collision : Texte aux curseurs respectifs
             startDateText
-                .attr('x', startX)
+                .attr('x', xScale(selectedStartDate))
+                .attr('text-anchor', 'middle')
                 .text(formatDate(selectedStartDate));
-            
             endDateText
-                .attr('x', endX)
+                .attr('x', xScale(selectedEndDate))
+                .attr('text-anchor', 'middle')
                 .text(formatDate(selectedEndDate));
         }
     
+        // Récupère les dimensions du texte
+        const startTextBBox = startDateText.node().getBBox();
+        const endTextBBox = endDateText.node().getBBox();
+    
+        // Corrige le texte de début s'il dépasse à gauche
+        if (startTextBBox.x < 0) {
+            startDateText.attr('x', startTextBBox.width / 2);
+        }
+    
+        // Vérifie que endTextRightEdge est valide avant de le calculer
+        if (distance >= 50) {
+            const endTextRightEdge = endTextBBox.x + endTextBBox.width;
+            
+            // Corrige le texte de fin s'il dépasse à droite
+            if (endTextRightEdge > containerWidth - 10) {
+                endDateText
+                    .attr('x', containerWidth - endTextBBox.width / 2 - 10)
+                    .attr('text-anchor', 'end');
+            }
+        }
+    
+        // Mets à jour les dates sélectionnées
         setStartDate(selectedStartDate);
         setEndDate(selectedEndDate);
         if (onSelectionChange) {
@@ -171,6 +194,8 @@ export function renderTimeline(onSelectionChange) {
         }
     }
     
+    
+
 
 
     window.addEventListener('resize', () => {

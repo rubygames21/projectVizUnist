@@ -128,12 +128,12 @@ function renderIncentives(container, incentives) {
             .style('margin-right', '15px')
             .style('margin-left', '4px')
             .style('color', '#333')
-            .style('font-size', '16px'); // Taille de texte ajustée
+            .style('font-size', '16px'); 
 
             const typesContainer = row.append('div')
             .style('display', 'flex')
-            .style('gap', '25px') // Espacement entre les icônes
-            .style('margin-left', 'auto') // Aligne les icônes à droite
+            .style('gap', '25px') 
+            .style('margin-left', 'auto')
         const supportedTypes = incentive["Types Supported"]?.split('|') || [];
         supportedTypes.forEach(type => {
             let imgSrc;
@@ -148,34 +148,22 @@ function renderIncentives(container, incentives) {
                     imgSrc = 'data/phev.png';
                     break;
             }
-        
             if (imgSrc) {
                 typesContainer.append('img')
                     .attr('src', imgSrc)
                     .attr('alt', type)
-                    .style('width', '30px') // Ajustez la taille si nécessaire
+                    .style('width', '30px') 
                     .style('height', '30px')
-                    .style('transform', 'scale(2.5)') // Zoom des logos
-                    .style('transform-origin', 'center') // Centre le zoom
+                    .style('transform', 'scale(2.5)') 
+                    .style('transform-origin', 'center')
                     .style('margin-right','20px') 
-
             }
         });
     });
 }
 
-
-// Fonction pour formater la date
 function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
     return date.toLocaleDateString('en-US', options);
-}
-
-// Fonction pour tronquer le texte
-function truncateText(text, maxLength) {
-    if (text.length > maxLength) {
-        return text.substring(0, maxLength) + '...';
-    }
-    return text;
 }

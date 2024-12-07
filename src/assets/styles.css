@@ -4,10 +4,9 @@ body, html {
   width: 100%;
   height: 100%;
   font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  background-color: grey;
 }
 
 .container {
@@ -25,8 +24,74 @@ body, html {
   display: flex;
   flex: 1;
   gap: 10px;
-  height: 70%; /* Réserve une partie de la hauteur totale */
+  height: 70%; /* Height of the top section */
 }
+
+
+  /* Left Section (Main Title + Map Content + Filters) */
+  .side-left-section {
+    flex: 1; /* Occupies 2/3 of the top section */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between elements */
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+    /* Main Title */
+    .main-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #004080; /* Dark blue for emphasis */
+      text-align: left;
+      background-color: #f9f9f9;
+      padding: 5px 0px;
+      border-radius: 8px;
+    }
+
+    /* Map Content Container (Map Title + Map) */
+    .map-content-container {
+      flex: 1; 
+      display: flex;
+      flex-direction: column;
+      gap: 10px; /* Space between the title and map */
+      border-radius: 8px;
+      background-color: #d1e9f7; /* Light blue background */
+    }
+
+          /* Map Title */
+          .map-title {
+            margin-top: 0.5vw;
+            margin-left: 0.5vw;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: left;
+            color: #333333;
+          }
+
+          /* Map */
+          .map {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white; /* Ensure text is visible */
+            border-radius: 8px;
+            width: 100%;
+          }
+
+    .filters {
+      background-color: lightgray;
+      padding: 10px;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 18px;
+    }
 
 
 .map-container {
@@ -34,16 +99,11 @@ body, html {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background-color: lightgray;
+  border-radius: 8px;
+
 }
 
-.map {
-  flex: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  border-radius: 8px;
-}
 
 .tooltip {
   position: absolute;
@@ -59,82 +119,156 @@ body, html {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Ombre pour plus de visibilité */
 }
 
-/* Dans votre fichier CSS */
-.selected-state {
-  fill: purple; /* Changez cette couleur pour celle de votre choix */
-  stroke: #333333;
-  stroke-width: 2px;
-}
 
 .stations-layer {
   pointer-events: none; /* Désactive les interactions de la souris */
 }
 
 .timeline {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: calc(100% - 22px); 
+  margin: 0 auto; /* Centre horizontalement */
+  background-color: lightgray;
+  border-radius: 8px;
+  padding: 10px;
+  overflow: hidden; /* Empêche tout débordement */
 }
 
-
 .filters {
-  flex: 0.1;
-  background-color: #f5a623;
+  flex: 0.05;
+  background-color: lightgray;
   padding: 10px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: black; /* Couleur pour lisibilité */
+  display: flex; /* Important pour activer Flexbox */
+  justify-content: center; /* Centre les enfants horizontalement */
+  align-items: center; /* Centre les enfants verticalement */
   border-radius: 8px;
   font-size: 18px;
+  gap: 20px; /* Ajoute un espace entre les filtres */
+}
+
+.checkbox-container {
+  display: flex; /* Permet d'aligner les checkbox et labels */
+  align-items: center; /* Centre verticalement la checkbox et le label */
+  gap: 5px; /* Espace entre la checkbox et son label */
+  padding-left: 2vw; /* Ajoutez de l'espace à gauche des filtres */
 }
 
 .side-section {
-  flex: 2.3;
+  flex: 0.8; /* Occupies 1/3 of the top section */
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  height: 100%; /* Prend la taille totale allouée par le parent */
+  gap: 0px;
+  background-color: #f9f9f9;
+  padding-left: 10px;  
+  padding-right: 10px;
+  border-radius: 8px;
+}
+
+
+.linegraph-container {
+  flex: 1; /* Utilise tout l'espace disponible dans la section */
+  display: flex;
+  flex-direction: column; /* Aligne les éléments verticalement */
+  gap: 10px; /* Espace entre le titre et le contenu */
+  background-color: #f9f9f9; /* Couleur de fond neutre */
+  padding: 10px;
+  border-radius: 8px;
+  overflow: hidden; /* Empêche le débordement pour le conteneur global */
+}
+
+.linegraph-title{
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333333;
+  text-align: left; /* Centré */
+  margin: 0; /* Supprime les marges par défaut */
+  padding: 10px 0; /* Ajoute un peu d'espace vertical */
+  border-bottom: 1px solid #d1d1d6; /* Ligne en bas pour séparer du contenu */
 }
 
 .linegraph {
   flex: 1;
-  color: black;
+  background-color: #ededed; /* Ajoutez une couleur de fond pour vérifier */
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  font-size: 22px;
 }
 
+
+/* Container pour les incentives (contient le titre et la liste) */
+.incentives-container {
+  flex: 1; /* Utilise tout l'espace disponible dans la section */
+  display: flex;
+  flex-direction: column; /* Aligne les éléments verticalement */
+  gap: 10px; /* Espace entre le titre et le contenu */
+  background-color: #f9f9f9; /* Couleur de fond neutre */
+  padding: 10px;
+  border-radius: 8px;
+  overflow: hidden; /* Empêche le débordement pour le conteneur global */
+}
+
+/* Titre pour les incentives */
+.incentives-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333333;
+  text-align: left; /* Centré */
+  margin: 0; /* Supprime les marges par défaut */
+  padding: 10px 0; /* Ajoute un peu d'espace vertical */
+  border-bottom: 1px solid #d1d1d6; /* Ligne en bas pour séparer du contenu */
+}
+
+/* Contenu des incentives (liste défilante) */
+.incentives {
+  flex: 1; /* Prend tout l'espace restant dans le container */
+  background-color: #ffffff; /* Couleur de fond blanche pour contraste */
+  border-radius: 8px;
+  padding: 10px;
+  overflow-y: auto; /* Scroll vertical si le contenu dépasse */
+  overflow-x: hidden; /* Empêche le scroll horizontal */
+  scrollbar-width: thin; /* Barre de défilement fine pour Firefox */
+  scrollbar-color: #c1c1c1 #f9f9f9; /* Couleurs de la barre pour Firefox */
+}
+
+/* Customisation de la scrollbar pour Chrome, Edge, Safari */
+.incentives::-webkit-scrollbar {
+  width: 8px; /* Largeur de la scrollbar */
+}
+
+.incentives::-webkit-scrollbar-track {
+  background: #f9f9f9; /* Couleur de fond de la track */
+}
+
+.incentives::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1; /* Couleur de la barre */
+  border-radius: 8px; /* Arrondie */
+}
+
+.types-container img {
+  width: 50px; /* Largeur identique */
+  height: 50px; /* Hauteur identique */
+  object-fit: contain; /* Maintenir les proportions sans étirer */
+  margin-right: 10px; /* Espacement régulier entre les images */
+  line-height: 1; /* Réduire l'espace réservé au texte dans l'image */
+  vertical-align: middle; /* Alignement au centre verticalement */
+}
+
+.types-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around; /* Répartir uniformément l'espace */
+  gap: 15px; /* Espacement entre les icônes */
+}
+
+
 .x-axis{
-font-size: 8px;
+  font-size: 8px;
 }
 
 .y-axis{
   font-size: 8px;
 }
-
-.incentives {
-  flex: 1; /* Garde la taille relative définie avec le flex */
-  background-color: #7e57c2;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Aligne le texte à gauche */
-  justify-content: flex-start;
-  border-radius: 8px;
-  font-size: 18px;
-  overflow-y: auto; /* Barre de défilement verticale */
-  overflow-x: hidden; /* Empêche le défilement horizontal */
-  padding: 10px; /* Espace intérieur */
-  box-sizing: border-box; /* Assure que padding et bordures sont inclus */
-  height: 100%; /* Prend tout l'espace défini par le parent flex */
-  max-height: 100%; /* Empêche que la taille dépasse le parent */
-  width: 100%;
-}
-
 
 .selection {
   fill: rgba(70, 130, 180, 0.3); /* Ajustez la couleur et la transparence */

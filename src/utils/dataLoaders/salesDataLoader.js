@@ -103,7 +103,6 @@ export function calculateSalesByMonthForState(startDate, endDate, stateName, sal
 }
 
 
-
 export function calculateTotalSalesByMonth(startDate, endDate, salesData) {
     const startYear = startDate.getFullYear();
     const endYear = endDate.getFullYear();
@@ -127,12 +126,13 @@ export function calculateTotalSalesByMonth(startDate, endDate, salesData) {
         let cumulativeSum = 0; // Cumul global pour ce type de ventes
 
         for (let year = startYear; year <= endYear; year++) {
-            results[type][year] = {};
+            const yearData = {}; // Données pour une année spécifique
 
             for (let month = 0; month < 12; month++) {
+                // Modifier la logique pour exclure le mois de `endDate`
                 const isInRange =
                     (year > startYear || month >= startMonth) &&
-                    (year < endYear || month <= endMonth);
+                    (year < endYear || (year === endYear && month < endMonth)); // Mois strictement avant `endMonth`
 
                 if (!isInRange) continue; // Ignorer les mois hors plage
 
@@ -149,12 +149,18 @@ export function calculateTotalSalesByMonth(startDate, endDate, salesData) {
                 cumulativeSum += monthlySales;
 
                 // Assigner le cumul au mois en question
-                results[type][year][monthName] = cumulativeSum;
+                yearData[monthName] = cumulativeSum;
+            }
+
+            // Ajouter l'année uniquement si elle contient des données
+            if (Object.keys(yearData).length > 0) {
+                results[type][year] = yearData;
             }
         }
     }
 
     return results;
 }
+
 
 

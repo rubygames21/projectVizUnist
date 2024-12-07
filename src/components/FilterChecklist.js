@@ -11,13 +11,12 @@ export function renderFilterChecklist() {
     const filterState = getFilters();
 
     const filters = [
-        { id: 'EV_sales', label: 'EV Sales' },
-        { id: 'HEV_sales', label: 'HEV Sales' },
-        { id: 'PHEV_sales', label: 'PHEV Sales' },
-        { id: 'stations', label: 'Stations' },
-        { id: 'incentives', label: 'Incentives' },
+        { id: 'EV_sales', label: 'EV Sales' ,color :'#34C759'},
+        { id: 'PHEV_sales', label: 'PHEV Sales', color:'#00FFFF' },
+        { id: 'HEV_sales', label: 'HEV Sales', color:'#007AFF' },
+        { id: 'stations', label: 'Stations' , color:'orange'},
+        { id: 'incentives', label: 'Incentives',color:'#FF3B30' },
     ];
-
     filters.forEach(filter => {
         const checkboxContainer = container.append('div').attr('class', 'checkbox-container');
         checkboxContainer
@@ -32,7 +31,7 @@ export function renderFilterChecklist() {
                 document.dispatchEvent(event);
             });
         
-        checkboxContainer.append('label').attr('for', filter.id).text(filter.label);
+        checkboxContainer.append('label').attr('for', filter.id).text(filter.label).style('color', filter.color);;
     });
 }
 

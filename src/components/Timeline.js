@@ -6,7 +6,7 @@ export function renderTimeline(onSelectionChange) {
     const timelineContainer = document.querySelector('.timeline');
     const containerWidth = timelineContainer.offsetWidth;
     const height = 80;
-    const margin = { left: 40, right: 40, top: 0, bottom: 20 };
+    const margin = { left: 60, right: 90, top: 0, bottom: 20 };
 
     const svg = d3
         .select(timelineContainer)
@@ -61,7 +61,7 @@ export function renderTimeline(onSelectionChange) {
         .attr('y', height / 4)
         .attr('width', rectWidth)
         .attr('height', height / 2)
-        .style('fill', '#69b3a2')
+        .style('fill', '#387CFF')
         .style('cursor', 'ew-resize')
         .call(
             d3
@@ -69,8 +69,14 @@ export function renderTimeline(onSelectionChange) {
                 .on('drag', function (event) {
                     const newDate = snapToMonth(xScale.invert(event.x));
 
-                    // Empêcher la superposition : la nouvelle date de début doit être < date de fin
-                    if (newDate >= startDate && newDate < selectedEndDate) {
+                    const minEndDate = new Date(
+                        newDate.getFullYear(),
+                        newDate.getMonth() + 2, // Au moins 2 mois après la nouvelle date
+                        1
+                    );
+    
+                    // Vérifier que la nouvelle date respecte les contraintes
+                    if (newDate >= startDate && newDate < selectedEndDate && selectedEndDate >= minEndDate) {
                         selectedStartDate = newDate;
                         d3.select(this).attr('x', xScale(selectedStartDate) - rectWidth / 2);
                         updateRange();
@@ -85,7 +91,7 @@ export function renderTimeline(onSelectionChange) {
         .attr('y', height / 4)
         .attr('width', rectWidth)
         .attr('height', height / 2)
-        .style('fill', '#69b3a2')
+        .style('fill', '#387CFF')
         .style('cursor', 'ew-resize')
         .call(
             d3
@@ -93,7 +99,14 @@ export function renderTimeline(onSelectionChange) {
                 .on('drag', function (event) {
                     const newDate = snapToMonth(xScale.invert(event.x));
 
-                    if (newDate <= endDate && newDate > selectedStartDate) {
+                    const maxStartDate = new Date(
+                        newDate.getFullYear(),
+                        newDate.getMonth() - 2, // Au moins 2 mois avant la nouvelle date
+                        1
+                    );
+    
+                    // Vérifier que la nouvelle date respecte les contraintes
+                    if (newDate <= endDate && newDate > selectedStartDate && selectedStartDate <= maxStartDate) {
                         selectedEndDate = newDate;
                         d3.select(this).attr('x', xScale(selectedEndDate) - rectWidth / 2);
                         updateRange();
@@ -108,8 +121,9 @@ export function renderTimeline(onSelectionChange) {
         .attr('y1', height / 2)
         .attr('x2', xScale(selectedEndDate))
         .attr('y2', height / 2)
-        .style('stroke', '#ff7f0e')
-        .style('stroke-width', 6);
+        .style('stroke', '#387CFF')
+        .style('stroke-width', 6)
+        .style('opacity','0.3');
 
     function snapToMonth(date) {
         const year = date.getFullYear();

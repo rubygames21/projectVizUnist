@@ -1,19 +1,15 @@
-visuel : 
-	- linegraph axe x et y sans valeur à la fin
-	- linegraph dernier mois de 2023 bug ligne droite
-	- legende/titre linegraph
-	- lingegraph incentives plusieurs sur la meme date comment faire ?
-	- LR = violet (logo dans incentivesList + ligne verticale dans linegraph) / SI = orange / I = black
 
-	- timeline collision à droite
+- linegrpah
+	- legende linegraph
 
-	- filter
-
-	- map legend/titre
-
+- incentives :	
 	- margin entre logo EV... depend du type de logo (pas d'espace à doirte d'un logo EV)
-	- legend incentives
 
-si le temps :
-	- zoom sur le graph
-	- bouton help ?
+
+all : 
+	- color
+		- color Hev/state trop pareil
+	- font
+	- couleur cyan à changer 
+
+

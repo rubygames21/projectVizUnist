@@ -94,8 +94,8 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
     const height = container.node().getBoundingClientRect().height;
 
     projection = d3.geoAlbersUsa()
-        .translate([width / 2, height / 2])
-        .scale(Math.min(width, height) * 1.7);
+        .translate([width / 2+25, height / 2-30])
+        .scale(Math.min(width, height) * 1.9);
 
     const path = d3.geoPath().projection(projection);
 
@@ -124,7 +124,7 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
             .enter()
             .append('path')
             .attr('d', path)
-            .attr('fill', '#4a90e2')
+            .attr('fill', '#6B9EFF')
             .attr('stroke', '#ffffff')
             .attr('stroke-width', 1)
             .attr('class', 'state')
@@ -177,12 +177,12 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
         .append('div')
         .attr('class', 'global-tooltip')
         .style('position', 'absolute')
-        .style('top', '3vh') // Position initiale
-        .style('right', '82vh') // Position initiale
+        .style('top', '13vh') // Position initiale
+        .style('right', '91vh') // Position initiale
         .style('width', '158px') // Taille fixe
         .style('height', '95px') // Hauteur fixe
         .style('padding', '10px')
-        .style('background', '#fff')
+        .style('background', 'lightgray')
         .style('border', '1px solid #ccc')
         .style('border-radius', '5px')
         .style('box-shadow', '0 4px 8px rgba(0,0,0,0.1)')
@@ -218,12 +218,14 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
 
         // Contraindre le tooltip à rester dans les limites de la carte
         const constrainedLeft = Math.max(
-            containerRect.left+10,
-            Math.min(containerRect.right - tooltipRect.width +10, newLeft+10)
+            containerRect.left+42//gauche
+            ,
+            Math.min(containerRect.right - tooltipRect.width -5 , newLeft-5)//droite
         );
         const constrainedTop = Math.max(
-            containerRect.top+10,
-            Math.min(containerRect.bottom - tooltipRect.height +10, newTop+10)
+            containerRect.top+135//haut
+            ,
+            Math.min(containerRect.bottom - tooltipRect.height +80, newTop+80)
         );
 
         globalTooltip.style('left', `${constrainedLeft - containerRect.left}px`);
@@ -309,7 +311,7 @@ function deselectState(svg, stationLayer) {
     activeState = null;
 
     setSelectedState(null)
-    svg.selectAll('.state').attr('fill', '#4a90e2');
+    svg.selectAll('.state').attr('fill', '#6B9EFF');
     stationLayer.selectAll('circle').remove();
 
     d3.select('.global-tooltip').style('opacity', 1);
@@ -328,7 +330,7 @@ function toggleStateSelection(svg, state, stations, projection) {
         activeState = null;
         setSelectedState(null);
         stationLayer.selectAll('circle').remove();
-        svg.selectAll('path').attr('fill', '#4a90e2');
+        svg.selectAll('path').attr('fill', '#6B9EFF');
 
         d3.select('.global-tooltip').style('opacity',1);
         renderLineGraph(getStartDate(), getEndDate());
@@ -337,7 +339,7 @@ function toggleStateSelection(svg, state, stations, projection) {
         activeState = state;
         setSelectedState(state);
         svg.selectAll('path').attr('fill', d =>
-            d.properties.NAME === state ? '#ffcc00' : '#4a90e2'
+            d.properties.NAME === state ? '#387CFF' : '#6B9EFF'
         );
         stationLayer.selectAll('circle').remove();
 
@@ -357,7 +359,7 @@ function toggleStateSelection(svg, state, stations, projection) {
                     return projected ? projected[1] : null;
                 })
                 .attr('r', 3.5 / currentTransform.k)
-                .attr('fill', 'red')
+                .attr('fill', 'orange')
                 .attr('stroke', 'black')
                 .attr('stroke-width', 1 / currentTransform.k);
         }

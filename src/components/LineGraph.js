@@ -71,24 +71,24 @@ function initializeLineGraph(svg, startDate, endDate, width, height,filters) {
 
     const xScale = d3.scaleTime()
         .domain(d3.extent(formattedSalesData, (d) => d.date))
-        .range([50, width - 50]);
+        .range([63, width - 50]);
 
     const yScaleSales = d3.scaleLinear()
         .domain([0, d3.max(formattedSalesData, (d) => d.value)])
-        .range([height - 50, 50]);
+        .range([height-20 ,20]);
 
     const yScaleStations = d3.scaleLinear()
         .domain([0, d3.max(formattedStationsData, (d) => d.value)])
-        .range([height - 50, 50]);
+        .range([height - 20, 20]);
 
     svg.append('g')
         .attr('class', 'x-axis')
-        .attr('transform', `translate(0, ${height - 50})`)
+        .attr('transform', `translate(0, ${height - 20})`)
         .call(d3.axisBottom(xScale).ticks(d3.timeYear.every(1)));
 
     svg.append('g')
         .attr('class', 'y-axis-sales')
-        .attr('transform', 'translate(50, 0)')
+        .attr('transform', 'translate(63, 0)')
         .call(d3.axisLeft(yScaleSales));
 
     if (filters.stations) {
@@ -131,20 +131,22 @@ function updateLineGraph(svg, startDate, endDate, width, height,filters) {
         ? getIncentivesDetailsForState(incentivesData, selectedState, startDate, endDate)
         : getIncentivesDetailsByState(incentivesData, startDate, endDate);
 
+    console.log(salesDataToPlot)
     const formattedSalesData = formatAllDataForLine(salesDataToPlot);
     const formattedStationsData = formatDataForStationLine(chargingStationsToPlot);
 
     const xScale = d3.scaleTime()
-        .domain(d3.extent(formattedSalesData, (d) => d.date))
-        .range([50, width - 50]);
+    .domain(d3.extent(formattedSalesData, (d) => d.date))
+    .range([63, width - 50]);
 
     const yScaleSales = d3.scaleLinear()
         .domain([0, d3.max(formattedSalesData, (d) => d.value)])
-        .range([height - 50, 50]);
+        .range([height-20 ,20]);
 
     const yScaleStations = d3.scaleLinear()
         .domain([0, d3.max(formattedStationsData, (d) => d.value)])
-        .range([height - 50, 50]);
+        .range([height - 20, 20]);
+
 
     svg.select('.x-axis')
         .call(d3.axisBottom(xScale).ticks(d3.timeYear.every(1)));
@@ -185,7 +187,7 @@ function updateLineGraph(svg, startDate, endDate, width, height,filters) {
 
 function plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales, filters) {
     svg.selectAll('.line-path').remove();
-    const colors = { evData: 'red', hevData: 'green', phevData: 'blue' };
+    const colors = { evData: '#34C759', hevData: '#007AFF', phevData: '#00FFFF' };
 
     for (const type in salesDataToPlot) {
         if (
@@ -219,7 +221,6 @@ function plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleSta
     svg.selectAll('.station-line-path').remove();
 
     const lineData = formatDataForStationLine(chargingStationsToPlot);
-    console.log('Line Data for Stations:', lineData);
 
     if (lineData.length === 0) {
         console.warn('No data for charging stations');
@@ -246,12 +247,13 @@ function plotIncentives(svg, incentivesToPlot, xScale, height) {
             svg.append('line')
                 .attr('class', 'incentive-line')
                 .attr('x1', xScale(incentiveDate))
-                .attr('y1', 50)
+                .attr('y1', 20)
                 .attr('x2', xScale(incentiveDate))
-                .attr('y2', height - 50)
-                .style('stroke', 'purple')
+                .attr('y2', height - 20)
+                .style('stroke', '#FF3B30')
                 .style('stroke-width', 1)
-                .style('stroke-dasharray', '4 2');
+                .style('stroke-dasharray', '4 2')
+                .style('opacity','0.35');
         });
 }
 

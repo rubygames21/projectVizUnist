@@ -95,7 +95,7 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
 
     projection = d3.geoAlbersUsa()
         .translate([width / 2+25, height / 2-30])
-        .scale(Math.min(width, height) * 1.8);
+        .scale(Math.min(width, height) * 1.5);
 
     const path = d3.geoPath().projection(projection);
 
@@ -183,7 +183,7 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
         .style('background', 'rgba(128, 128, 128, 0.7)')
         .style('border-radius', '5px')
         .style('font-size', '1.1rem')
-        .style('pointer-events', 'auto') // Permet les interactions
+        .style('pointer-events', 'auto') 
         .style('opacity', 1)
         .html(`<strong>Total USA Data</strong><br>Calculating...`);
 

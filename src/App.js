@@ -49,15 +49,17 @@ export function initApp() {
 
     const lineGraphTitle = document.createElement('div');
     lineGraphTitle.classList.add('linegraph-title');
-    lineGraphTitle.textContent = 'Trends in Electric Vehicle Sales, Charging Stations, and Policy Measures over time';
+    lineGraphTitle.textContent = 'Trends in EV Sales, Charging Stations, and Policy Measures over time';
 
+    const legendContainer = document.createElement('div');
+    legendContainer.classList.add('linegraph-legend');
 
     const linegraphContainer = document.createElement('div');
     linegraphContainer.classList.add('linegraph-container');
 
     linegraphContainer.appendChild(lineGraphTitle);
     linegraphContainer.appendChild(lineGraph);
-
+    linegraphContainer.appendChild(legendContainer);
     const incentives = document.createElement('div');
     incentives.classList.add('incentives');
 

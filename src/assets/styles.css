@@ -41,7 +41,7 @@ body, html {
 
     /* Main Title */
     .main-title {
-      font-size: 1.8vw;
+      font-size: 1.6vw;
       font-weight: bold;
       color: #004080; /* Dark blue for emphasis */
       text-align: center;
@@ -64,7 +64,7 @@ body, html {
           .map-title {
             margin-top: 0.5vw;
             margin-left: 0.5vw;
-            font-size: 1.4vw;
+            font-size: 1.3vw;
             font-weight: bold;
             text-align: center;
             color: #333333;
@@ -81,6 +81,7 @@ body, html {
             width: 100%;
           }
 
+        
 
 .map-container {
   flex: 3;
@@ -129,8 +130,18 @@ body, html {
   justify-content: center; /* Centre les enfants horizontalement */
   align-items: center; /* Centre les enfants verticalement */
   border-radius: 8px;
-  font-size: 1.1vw;
-  gap: 10px; /* Ajoute un espace entre les filtres */
+  font-size: 1vw;
+  gap: 6px; /* Ajoute un espace entre les filtres */
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 0.8vw; /* Taille proportionnelle à la largeur de l'écran */
+  height: 0.8vw; /* Taille proportionnelle à la largeur de l'écran */
+  min-width: 16px; /* Taille minimale pour éviter qu'elles ne soient trop petites */
+  min-height: 16px;
+  margin-right: 10px;
+  justify-content: center; /* Centre les enfants horizontalement */
+  align-items: center; /* Centre les enfants verticalement */
 }
 
 .checkbox-container {
@@ -164,7 +175,7 @@ body, html {
 }
 
 .linegraph-title{
-  font-size: 1.4vw;
+  font-size: 1.3vw;
   font-weight: bold;
   color: #333333;
   text-align: center; /* Centré */
@@ -183,6 +194,26 @@ body, html {
   padding: 10px;
 }
 
+.linegraph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.legend-item span {
+  font-size: 1vw;
+  margin-left: 5px;
+}
+
+
 
 /* Container pour les incentives (contient le titre et la liste) */
 .incentives-container {
@@ -198,7 +229,7 @@ body, html {
 
 /* Titre pour les incentives */
 .incentives-title {
-  font-size: 1.4vw;
+  font-size: 1.3vw;
   font-weight: bold;
   color: #333333;
   text-align: center; /* Centré */

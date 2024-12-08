@@ -129,7 +129,7 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
             .attr('stroke-width', 1)
             .attr('class', 'state')
             .on('mouseover', function (event, d) {
-                const filters = getFilters(); // Récupérer les filtres
+                const filters = getFilters(); 
                 const state = d.properties.NAME;
 
                 const evSales = filters.EV_sales ? (salesResults.evData[state] || 0) : null;
@@ -177,14 +177,12 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
         .append('div')
         .attr('class', 'global-tooltip')
         .style('position', 'absolute')
-        .style('top', '13vh') // Position initiale
-        .style('right', '91vh') // Position initiale
-       
+        .style('top', '14vh') // Position initiale
+        .style('right', '53vw') // Position initiale
         .style('padding', '10px')
         .style('background', 'rgba(128, 128, 128, 0.7)')
         .style('border-radius', '5px')
-        .style('box-shadow', '0 4px 8px rgba(0,0,0,0.1)')
-        .style('font-size', '1.3rem')
+        .style('font-size', '1.1rem')
         .style('pointer-events', 'auto') // Permet les interactions
         .style('opacity', 1)
         .html(`<strong>Total USA Data</strong><br>Calculating...`);
@@ -221,9 +219,9 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
             Math.min(containerRect.right - tooltipRect.width -5 , newLeft-5)//droite
         );
         const constrainedTop = Math.max(
-            containerRect.top+135//haut
+            containerRect.top+150//haut
             ,
-            Math.min(containerRect.bottom - tooltipRect.height +80, newTop+80)
+            Math.min(containerRect.bottom - tooltipRect.height +95, newTop+95)
         );
 
         globalTooltip.style('left', `${constrainedLeft - containerRect.left}px`);
@@ -430,21 +428,34 @@ function buildTooltipContent(state, evSales, hevSales, phevSales, stations, ince
     return tooltipContent;
 }
 
-// Mise à jour du tooltip global
 function updateGlobalTooltip(salesResults, stationsCount, incentivesCount, filters) {
     const { totalEVSales, totalHEVSales, totalPHEVSales, totalStations, totalIncentives } =
         calculateGlobalTotals(salesResults, stationsCount, incentivesCount, filters);
 
-    d3.select('.global-tooltip')
-        .html(`
-            <strong>Total USA Data</strong><br>
-            ${filters.EV_sales ? `BEV Sales: ${totalEVSales}<br>` : ''}
-            ${filters.HEV_sales ? `HEV Sales: ${totalHEVSales}<br>` : ''}
-            ${filters.PHEV_sales ? `PHEV Sales: ${totalPHEVSales}<br>` : ''}
-            ${filters.stations ? `Charging Stations: ${totalStations}<br>` : ''}
-            ${filters.incentives ? `Incentives: ${totalIncentives}<br>` : ''}
-        `);
+    // Construire le contenu du tooltip
+    const tooltipContent = `
+        <strong>Total USA Data</strong><br>
+        ${filters.EV_sales ? `BEV Sales: ${totalEVSales}<br>` : ''}
+        ${filters.HEV_sales ? `HEV Sales: ${totalHEVSales}<br>` : ''}
+        ${filters.PHEV_sales ? `PHEV Sales: ${totalPHEVSales}<br>` : ''}
+        ${filters.stations ? `Charging Stations: ${totalStations}<br>` : ''}
+        ${filters.incentives ? `Incentives: ${totalIncentives}<br>` : ''}
+    `;
+
+    const globalTooltip = d3.select('.global-tooltip');
+    globalTooltip.html(tooltipContent);
+
+    // Ajuster dynamiquement la taille du tooltip
+    const tooltipNode = globalTooltip.node();
+    const contentWidth = tooltipNode.scrollWidth;
+    const contentHeight = tooltipNode.scrollHeight;
+
+    globalTooltip
+        .style('width', `${contentWidth-20}px`)
+        .style('height', `${contentHeight-20}px`) // Ajuster à la hauteur réelle
+        .style('overflow', 'hidden'); // Cacher le débordement si nécessaire
 }
+
 
 // Calcul des totaux globaux
 function calculateGlobalTotals(salesResults, stationsCount, incentivesCount, filters) {

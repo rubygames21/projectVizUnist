@@ -34,6 +34,8 @@ export function renderLineGraph(startDate = getStartDate(), endDate = getEndDate
         return;
     }
     filters = getFilters(); // Récupérer les filtres
+
+    renderLegend(filters); // Mettre à jour la légende dynamiquement
     const container = d3.select('.linegraph');
     const width = container.node().getBoundingClientRect().width;
     const height = container.node().getBoundingClientRect().height;
@@ -315,4 +317,41 @@ function getMonthNumberEn(monthName) {
         december: 11,
     };
     return months[monthName.toLowerCase()]; // Convertir en minuscule pour éviter les erreurs de casse
+}
+
+function renderLegend(filters) {
+    const legendContainer = d3.select('.linegraph-legend');
+    legendContainer.html(''); // Réinitialise la légende
+
+    const legendData = [
+        { key: 'EV_sales', label: 'BEV', color: '#34C759' },
+        { key: 'PHEV_sales', label: 'PHEV', color: '#40e0d0' },
+        { key: 'HEV_sales', label: 'HEV', color: '#007AFF' },
+        { key: 'stations', label: 'Stations', color: 'orange' },
+        { key: 'incentives', label: 'Incentives', color: '#FF3B30' }
+    ];
+
+    // Filtrer les éléments en fonction des filtres actifs
+    const activeLegendData = legendData.filter(item => filters[item.key]);
+
+    // Ajouter chaque élément de la légende
+    activeLegendData.forEach(item => {
+        const legendItem = legendContainer.append('div')
+            .attr('class', 'legend-item')
+            .style('display', 'flex')
+            .style('align-items', 'center')
+            .style('margin-bottom', '5px');
+
+        legendItem.append('div')
+            .style('width', '20px')
+            .style('height', '5px')
+            .style('background-color', item.color)
+            .style('margin-right', '20px');
+
+        // Ajouter le texte
+        legendItem.append('span')
+            .text(item.label)
+            .style('color', item.color)
+    });
+    legendContainer.style('margin-top', '-10px'); // Ajuste l'espace sous le graphique
 }

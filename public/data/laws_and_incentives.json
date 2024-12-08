@@ -17,6 +17,12 @@
     ],
     "California": [
         {
+            "Project Name": "Volkswagen (VW) Zero Emission Vehicle (ZEV) Investment Plan",
+            "Date": "2017-03-13",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC"
+        },
+        {
             "Project Name": "Zero-Emission and Autonomous Vehicle Infrastructure Support",
             "Date": "2017-04-28",
             "Category": "Laws and Regulations",
@@ -41,18 +47,11 @@
             "Types Supported": "ELEC|PHEV"
         },
         {
-            "Project Name": "Volkswagen (VW) Zero Emission Vehicle (ZEV) Investment Plan",
-            "Date": "2017-03-13",
-            "Category": "Laws and Regulations",
-            "Types Supported": "ELEC"
-        },
-        {
             "Project Name": "Electric Vehicle (EV) Grid Integration Requirements",
             "Date": "2019-10-02",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
         },
-    
         {
             "Project Name": "Electric Vehicle (EV) Charging Station Certification and Training Requirements",
             "Date": "2020-09-30",
@@ -80,6 +79,12 @@
     ],
     "Colorado": [
         {
+            "Project Name": "Regional Electric Vehicle (REV) West Plan",
+            "Date": "2017-10-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
             "Project Name": "Colorado Electric Vehicle (EV) Plan",
             "Date": "2018-01-02",
             "Category": "Laws and Regulations",
@@ -97,7 +102,6 @@
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC"
         },
-       
         {
             "Project Name": "Electric Vehicle (EV) Charger Permitting Policy Development",
             "Date": "2023-05-23",
@@ -127,12 +131,6 @@
             "Date": "2023-06-02",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
-        },
-        {
-            "Project Name": "Regional Electric Vehicle (REV) West Plan",
-            "Date": "2017-10-04",
-            "Category": "Laws and Regulations",
-            "Types Supported": "ELEC|PHEV"
         }
     ],
     "Connecticut": [
@@ -154,7 +152,6 @@
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
         },
-        
         {
             "Project Name": "Electric Vehicle (EV) Charger Accessibility Requirements",
             "Date": "2023-10-02",
@@ -181,7 +178,6 @@
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC"
         }
-        
     ],
     "Delaware": [
         {
@@ -197,14 +193,25 @@
             "Types Supported": "ELEC|PHEVRBATE"
         }
     ],
-    "Hawaii": [
-    ],
+    "Hawaii": [],
     "Illinois": [
+        {
+            "Project Name": "Electric Vehicle (EV) Charging Station Grants",
+            "Date": "2021-09-15",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVRBATE"
+        },
         {
             "Project Name": "Regional Electric Vehicle (REV) Midwest Plan",
             "Date": "2021-09-30",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) and EV Charging Station Manufacturing Tax Credits",
+            "Date": "2021-11-16",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVTAX"
         },
         {
             "Project Name": "Electric Vehicle (EV) Permitting Support",
@@ -223,18 +230,6 @@
             "Date": "2023-06-09",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
-        },
-        {
-            "Project Name": "Electric Vehicle (EV) Charging Station Grants",
-            "Date": "2021-09-15",
-            "Category": "State Incentives",
-            "Types Supported": "ELEC|PHEVRBATE"
-        },
-        {
-            "Project Name": "Electric Vehicle (EV) and EV Charging Station Manufacturing Tax Credits",
-            "Date": "2021-11-16",
-            "Category": "State Incentives",
-            "Types Supported": "ELEC|PHEVTAX"
         }
     ],
     "Indiana": [
@@ -313,6 +308,12 @@
     ],
     "Maine": [
         {
+            "Project Name": "Electric Vehicle (EV) Rebates",
+            "Date": "2019-06-10",
+            "Category": "State Incentives",
+            "Types Supported": "ELEC|PHEVRBATE"
+        },
+        {
             "Project Name": "Electric Vehicle (EV) Deployment and Emissions Reduction Roadmap",
             "Date": "2019-06-26",
             "Category": "Laws and Regulations",
@@ -335,12 +336,6 @@
             "Date": "2023-06-23",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
-        },
-        {
-            "Project Name": "Electric Vehicle (EV) Rebates",
-            "Date": "2019-06-10",
-            "Category": "State Incentives",
-            "Types Supported": "ELEC|PHEVRBATE"
         }
     ],
     "Michigan": [
@@ -451,25 +446,25 @@
             "Types Supported": "ELEC|PHEV"
         },
         {
-            "Project Name": "Electric Vehicle (EV) Charger Make-Ready Requirements for New Developments",
-            "Date": "2021-07-09",
-            "Category": "Laws and Regulations",
-            "Types Supported": "ELEC|PHEV"
-        },
-        {
-            "Project Name": "Electric School Bus Program",
-            "Date": "2022-08-04",
-            "Category": "Laws and Regulations",
-            "Types Supported": "ELEC"
-        },
-        {
             "Project Name": "Electric Vehicle (EV) Charging Station Rebates - Atlantic City Electric (ACE)",
             "Date": "2021-02-17",
             "Category": "State Incentives",
             "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Make-Ready Requirements for New Developments",
+            "Date": "2021-07-09",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
         }
     ],
     "New Mexico": [
+        {
+            "Project Name": "Regional Electric Vehicle (REV) West Plan",
+            "Date": "2017-10-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
         {
             "Project Name": "State Emissions Reduction Strategy",
             "Date": "2019-01-29",
@@ -479,12 +474,6 @@
         {
             "Project Name": "Utility Electric Vehicle (EV) Support",
             "Date": "2019-04-03",
-            "Category": "Laws and Regulations",
-            "Types Supported": "ELEC|PHEV"
-        },
-        {
-            "Project Name": "Regional Electric Vehicle (REV) West Plan",
-            "Date": "2017-10-04",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
         },
@@ -563,20 +552,8 @@
             "Types Supported": "ELEC|PHEV"
         },
         {
-            "Project Name": "State Emissions Reductions and Reporting Requirements",
-            "Date": "2020-03-10",
-            "Category": "Laws and Regulations",
-            "Types Supported": "ELEC|PHEV"
-        },
-        {
             "Project Name": "Electric Vehicle (EV) Charger Building Standards for New Construction",
             "Date": "2017-11-06",
-            "Category": "Laws and Regulations",
-            "Types Supported": "ELEC|PHEV"
-        },
-        {
-            "Project Name": "Electric Vehicle (EV) Charger Certification",
-            "Date": "2023-07-31",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
         },
@@ -585,10 +562,21 @@
             "Date": "2017-11-06",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "State Emissions Reductions and Reporting Requirements",
+            "Date": "2020-03-10",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
+            "Project Name": "Electric Vehicle (EV) Charger Certification",
+            "Date": "2023-07-31",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
         }
     ],
-    "Pennsylvania": [
-    ],
+    "Pennsylvania": [],
     "Rhode Island": [
         {
             "Project Name": "Clean Diesel Grant",
@@ -641,6 +629,12 @@
             "Types Supported": "ELEC|PHEV"
         },
         {
+            "Project Name": "Regional Electric Vehicle (REV) West Plan",
+            "Date": "2017-10-04",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
             "Project Name": "Electric Vehicle (EV) Charging Station Rebate Program Authorization",
             "Date": "2020-03-28",
             "Category": "Laws and Regulations",
@@ -651,17 +645,11 @@
             "Date": "2023-03-02",
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
-        },
-        {
-            "Project Name": "Regional Electric Vehicle (REV) West Plan",
-            "Date": "2017-10-04",
-            "Category": "Laws and Regulations",
-            "Types Supported": "ELEC|PHEV"
         }
     ],
     "Virginia": [
         {
-            "Project Name": "Residential Electric Vehicle (EV) Charging Program – Dominion Energy",
+            "Project Name": "Residential Electric Vehicle (EV) Charging Program \u2013 Dominion Energy",
             "Date": "2023-10-02",
             "Category": "State Incentives",
             "Types Supported": "ELEC|PHEV"
@@ -728,7 +716,8 @@
             "Category": "Laws and Regulations",
             "Types Supported": "ELEC|PHEV"
         }
-    ],"United States of America": [
+    ],
+    "United States of America": [
         {
             "Project Name": "Charging and Fueling Infrastructure Grants",
             "Date": "2021-11-15",
@@ -748,6 +737,12 @@
             "Types Supported": "ELEC|PHEV"
         },
         {
+            "Project Name": "Utility Electric Vehicle (EV) Promotion Measures",
+            "Date": "2021-11-15",
+            "Category": "Laws and Regulations",
+            "Types Supported": "ELEC|PHEV"
+        },
+        {
             "Project Name": "Commercial Electric Vehicle (EV) and Fuel Cell Electric Vehicle (FCEV) Tax Credit",
             "Date": "2022-08-16",
             "Category": "Incentives",
@@ -758,12 +753,6 @@
             "Date": "2022-08-16",
             "Category": "Incentives",
             "Types Supported": "ELEC|HEV"
-        },
-        {
-            "Project Name": "Utility Electric Vehicle (EV) Promotion Measures",
-            "Date": "2021-11-15",
-            "Category": "Laws and Regulations",
-            "Types Supported": "ELEC|PHEV"
         }
     ]
 }

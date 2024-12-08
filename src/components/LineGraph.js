@@ -173,6 +173,8 @@ function updateLineGraph(svg, startDate, endDate, width, height, filters) {
 
     if (filters.incentives) {
         plotIncentives(svg, incentivesToPlot, xScale, height);
+    }else{
+        svg.selectAll('.incentive-line').remove();
     }
 }
 

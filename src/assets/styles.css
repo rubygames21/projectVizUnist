@@ -252,7 +252,7 @@ body, html {
 
 /* Customisation de la scrollbar pour Chrome, Edge, Safari */
 .incentives::-webkit-scrollbar {
-  width: 8px; /* Largeur de la scrollbar */
+  width: 15px; /* Largeur de la scrollbar */
 }
 
 .incentives::-webkit-scrollbar-track {
@@ -278,6 +278,29 @@ body, html {
   align-items: center;
   justify-content: space-around; /* Répartir uniformément l'espace */
   gap: 15px; /* Espacement entre les icônes */
+}
+
+
+
+.incentives-legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  font-size: 1vw;
+  border-radius: 8px; /* Coins arrondis */
+  color: #333; /* Couleur du texte */
+  gap: 5vw; /* Ajoute un espacement entre chaque élément */
+}
+
+.incentives-legend span {
+  margin: 0 5px; /* Espacement entre les éléments */
+  white-space: nowrap; /* Évite que les mots soient coupés */
+}
+
+.incentives-legend strong {
+  color: #007AFF; 
 }
 
 

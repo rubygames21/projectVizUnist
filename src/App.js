@@ -69,8 +69,11 @@ export function initApp() {
 
     const incentivesLegend = document.createElement('div');
     incentivesLegend.classList.add('incentives-legend');
-    incentivesLegend.textContent = 'L&R : Law & regulations  |  USI : US Incentive  |  SI : State Incentive';
-
+    incentivesLegend.innerHTML = `
+    <span><strong>L&R</strong> : Law & Regulations</span> 
+    <span><strong>USI</strong> : US Incentive</span> 
+    <span><strong>SI</strong> : State Incentive</span>
+`;
     const incentivesContainer = document.createElement('div');
     incentivesContainer.classList.add('incentives-container');
 

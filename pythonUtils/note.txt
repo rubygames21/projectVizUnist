@@ -1,11 +1,5 @@
-- linegrpah
-	- legende linegraph
-
- 
-
 all : 
 	- font
-	- color backgroup filter comme les autre mais chaque element dans une box ovale
 	- logo BEV à la place de EV
 	- colorblind
 

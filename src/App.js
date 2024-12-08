@@ -4,6 +4,7 @@ import { renderLineGraph } from './components/LineGraph';
 import { renderIncentivesList  } from './components/IncentivesList';
 import { renderFilterChecklist } from './components/FilterChecklist';
 import { getStartDate, getEndDate } from './components/stateManager';
+import { getFilters } from './components/FilterManager';
 export function initApp() {
     const container = document.createElement('div');
     container.classList.add('container');
@@ -112,6 +113,16 @@ export function initApp() {
 
     // Listen to Filter Updates
     document.addEventListener('filtersUpdated', () => {
+        const filters = getFilters(); // Récupérer l'état des filtres
+    const incentivesLegend = document.querySelector('.incentives-legend'); // Sélectionner le conteneur des incentives
+
+    if (filters.incentives) {
+        // Si le filtre des incentives est activé, afficher la légende
+        incentivesLegend.style.display = 'flex';
+    } else {
+        // Si le filtre des incentives est désactivé, masquer la légende
+        incentivesLegend.style.display = 'none';
+    }
         const startDate = getStartDate();
         const endDate = getEndDate();
         renderLineGraph(startDate, endDate);

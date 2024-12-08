@@ -445,16 +445,25 @@ function updateGlobalTooltip(salesResults, stationsCount, incentivesCount, filte
     const globalTooltip = d3.select('.global-tooltip');
     globalTooltip.html(tooltipContent);
 
-    // Ajuster dynamiquement la taille du tooltip
+    // Mesurer les dimensions du contenu réel
     const tooltipNode = globalTooltip.node();
+
+    // Utiliser scrollWidth et scrollHeight pour ajuster automatiquement
     const contentWidth = tooltipNode.scrollWidth;
     const contentHeight = tooltipNode.scrollHeight;
 
+    // Appliquer les dimensions au tooltip
     globalTooltip
         .style('width', `${contentWidth-20}px`)
-        .style('height', `${contentHeight-20}px`) // Ajuster à la hauteur réelle
-        .style('overflow', 'hidden'); // Cacher le débordement si nécessaire
+        .style('height', `${contentHeight-20}px`)
+        .style('min-width', '150px') // Taille minimale pour éviter une largeur trop petite
+        .style('min-height', '50px') // Taille minimale pour éviter une hauteur trop petite
+        .style('padding', filters.EV_sales || filters.HEV_sales || filters.PHEV_sales || filters.stations || filters.incentives ? '10px' : '0') // Ajuste le padding
+        .style('background', filters.EV_sales || filters.HEV_sales || filters.PHEV_sales || filters.stations || filters.incentives ? 'rgba(128, 128, 128, 0.7)' : 'transparent') // Enlever le fond si vide
+        .style('border-radius', filters.EV_sales || filters.HEV_sales || filters.PHEV_sales || filters.stations || filters.incentives ? '5px' : '0'); // Ajuste le rayon des coins
 }
+
+
 
 
 // Calcul des totaux globaux

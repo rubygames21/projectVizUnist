@@ -328,7 +328,7 @@ function renderLegend(filters) {
         { key: 'PHEV_sales', label: 'PHEV', color: '#40e0d0' },
         { key: 'HEV_sales', label: 'HEV', color: '#007AFF' },
         { key: 'stations', label: 'Stations', color: 'orange' },
-        { key: 'incentives', label: 'Incentives', color: '#FF3B30' }
+        { key: 'incentives', label: 'Incentives', color: '#FF3B30', dashed: true }
     ];
 
     // Filtrer les éléments en fonction des filtres actifs
@@ -342,16 +342,20 @@ function renderLegend(filters) {
             .style('align-items', 'center')
             .style('margin-bottom', '5px');
 
+        // Ajouter la ligne de la légende
         legendItem.append('div')
-            .style('width', '20px')
-            .style('height', '5px')
-            .style('background-color', item.color)
-            .style('margin-right', '20px');
+            .style('width', '30px')
+            .style('height', item.dashed ? '0' : '5px') // Pas de hauteur pour les pointillés
+            .style('margin-right', '20px')
+            .style('background-color', item.dashed ? 'transparent' : item.color) // Pas de couleur si pointillé
+            .style('border-top', item.dashed ? `4px dashed ${item.color}` : 'none') // Ligne pointillée plus épaisse
+            .style('border-width', item.dashed ? '4px' : '0'); // Largeur de la bordure pour les pointillés
 
         // Ajouter le texte
         legendItem.append('span')
             .text(item.label)
-            .style('color', item.color)
+            .style('color', item.color);
     });
+
     legendContainer.style('margin-top', '-10px'); // Ajuste l'espace sous le graphique
 }

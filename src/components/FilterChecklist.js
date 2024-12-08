@@ -15,7 +15,7 @@ export function renderFilterChecklist() {
         { id: 'PHEV_sales', label: 'PHEV Sales', color:'#40e0d0' },
         { id: 'HEV_sales', label: 'HEV Sales', color:'#007AFF' },
         { id: 'stations', label: 'Stations' , color:'orange'},
-        { id: 'incentives', label: 'Incentives',color:'#FF3B30' },
+        { id: 'incentives', label: 'Policy measures',color:'#FF3B30' },
     ];
     filters.forEach(filter => {
         const checkboxContainer = container.append('div').attr('class', 'checkbox-container');

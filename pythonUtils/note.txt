@@ -1,13 +1,17 @@
 - linegrpah
 	- legende linegraph
 
-- incentives :	
-	- margin entre logo EV... depend du type de logo (pas d'espace à doirte d'un logo EV)
-	- down a bit 
+ 
 
 all : 
 	- font
 	- color backgroup filter comme les autre mais chaque element dans une box ovale
-	- tooltip state font size plus grande
-	- font size of echelle linegraph bigger
 	- logo BEV à la place de EV
+	- colorblind
+
+
+
+
+story :
+
+pas beaucoup de incentives sur HEV et on peut voir que la courbe HEV reste pareil partout

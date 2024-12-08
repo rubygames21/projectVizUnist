@@ -124,40 +124,50 @@ function renderIncentives(container, incentives) {
         row.append('span')
             .text(incentive["Project Name"])
             .style('flex', '1')
-            .style('margin-right', '15px')
+            .style('margin-right', '20px')
             .style('margin-left', '4px')
             .style('color', '#333')
-            .style('font-size', '1.3rem'); 
+            .style('font-size', '1vw'); 
 
             const typesContainer = row.append('div')
             .style('display', 'flex')
             .style('gap', '25px') 
             .style('margin-left', 'auto')
-        const supportedTypes = incentive["Types Supported"]?.split('|') || [];
-        supportedTypes.forEach(type => {
-            let imgSrc;
-            switch (type) {
-                case 'ELEC':
-                    imgSrc = 'data/ev.png';
-                    break;
-                case 'HEV':
-                    imgSrc = 'data/hev.png';
-                    break;
-                case 'PHEV':
-                    imgSrc = 'data/phev.png';
-                    break;
-            }
-            if (imgSrc) {
-                typesContainer.append('img')
-                    .attr('src', imgSrc)
-                    .attr('alt', type)
-                    .style('width', '30px') 
-                    .style('height', '30px')
-                    .style('transform', 'scale(2.5)') 
-                    .style('transform-origin', 'center')
-                    .style('margin-right','20px') 
-            }
-        });
+            const supportedTypes = incentive["Types Supported"]?.split('|') || [];
+            let prevType = null; // Suivre le type précédent pour ajuster la marge
+            
+            supportedTypes.forEach(type => {
+                let imgSrc;
+                switch (type) {
+                    case 'ELEC':
+                        imgSrc = 'data/ev.png';
+                        break;
+                    case 'HEV':
+                        imgSrc = 'data/hev.png';
+                        break;
+                    case 'PHEV':
+                        imgSrc = 'data/phev.png';
+                        break;
+                }
+                if (imgSrc) {
+                    const img = typesContainer.append('img')
+                        .attr('src', imgSrc)
+                        .attr('alt', type)
+                        .style('width', '30px')
+                        .style('height', '30px')
+                        .style('transform', 'scale(2.5)')
+                        .style('transform-origin', 'center')
+                        .style('margin-top', '10px')
+                        .style('margin-right', '20px');// Marge par défaut
+                    // Ajuster la marge en fonction du type précédent
+                    if (prevType === 'ELEC' && type === 'HEV') {
+                        img.style('margin-left', '-15px'); 
+                    } 
+                    // Mettre à jour le type précédent
+                    prevType = type;
+                }
+            });
+            
     });
 }
 

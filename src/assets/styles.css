@@ -41,7 +41,7 @@ body, html {
 
     /* Main Title */
     .main-title {
-      font-size: 3.5rem;
+      font-size: 1.8vw;
       font-weight: bold;
       color: #004080; /* Dark blue for emphasis */
       text-align: center;
@@ -64,7 +64,7 @@ body, html {
           .map-title {
             margin-top: 0.5vw;
             margin-left: 0.5vw;
-            font-size: 2rem;
+            font-size: 1.4vw;
             font-weight: bold;
             text-align: center;
             color: #333333;
@@ -75,9 +75,7 @@ body, html {
             flex: 2;
             display: flex;
             align-items: center;
-            
             justify-content: center;
-            font-size: 24px;
             color: white; /* Ensure text is visible */
             border-radius: 8px;
             width: 100%;
@@ -101,7 +99,7 @@ body, html {
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 0.9vw;
   pointer-events: none;
   z-index: 1000; /* Assure que le tooltip est au-dessus de la carte */
   opacity: 0;
@@ -131,19 +129,19 @@ body, html {
   justify-content: center; /* Centre les enfants horizontalement */
   align-items: center; /* Centre les enfants verticalement */
   border-radius: 8px;
-  font-size: 2rem;
-  gap: 20px; /* Ajoute un espace entre les filtres */
+  font-size: 1.1vw;
+  gap: 10px; /* Ajoute un espace entre les filtres */
 }
 
 .checkbox-container {
   display: flex; /* Permet d'aligner les checkbox et labels */
   align-items: center; /* Centre verticalement la checkbox et le label */
   gap: 5px; /* Espace entre la checkbox et son label */
-  padding-left: 2vw; /* Ajoutez de l'espace à gauche des filtres */
+  padding-left: 1.5vw; /* Ajoutez de l'espace à gauche des filtres */
 }
 
 .side-section {
-  flex: 0.8; /* Occupies 1/3 of the top section */
+  flex: 1; /* Occupies 1/3 of the top section */
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -166,7 +164,7 @@ body, html {
 }
 
 .linegraph-title{
-  font-size: 2rem;
+  font-size: 1.4vw;
   font-weight: bold;
   color: #333333;
   text-align: center; /* Centré */
@@ -200,7 +198,7 @@ body, html {
 
 /* Titre pour les incentives */
 .incentives-title {
-  font-size: 2rem;
+  font-size: 1.4vw;
   font-weight: bold;
   color: #333333;
   text-align: center; /* Centré */
@@ -253,13 +251,16 @@ body, html {
 
 
 .x-axis{
-  font-size: 8px;
+  font-size: 0.8vw;
 }
 
-.y-axis{
-  font-size: 8px;
+.y-axis-sales{
+  font-size:0.8vw;
 }
 
+.y-axis-stations{
+  font-size:0.8vw;
+}
 .selection {
   fill: rgba(70, 130, 180, 0.3); /* Ajustez la couleur et la transparence */
 }

@@ -70,15 +70,15 @@ function initializeLineGraph(svg, startDate, endDate, width, height, filters) {
 
     const xScale = d3.scaleTime()
         .domain(d3.extent(formattedSalesData, (d) => d.date))
-        .range([63, width - 50]);
+        .range([90, width - 90]);
 
     const yScaleSales = d3.scaleLinear()
         .domain([0, d3.max(formattedSalesData, (d) => d.value)])
-        .range([height - 40, 20]); // Ajusté pour synchroniser avec l'axe X
+        .range([height - 40, 0]); // Ajusté pour synchroniser avec l'axe X
 
     const yScaleStations = d3.scaleLinear()
         .domain([0, d3.max(formattedStationsData, (d) => d.value)])
-        .range([height - 40, 20]); // Ajusté pour synchroniser avec l'axe X
+        .range([height - 40, 0]); // Ajusté pour synchroniser avec l'axe X
 
     svg.append('g')
         .attr('class', 'x-axis')
@@ -87,13 +87,13 @@ function initializeLineGraph(svg, startDate, endDate, width, height, filters) {
 
     svg.append('g')
         .attr('class', 'y-axis-sales')
-        .attr('transform', 'translate(63, 0)')
+        .attr('transform', 'translate(90, 0)')
         .call(d3.axisLeft(yScaleSales));
 
     if (filters.stations) {
         svg.append('g')
             .attr('class', 'y-axis-stations')
-            .attr('transform', `translate(${width - 50}, 0)`)
+            .attr('transform', `translate(${width - 90}, 0)`)
             .style('color', 'orange')
             .call(d3.axisRight(yScaleStations));
         plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleStations);
@@ -132,15 +132,15 @@ function updateLineGraph(svg, startDate, endDate, width, height, filters) {
 
     const xScale = d3.scaleTime()
         .domain(d3.extent(formattedSalesData, (d) => d.date))
-        .range([63, width - 50]);
+        .range([90, width - 90]);
 
     const yScaleSales = d3.scaleLinear()
         .domain([0, d3.max(formattedSalesData, (d) => d.value)])
-        .range([height - 40, 20]); // Ajusté pour synchroniser avec l'axe X
+        .range([height - 40, 0]); // Ajusté pour synchroniser avec l'axe X
 
     const yScaleStations = d3.scaleLinear()
         .domain([0, d3.max(formattedStationsData, (d) => d.value)])
-        .range([height - 40, 20]); // Ajusté pour synchroniser avec l'axe X
+        .range([height - 40, 0]); // Ajusté pour synchroniser avec l'axe X
 
     svg.select('.x-axis')
         .attr('transform', `translate(0, ${height - 40})`) // Ajusté pour l'alignement
@@ -154,7 +154,7 @@ function updateLineGraph(svg, startDate, endDate, width, height, filters) {
 
         svg.append('g')
             .attr('class', 'y-axis-stations')
-            .attr('transform', `translate(${width - 50}, 0)`)
+            .attr('transform', `translate(${width - 90}, 0)`)
             .style('color', 'orange')
             .call(d3.axisRight(yScaleStations));
         plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleStations);
@@ -247,7 +247,7 @@ function plotIncentives(svg, incentivesToPlot, xScale, height) {
             svg.append('line')
                 .attr('class', 'incentive-line')
                 .attr('x1', xPosition)
-                .attr('y1', 20)
+                .attr('y1', 0)
                 .attr('x2', xPosition)
                 .attr('y2', height - 40) // Ajuster pour correspondre à l'axe X
                 .style('stroke', '#FF3B30')

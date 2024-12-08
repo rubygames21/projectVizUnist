@@ -3,9 +3,6 @@ all :
 	- logo BEV à la place de EV
 	- colorblind
 
-
-
-
 story :
 
 pas beaucoup de incentives sur HEV et on peut voir que la courbe HEV reste pareil partout

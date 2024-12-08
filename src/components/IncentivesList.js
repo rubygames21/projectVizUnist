@@ -140,7 +140,7 @@ function renderIncentives(container, incentives) {
                 let imgSrc;
                 switch (type) {
                     case 'ELEC':
-                        imgSrc = 'data/ev.png';
+                        imgSrc = 'data/bev.png';
                         break;
                     case 'HEV':
                         imgSrc = 'data/hev.png';

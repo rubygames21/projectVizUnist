@@ -10,7 +10,7 @@ import { getFilters } from './FilterManager';
 let salesData = null;
 let chargingData = null;
 let incentivesData = null;
-let activeState = null; // État actuellement sélectionné
+let activeState = null; 
 let filteredStationsByState = {};
 let projection = null;
 

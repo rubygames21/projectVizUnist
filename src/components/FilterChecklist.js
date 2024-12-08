@@ -11,8 +11,8 @@ export function renderFilterChecklist() {
     const filterState = getFilters();
 
     const filters = [
-        { id: 'EV_sales', label: 'EV Sales' ,color :'#34C759'},
-        { id: 'PHEV_sales', label: 'PHEV Sales', color:'#00FFFF' },
+        { id: 'EV_sales', label: 'BEV Sales' ,color :'#34C759'},
+        { id: 'PHEV_sales', label: 'PHEV Sales', color:'#40e0d0' },
         { id: 'HEV_sales', label: 'HEV Sales', color:'#007AFF' },
         { id: 'stations', label: 'Stations' , color:'orange'},
         { id: 'incentives', label: 'Incentives',color:'#FF3B30' },

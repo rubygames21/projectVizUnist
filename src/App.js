@@ -25,7 +25,7 @@ export function initApp() {
 
     const mapTitle = document.createElement('div');
     mapTitle.classList.add('map-title');
-    mapTitle.textContent = 'Map Title'; // Ajoutez du contenu si nécessaire
+    mapTitle.textContent = 'Charging stations and EV sales map for the US '; // Ajoutez du contenu si nécessaire
 
     const map = document.createElement('div');
     map.classList.add('map');
@@ -49,7 +49,7 @@ export function initApp() {
 
     const lineGraphTitle = document.createElement('div');
     lineGraphTitle.classList.add('linegraph-title');
-    lineGraphTitle.textContent = 'Linegraph Title';
+    lineGraphTitle.textContent = 'Trends in Electric Vehicle Sales, Charging Stations, and Policy Measures over time';
 
 
     const linegraphContainer = document.createElement('div');

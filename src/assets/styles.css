@@ -6,7 +6,7 @@ body, html {
   font-family: Arial, sans-serif;
   align-items: center;
   box-sizing: border-box;
-  background-color: grey;
+  background-color: #f7f7f7;
 }
 
 .container {
@@ -34,18 +34,18 @@ body, html {
     display: flex;
     flex-direction: column;
     gap: 10px; /* Space between elements */
-    background-color: #f9f9f9;
+    background-color: #f7f7f7;
     padding: 10px;
     border-radius: 8px;
   }
 
     /* Main Title */
     .main-title {
-      font-size: 1.8rem;
+      font-size: 3.5rem;
       font-weight: bold;
       color: #004080; /* Dark blue for emphasis */
-      text-align: left;
-      background-color: #f9f9f9;
+      text-align: center;
+      background-color: #f7f7f7;
       padding: 5px 0px;
       border-radius: 8px;
     }
@@ -57,16 +57,16 @@ body, html {
       flex-direction: column;
       gap: 10px; /* Space between the title and map */
       border-radius: 8px;
-      background-color: #d1e9f7; /* Light blue background */
+      background-color: #f7f7f7; /* Light blue background */
     }
 
           /* Map Title */
           .map-title {
             margin-top: 0.5vw;
             margin-left: 0.5vw;
-            font-size: 1.2rem;
+            font-size: 2rem;
             font-weight: bold;
-            text-align: left;
+            text-align: center;
             color: #333333;
           }
 
@@ -75,23 +75,13 @@ body, html {
             flex: 2;
             display: flex;
             align-items: center;
+            
             justify-content: center;
             font-size: 24px;
             color: white; /* Ensure text is visible */
             border-radius: 8px;
             width: 100%;
           }
-
-    .filters {
-      background-color: lightgray;
-      padding: 10px;
-      color: black;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      font-size: 18px;
-    }
 
 
 .map-container {
@@ -127,7 +117,7 @@ body, html {
 .timeline {
   width: calc(100% - 22px); 
   margin: 0 auto; /* Centre horizontalement */
-  background-color: lightgray;
+  background-color: #f7f7f7;
   border-radius: 8px;
   padding: 10px;
   overflow: hidden; /* Empêche tout débordement */
@@ -135,14 +125,13 @@ body, html {
 
 .filters {
   flex: 0.05;
-  background-color: lightgray;
+  background-color: #ededed;
   padding: 10px;
-  color: black; /* Couleur pour lisibilité */
   display: flex; /* Important pour activer Flexbox */
   justify-content: center; /* Centre les enfants horizontalement */
   align-items: center; /* Centre les enfants verticalement */
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 2rem;
   gap: 20px; /* Ajoute un espace entre les filtres */
 }
 
@@ -158,7 +147,7 @@ body, html {
   display: flex;
   flex-direction: column;
   gap: 0px;
-  background-color: #f9f9f9;
+  background-color: #f7f7f7;
   padding-left: 10px;  
   padding-right: 10px;
   border-radius: 8px;
@@ -170,17 +159,17 @@ body, html {
   display: flex;
   flex-direction: column; /* Aligne les éléments verticalement */
   gap: 10px; /* Espace entre le titre et le contenu */
-  background-color: #f9f9f9; /* Couleur de fond neutre */
+  background-color: #f7f7f7; /* Couleur de fond neutre */
   padding: 10px;
   border-radius: 8px;
   overflow: hidden; /* Empêche le débordement pour le conteneur global */
 }
 
 .linegraph-title{
-  font-size: 1.2rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #333333;
-  text-align: left; /* Centré */
+  text-align: center; /* Centré */
   margin: 0; /* Supprime les marges par défaut */
   padding: 10px 0; /* Ajoute un peu d'espace vertical */
   border-bottom: 1px solid #d1d1d6; /* Ligne en bas pour séparer du contenu */
@@ -188,11 +177,12 @@ body, html {
 
 .linegraph {
   flex: 1;
-  background-color: #ededed; /* Ajoutez une couleur de fond pour vérifier */
+  background-color: #f7f7f7; /* Ajoutez une couleur de fond pour vérifier */
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 10px;
 }
 
 
@@ -202,7 +192,7 @@ body, html {
   display: flex;
   flex-direction: column; /* Aligne les éléments verticalement */
   gap: 10px; /* Espace entre le titre et le contenu */
-  background-color: #f9f9f9; /* Couleur de fond neutre */
+  background-color: #f7f7f7; /* Couleur de fond neutre */
   padding: 10px;
   border-radius: 8px;
   overflow: hidden; /* Empêche le débordement pour le conteneur global */
@@ -210,10 +200,10 @@ body, html {
 
 /* Titre pour les incentives */
 .incentives-title {
-  font-size: 1.2rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #333333;
-  text-align: left; /* Centré */
+  text-align: center; /* Centré */
   margin: 0; /* Supprime les marges par défaut */
   padding: 10px 0; /* Ajoute un peu d'espace vertical */
   border-bottom: 1px solid #d1d1d6; /* Ligne en bas pour séparer du contenu */
@@ -222,7 +212,7 @@ body, html {
 /* Contenu des incentives (liste défilante) */
 .incentives {
   flex: 1; /* Prend tout l'espace restant dans le container */
-  background-color: #ffffff; /* Couleur de fond blanche pour contraste */
+  background-color: #f7f7f7; /* Couleur de fond blanche pour contraste */
   border-radius: 8px;
   padding: 10px;
   overflow-y: auto; /* Scroll vertical si le contenu dépasse */

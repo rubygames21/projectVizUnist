@@ -97,7 +97,6 @@ function renderIncentives(container, incentives) {
             .style('border-radius', '5px')
             .style('border', '1px solid #ccc')
             .style('width', '97%')
-            .style('box-shadow', '0 2px 4px rgba(0, 0, 0, 0.1)'); // Ajout d'une ombre légère
 
             row.append('img')
             .attr('src', (() => {
@@ -128,7 +127,7 @@ function renderIncentives(container, incentives) {
             .style('margin-right', '15px')
             .style('margin-left', '4px')
             .style('color', '#333')
-            .style('font-size', '16px'); 
+            .style('font-size', '1.3rem'); 
 
             const typesContainer = row.append('div')
             .style('display', 'flex')

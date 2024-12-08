@@ -95,7 +95,7 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
 
     projection = d3.geoAlbersUsa()
         .translate([width / 2+25, height / 2-30])
-        .scale(Math.min(width, height) * 1.9);
+        .scale(Math.min(width, height) * 1.8);
 
     const path = d3.geoPath().projection(projection);
 
@@ -179,14 +179,12 @@ function initializeMap(salesResults, stationsCount, incentivesCount, stationsByS
         .style('position', 'absolute')
         .style('top', '13vh') // Position initiale
         .style('right', '91vh') // Position initiale
-        .style('width', '158px') // Taille fixe
-        .style('height', '95px') // Hauteur fixe
+       
         .style('padding', '10px')
-        .style('background', 'lightgray')
-        .style('border', '1px solid #ccc')
+        .style('background', 'rgba(128, 128, 128, 0.7)')
         .style('border-radius', '5px')
         .style('box-shadow', '0 4px 8px rgba(0,0,0,0.1)')
-        .style('font-size', '14px')
+        .style('font-size', '1.3rem')
         .style('pointer-events', 'auto') // Permet les interactions
         .style('opacity', 1)
         .html(`<strong>Total USA Data</strong><br>Calculating...`);
@@ -416,7 +414,7 @@ function updateStationsForState(state, filteredStations) {
             return projected ? projected[1] : null;
         })
         .attr('r', 3.5 / currentTransform.k)
-        .attr('fill', 'red')
+        .attr('fill', 'orange')
         .attr('stroke', 'black')
         .attr('stroke-width', 1 / currentTransform.k);
 }
@@ -424,7 +422,7 @@ function updateStationsForState(state, filteredStations) {
 // Construction du contenu du tooltip pour un état
 function buildTooltipContent(state, evSales, hevSales, phevSales, stations, incentives) {
     let tooltipContent = `<strong>${state}</strong><br>`;
-    if (evSales !== null) tooltipContent += `EV: ${evSales}<br>`;
+    if (evSales !== null) tooltipContent += `BEV: ${evSales}<br>`;
     if (hevSales !== null) tooltipContent += `HEV: ${hevSales}<br>`;
     if (phevSales !== null) tooltipContent += `PHEV: ${phevSales}<br>`;
     if (stations !== null) tooltipContent += `Charging stations: ${stations}<br>`;
@@ -440,7 +438,7 @@ function updateGlobalTooltip(salesResults, stationsCount, incentivesCount, filte
     d3.select('.global-tooltip')
         .html(`
             <strong>Total USA Data</strong><br>
-            ${filters.EV_sales ? `EV Sales: ${totalEVSales}<br>` : ''}
+            ${filters.EV_sales ? `BEV Sales: ${totalEVSales}<br>` : ''}
             ${filters.HEV_sales ? `HEV Sales: ${totalHEVSales}<br>` : ''}
             ${filters.PHEV_sales ? `PHEV Sales: ${totalPHEVSales}<br>` : ''}
             ${filters.stations ? `Charging Stations: ${totalStations}<br>` : ''}

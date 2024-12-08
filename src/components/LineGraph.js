@@ -46,7 +46,7 @@ export function renderLineGraph(startDate = getStartDate(), endDate = getEndDate
     }
 }
 
-function initializeLineGraph(svg, startDate, endDate, width, height,filters) {
+function initializeLineGraph(svg, startDate, endDate, width, height, filters) {
     const container = d3.select('.linegraph');
     svg = container.append('svg')
         .attr('width', width)
@@ -60,7 +60,6 @@ function initializeLineGraph(svg, startDate, endDate, width, height,filters) {
     let chargingStationsToPlot = selectedState
         ? filterDataByDateRangeForState(stationsData, selectedState, startDate, endDate)
         : filterDataByDateRange(stationsData, startDate, endDate);
-    //console.log(chargingStationsToPlot);
 
     let incentivesToPlot = selectedState
         ? getIncentivesDetailsForState(incentivesData, selectedState, startDate, endDate)
@@ -75,15 +74,15 @@ function initializeLineGraph(svg, startDate, endDate, width, height,filters) {
 
     const yScaleSales = d3.scaleLinear()
         .domain([0, d3.max(formattedSalesData, (d) => d.value)])
-        .range([height-20 ,20]);
+        .range([height - 40, 20]); // Ajusté pour synchroniser avec l'axe X
 
     const yScaleStations = d3.scaleLinear()
         .domain([0, d3.max(formattedStationsData, (d) => d.value)])
-        .range([height - 20, 20]);
+        .range([height - 40, 20]); // Ajusté pour synchroniser avec l'axe X
 
     svg.append('g')
         .attr('class', 'x-axis')
-        .attr('transform', `translate(0, ${height - 20})`)
+        .attr('transform', `translate(0, ${height - 40})`) // Ajusté pour l'alignement
         .call(d3.axisBottom(xScale).ticks(d3.timeYear.every(1)));
 
     svg.append('g')
@@ -93,31 +92,28 @@ function initializeLineGraph(svg, startDate, endDate, width, height,filters) {
 
     if (filters.stations) {
         svg.append('g')
-        .attr('class', 'y-axis-stations')
-        .attr('transform', `translate(${width - 50}, 0)`)
-        .style('color','orange')
-        .call(d3.axisRight(yScaleStations));
+            .attr('class', 'y-axis-stations')
+            .attr('transform', `translate(${width - 50}, 0)`)
+            .style('color', 'orange')
+            .call(d3.axisRight(yScaleStations));
         plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleStations);
-    }
-    else{
+    } else {
         svg.selectAll('.station-line-path').remove();
         svg.selectAll('.y-axis-stations').remove();
-
     }
+
     if (filters.EV_sales || filters.HEV_sales || filters.PHEV_sales) {
         plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales, filters);
-    }
-    else{
-        svg.selectAll('.incentive-line').remove();
+    } else {
+        svg.selectAll('.line-path').remove();
     }
 
-       
-    if(filters.incentives){
+    if (filters.incentives) {
         plotIncentives(svg, incentivesToPlot, xScale, height);
     }
 }
 
-function updateLineGraph(svg, startDate, endDate, width, height,filters) {
+function updateLineGraph(svg, startDate, endDate, width, height, filters) {
     const selectedState = getSelectedState();
     let salesDataToPlot = selectedState
         ? calculateSalesByMonthForState(startDate, endDate, selectedState, salesData)
@@ -131,24 +127,23 @@ function updateLineGraph(svg, startDate, endDate, width, height,filters) {
         ? getIncentivesDetailsForState(incentivesData, selectedState, startDate, endDate)
         : getIncentivesDetailsByState(incentivesData, startDate, endDate);
 
-    console.log(salesDataToPlot)
     const formattedSalesData = formatAllDataForLine(salesDataToPlot);
     const formattedStationsData = formatDataForStationLine(chargingStationsToPlot);
 
     const xScale = d3.scaleTime()
-    .domain(d3.extent(formattedSalesData, (d) => d.date))
-    .range([63, width - 50]);
+        .domain(d3.extent(formattedSalesData, (d) => d.date))
+        .range([63, width - 50]);
 
     const yScaleSales = d3.scaleLinear()
         .domain([0, d3.max(formattedSalesData, (d) => d.value)])
-        .range([height-20 ,20]);
+        .range([height - 40, 20]); // Ajusté pour synchroniser avec l'axe X
 
     const yScaleStations = d3.scaleLinear()
         .domain([0, d3.max(formattedStationsData, (d) => d.value)])
-        .range([height - 20, 20]);
-
+        .range([height - 40, 20]); // Ajusté pour synchroniser avec l'axe X
 
     svg.select('.x-axis')
+        .attr('transform', `translate(0, ${height - 40})`) // Ajusté pour l'alignement
         .call(d3.axisBottom(xScale).ticks(d3.timeYear.every(1)));
 
     svg.select('.y-axis-sales')
@@ -158,36 +153,31 @@ function updateLineGraph(svg, startDate, endDate, width, height,filters) {
         svg.selectAll('.y-axis-stations').remove();
 
         svg.append('g')
-        .attr('class', 'y-axis-stations')
-        .attr('transform', `translate(${width - 50}, 0)`)
-        .style('color','orange')
-        .call(d3.axisRight(yScaleStations));
+            .attr('class', 'y-axis-stations')
+            .attr('transform', `translate(${width - 50}, 0)`)
+            .style('color', 'orange')
+            .call(d3.axisRight(yScaleStations));
         plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleStations);
-    }
-    else{
+    } else {
         svg.selectAll('.station-line-path').remove();
         svg.selectAll('.y-axis-stations').remove();
     }
-   
 
     if (filters.EV_sales || filters.HEV_sales || filters.PHEV_sales) {
         plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales, filters);
-    }
-    else{
+    } else {
         svg.selectAll('.line-path').remove();
     }
 
-    if(filters.incentives){
+    if (filters.incentives) {
         plotIncentives(svg, incentivesToPlot, xScale, height);
-    }
-    else{
-        svg.selectAll('.incentive-line').remove();
     }
 }
 
+
 function plotSalesLines(svg, salesDataToPlot, xScale, yScaleSales, filters) {
     svg.selectAll('.line-path').remove();
-    const colors = { evData: '#34C759', hevData: '#007AFF', phevData: '#00FFFF' };
+    const colors = { evData: '#34C759', hevData: '#007AFF', phevData: '#40e0d0' };
 
     for (const type in salesDataToPlot) {
         if (
@@ -242,20 +232,32 @@ function plotChargingStationLines(svg, chargingStationsToPlot, xScale, yScaleSta
 
 function plotIncentives(svg, incentivesToPlot, xScale, height) {
     svg.selectAll('.incentive-line').remove();
-        Object.values(incentivesToPlot).flat().forEach((incentive) => {
-            const incentiveDate = new Date(incentive.Date);
+
+    // Déterminer les limites de l'axe X
+    const xDomain = xScale.domain(); // [startDate, endDate]
+    const startX = xScale(xDomain[0]);
+    const endX = xScale(xDomain[1]);
+
+    Object.values(incentivesToPlot).flat().forEach((incentive) => {
+        const incentiveDate = new Date(incentive.Date);
+        const xPosition = xScale(incentiveDate);
+
+        // Vérifier si la date est dans les limites de l'axe X
+        if (xPosition >= startX && xPosition <= endX) {
             svg.append('line')
                 .attr('class', 'incentive-line')
-                .attr('x1', xScale(incentiveDate))
+                .attr('x1', xPosition)
                 .attr('y1', 20)
-                .attr('x2', xScale(incentiveDate))
-                .attr('y2', height - 20)
+                .attr('x2', xPosition)
+                .attr('y2', height - 40) // Ajuster pour correspondre à l'axe X
                 .style('stroke', '#FF3B30')
                 .style('stroke-width', 1)
                 .style('stroke-dasharray', '4 2')
-                .style('opacity','0.35');
-        });
+                .style('opacity', '0.35');
+        }
+    });
 }
+
 
 function formatDataForStationLine(data) {
     return Object.entries(data).flatMap(([year, months]) =>

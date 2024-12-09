@@ -266,7 +266,7 @@ function plotIncentives(svg, incentivesToPlot, xScale, height) {
 function formatDataForStationLine(data) {
     return Object.entries(data).flatMap(([year, months]) =>
         Object.entries(months).map(([month, value]) => ({
-            date: new Date(year, getMonthNumberEn(month), 1),
+            date: new Date(year, getMonthNumber(month), 1),
             value,
         }))
     ).sort((a, b) => a.date - b.date);
@@ -287,38 +287,12 @@ function formatAllDataForLine(salesData) {
 
 function getMonthNumber(monthName) {
     const months = {
-        janvier: 0,
-        février: 1,
-        mars: 2,
-        avril: 3,
-        mai: 4,
-        juin: 5,
-        juillet: 6,
-        août: 7,
-        septembre: 8,
-        octobre: 9,
-        novembre: 10,
-        décembre: 11,
+        janvier: 0, février: 1, mars: 2, avril: 3, mai: 4, juin: 5,
+        juillet: 6, août: 7, septembre: 8, octobre: 9, novembre: 10, décembre: 11,
+        january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
+        july: 6, august: 7, september: 8, october: 9, november: 10, december: 11
     };
-    return months[monthName];
-}
-
-function getMonthNumberEn(monthName) {
-    const months = {
-        january: 0,
-        february: 1,
-        march: 2,
-        april: 3,
-        may: 4,
-        june: 5,
-        july: 6,
-        august: 7,
-        september: 8,
-        october: 9,
-        november: 10,
-        december: 11,
-    };
-    return months[monthName.toLowerCase()]; // Convertir en minuscule pour éviter les erreurs de casse
+    return months[monthName.toLowerCase()] ?? null; // Retourne null si le mois est invalide
 }
 
 function renderLegend(filters) {

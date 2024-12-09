@@ -290,7 +290,9 @@ function getMonthNumber(monthName) {
         janvier: 0, février: 1, mars: 2, avril: 3, mai: 4, juin: 5,
         juillet: 6, août: 7, septembre: 8, octobre: 9, novembre: 10, décembre: 11,
         january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
-        july: 6, august: 7, september: 8, october: 9, november: 10, december: 11
+        july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
+        '1월': 0, '2월': 1, '3월': 2, '4월': 3, '5월': 4, '6월': 5,
+        '7월': 6, '8월': 7, '9월': 8, '10월': 9, '11월': 10, '12월': 11
     };
     return months[monthName.toLowerCase()] ?? null; // Retourne null si le mois est invalide
 }
